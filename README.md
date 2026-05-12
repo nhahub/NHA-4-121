@@ -455,13 +455,13 @@ All AI-generated answers must be grounded in retrieved records. If the required 
 
 # 15. Contributors
 
-| Name          | Role                                | Main Responsibility                                                                                                                                          |
-| ------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Ahmed Hesham  | Team Leader & Data Engineering Lead | Project coordination, synthetic patient data generation, schema design, validation pipeline (V1–V11), documentation organization, and overall demo readiness |
-| [Member Name] | AI/RAG Engineer                     | RAG pipeline design, chunking strategy, embeddings, ChromaDB ingestion, retrieval workflow, prompt construction, grounded answer generation, and citations   |
-| [Member Name] | Backend Developer                   | FastAPI backend development, API endpoints, service integration, request/response handling, and backend orchestration                                        |
-| [Member Name] | Frontend & OCR Engineer             | Streamlit frontend development, OCR workflow integration, OCR cache handling, scanned document demo support, and frontend API integration                    |
-| [Member Name] | DevOps & Testing Engineer           | Docker setup, Docker Compose orchestration, local deployment workflow, environment management, retrieval/API testing, and demo stability verification        |
+| Member                   | Role                                    | Main Ownership                                            | Main Deliverables                                                         |
+| ------------------------ | --------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Ahmed Hesham Kamel       | Team Leader & Data Engineering Lead     | `generators/`, `validators/`, `data/`, `config/`, `docs/` | Valid dataset, schema, validation rules, showcase patients, documentation |
+| Gamal Mohamed Gad        | Retrieval-Augmented Generation Engineer | `ingestion/`, `rag/`, `data/chromadb/`, retrieval tests   | Chunking, embeddings, ChromaDB ingestion, retrieval, grounding, citations |
+| Mahmoud Tarek Mahmoud    | FastAPI Backend Engineer                | `backend/`, API services, API testing                     | API routes, schemas, backend orchestration                                |
+| Youssef Yassin Ibrahim   | Streamlit and OCR Engineer              | `frontend/`, `ocr/`                                       | Demo UI, API client, OCR cache flow, OCR display                          |
+| Mahmoud Mohamed El Faham | Deployment and Testing Engineer         | `deployment/`, `scripts/`, `tests/`, `logs/`              | Docker setup, reproducible local demo, tests, smoke checks                |
 
 Detailed workflow and ownership rules are available in [`docs/workflow/`](docs/workflow/).
 
