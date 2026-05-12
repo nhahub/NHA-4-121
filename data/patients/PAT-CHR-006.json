@@ -1,0 +1,820 @@
+{
+  "schema_version": "1.0",
+  "patient_id": "PAT-CHR-006",
+  "demographics": {
+    "name": "Mariam Tarek",
+    "date_of_birth": "1978-07-07",
+    "sex": "female"
+  },
+  "conditions": [
+    "T2DM",
+    "HTN",
+    "GERD"
+  ],
+  "allergy_registry": [],
+  "visits": [
+    {
+      "visit_id": "VST-CHR-006-001",
+      "visit_date": "2021-06-15",
+      "visit_type": "initial",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 152,
+        "bp_diastolic": 94,
+        "heart_rate": 82,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 8.1,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 165,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2021-06-15",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-06-15",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-06-15",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 42-year-old female patient attending a initial visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 152/94 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-001.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-001"
+      ],
+      "prior_visit_id": null
+    },
+    {
+      "visit_id": "VST-CHR-006-002",
+      "visit_date": "2021-09-13",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 148,
+        "bp_diastolic": 92,
+        "heart_rate": 81,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 7.7,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 150,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2021-09-13",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-09-13",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-09-13",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 43-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 148/92 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 150 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-002.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-002"
+      ],
+      "prior_visit_id": "VST-CHR-006-001"
+    },
+    {
+      "visit_id": "VST-CHR-006-003",
+      "visit_date": "2021-12-12",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 144,
+        "bp_diastolic": 90,
+        "heart_rate": 80,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 7.2,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 132,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 1.0,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2021-12-12",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-12-12",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-12-12",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 43-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 144/90 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.2 % (HIGH); FBG 132 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-006-003.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-003"
+      ],
+      "prior_visit_id": "VST-CHR-006-002"
+    },
+    {
+      "visit_id": "VST-CHR-006-004",
+      "visit_date": "2022-03-12",
+      "visit_type": "hospitalization",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 158,
+        "bp_diastolic": 96,
+        "heart_rate": 79,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2022-03-12",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-03-12",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-03-12",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 43-year-old female patient attending a hospitalization visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 158/96 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-004.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-004"
+      ],
+      "prior_visit_id": "VST-CHR-006-003"
+    },
+    {
+      "visit_id": "VST-CHR-006-005",
+      "visit_date": "2022-06-10",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Mona Kareem",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 140,
+        "bp_diastolic": 88,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2022-06-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-06-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-06-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 43-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 140/88 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-005.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-005"
+      ],
+      "prior_visit_id": "VST-CHR-006-004"
+    },
+    {
+      "visit_id": "VST-CHR-006-006",
+      "visit_date": "2022-09-08",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Yasser Amin",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 84,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2022-09-08",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-09-08",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-09-08",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 44-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-006.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-006"
+      ],
+      "prior_visit_id": "VST-CHR-006-005"
+    },
+    {
+      "visit_id": "VST-CHR-006-007",
+      "visit_date": "2022-12-07",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 84,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2022-12-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-12-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-12-07",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 44-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-007.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-007"
+      ],
+      "prior_visit_id": "VST-CHR-006-006"
+    },
+    {
+      "visit_id": "VST-CHR-006-008",
+      "visit_date": "2023-03-07",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 84,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-03-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-03-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-03-07",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 44-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-008.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-007. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-008"
+      ],
+      "prior_visit_id": "VST-CHR-006-007"
+    },
+    {
+      "visit_id": "VST-CHR-006-009",
+      "visit_date": "2023-06-05",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 84,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-06-05",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-06-05",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-06-05",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 44-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-009.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-008. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-009"
+      ],
+      "prior_visit_id": "VST-CHR-006-008"
+    },
+    {
+      "visit_id": "VST-CHR-006-010",
+      "visit_date": "2023-09-03",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 84,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-09-03",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-09-03",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-09-03",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 45-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-006-010.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-CHR-006-009. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-CHR-006-010"
+      ],
+      "prior_visit_id": "VST-CHR-006-009"
+    }
+  ],
+  "metadata": {
+    "tier": "chronic"
+  }
+}

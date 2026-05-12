@@ -1,0 +1,389 @@
+{
+  "schema_version": "1.0",
+  "patient_id": "PAT-MOD-003",
+  "demographics": {
+    "name": "Mahmoud Sherif",
+    "date_of_birth": "1983-10-16",
+    "sex": "male"
+  },
+  "conditions": [
+    "T2DM"
+  ],
+  "allergy_registry": [],
+  "visits": [
+    {
+      "visit_id": "VST-MOD-003-001",
+      "visit_date": "2023-03-10",
+      "visit_type": "initial",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 126,
+        "bp_diastolic": 82,
+        "heart_rate": 82,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 8.1,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 165,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-03-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 39-year-old male patient attending a initial visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 126/82 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH). Linked document references: DOC-MOD-003-001.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-001"
+      ],
+      "prior_visit_id": null
+    },
+    {
+      "visit_id": "VST-MOD-003-002",
+      "visit_date": "2023-05-09",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 124,
+        "bp_diastolic": 80,
+        "heart_rate": 81,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 7.7,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 150,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-05-09",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 39-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 124/80 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 150 mg/dL (HIGH). Linked document references: DOC-MOD-003-002.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-002"
+      ],
+      "prior_visit_id": "VST-MOD-003-001"
+    },
+    {
+      "visit_id": "VST-MOD-003-003",
+      "visit_date": "2023-07-08",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 122,
+        "bp_diastolic": 78,
+        "heart_rate": 80,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 7.2,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 132,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-07-08",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 39-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.2 % (HIGH); FBG 132 mg/dL (HIGH). Linked document references: DOC-MOD-003-003.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-003"
+      ],
+      "prior_visit_id": "VST-MOD-003-002"
+    },
+    {
+      "visit_id": "VST-MOD-003-004",
+      "visit_date": "2023-09-06",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 79,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-09-06",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 39-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH). Linked document references: DOC-MOD-003-004.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-004"
+      ],
+      "prior_visit_id": "VST-MOD-003-003"
+    },
+    {
+      "visit_id": "VST-MOD-003-005",
+      "visit_date": "2023-12-05",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Mona Kareem",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-12-05",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 40-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH). Linked document references: DOC-MOD-003-005.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-005"
+      ],
+      "prior_visit_id": "VST-MOD-003-004"
+    },
+    {
+      "visit_id": "VST-MOD-003-006",
+      "visit_date": "2024-03-04",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Yasser Amin",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 118,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2024-03-04",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 40-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH). Linked document references: DOC-MOD-003-006.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-006"
+      ],
+      "prior_visit_id": "VST-MOD-003-005"
+    },
+    {
+      "visit_id": "VST-MOD-003-007",
+      "visit_date": "2024-06-02",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "T2DM"
+      ],
+      "vitals": {
+        "bp_systolic": 118,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.9,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 118,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2024-06-02",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 40-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH). Linked document references: DOC-MOD-003-007.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-003-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-003-007"
+      ],
+      "prior_visit_id": "VST-MOD-003-006"
+    }
+  ],
+  "metadata": {
+    "tier": "moderate"
+  }
+}

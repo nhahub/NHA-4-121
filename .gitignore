@@ -1,0 +1,6 @@
+clinical-rag-env/
+__pycache__/
+*.pyc
+.env
+logs/
+data/chromadb/

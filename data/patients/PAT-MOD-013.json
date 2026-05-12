@@ -1,0 +1,244 @@
+{
+  "schema_version": "1.0",
+  "patient_id": "PAT-MOD-013",
+  "demographics": {
+    "name": "Hussein Gamal",
+    "date_of_birth": "1986-04-18",
+    "sex": "male"
+  },
+  "conditions": [
+    "Asthma"
+  ],
+  "allergy_registry": [],
+  "visits": [
+    {
+      "visit_id": "VST-MOD-013-001",
+      "visit_date": "2023-01-10",
+      "visit_type": "initial",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "Asthma"
+      ],
+      "vitals": {
+        "bp_systolic": 126,
+        "bp_diastolic": 82,
+        "heart_rate": 82,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [],
+      "medications": [
+        {
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-01-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 36-year-old male patient attending a initial visit. The structured condition list records Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 126/82 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-013-001.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Salbutamol inhaler 100 mcg as_needed via inhaled. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-013-001"
+      ],
+      "prior_visit_id": null
+    },
+    {
+      "visit_id": "VST-MOD-013-002",
+      "visit_date": "2023-03-11",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "Asthma"
+      ],
+      "vitals": {
+        "bp_systolic": 124,
+        "bp_diastolic": 80,
+        "heart_rate": 81,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [],
+      "medications": [
+        {
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-03-11",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-03-11",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 36-year-old male patient attending a follow_up visit. The structured condition list records Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 124/80 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-013-002.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-MOD-013-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-013-002"
+      ],
+      "prior_visit_id": "VST-MOD-013-001"
+    },
+    {
+      "visit_id": "VST-MOD-013-003",
+      "visit_date": "2023-05-10",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "Asthma"
+      ],
+      "vitals": {
+        "bp_systolic": 122,
+        "bp_diastolic": 78,
+        "heart_rate": 80,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [],
+      "medications": [
+        {
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-05-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-05-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old male patient attending a follow_up visit. The structured condition list records Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-013-003.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-MOD-013-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-013-003"
+      ],
+      "prior_visit_id": "VST-MOD-013-002"
+    },
+    {
+      "visit_id": "VST-MOD-013-004",
+      "visit_date": "2023-07-09",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "Asthma"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 79,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [],
+      "medications": [
+        {
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-07-09",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-07-09",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old male patient attending a follow_up visit. The structured condition list records Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-013-004.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-MOD-013-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-013-004"
+      ],
+      "prior_visit_id": "VST-MOD-013-003"
+    },
+    {
+      "visit_id": "VST-MOD-013-005",
+      "visit_date": "2023-10-07",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Mona Kareem",
+      "diagnoses": [
+        "Asthma"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [],
+      "medications": [
+        {
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-10-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-10-07",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old male patient attending a follow_up visit. The structured condition list records Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-013-005.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-MOD-013-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-013-005"
+      ],
+      "prior_visit_id": "VST-MOD-013-004"
+    }
+  ],
+  "metadata": {
+    "tier": "moderate"
+  }
+}

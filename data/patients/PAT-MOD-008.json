@@ -1,0 +1,336 @@
+{
+  "schema_version": "1.0",
+  "patient_id": "PAT-MOD-008",
+  "demographics": {
+    "name": "Sara Nabil",
+    "date_of_birth": "1987-01-17",
+    "sex": "female"
+  },
+  "conditions": [
+    "IDA"
+  ],
+  "allergy_registry": [],
+  "visits": [
+    {
+      "visit_id": "VST-MOD-008-001",
+      "visit_date": "2023-08-10",
+      "visit_type": "initial",
+      "attending_physician": "Dr. Salma Nabil",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 126,
+        "bp_diastolic": 82,
+        "heart_rate": 82,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 9.8,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "LOW"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 12,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "LOW"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-08-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 36-year-old female patient attending a initial visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 126/82 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 9.8 g/dL (LOW); Ferritin 12 ng/mL (LOW). Linked document references: DOC-MOD-008-001.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-001"
+      ],
+      "prior_visit_id": null
+    },
+    {
+      "visit_id": "VST-MOD-008-002",
+      "visit_date": "2023-10-09",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 124,
+        "bp_diastolic": 80,
+        "heart_rate": 81,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 10.6,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "LOW"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 18,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "LOW"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-10-09",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 36-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 124/80 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 10.6 g/dL (LOW); Ferritin 18 ng/mL (LOW). Linked document references: DOC-MOD-008-002.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-002"
+      ],
+      "prior_visit_id": "VST-MOD-008-001"
+    },
+    {
+      "visit_id": "VST-MOD-008-003",
+      "visit_date": "2023-12-08",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 122,
+        "bp_diastolic": 78,
+        "heart_rate": 80,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 11.4,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "LOW"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 25,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "LOW"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-12-08",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 36-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 11.4 g/dL (LOW); Ferritin 25 ng/mL (LOW). Linked document references: DOC-MOD-008-003.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-003"
+      ],
+      "prior_visit_id": "VST-MOD-008-002"
+    },
+    {
+      "visit_id": "VST-MOD-008-004",
+      "visit_date": "2024-02-06",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 79,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 12.1,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "NORMAL"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 34,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2024-02-06",
+          "stop_date": "2024-02-06"
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 12.1 g/dL (NORMAL); Ferritin 34 ng/mL (NORMAL). Linked document references: DOC-MOD-008-004.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-004"
+      ],
+      "prior_visit_id": "VST-MOD-008-003"
+    },
+    {
+      "visit_id": "VST-MOD-008-005",
+      "visit_date": "2024-05-06",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Mona Kareem",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 12.1,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "NORMAL"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 34,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2024-05-06",
+          "stop_date": "2024-05-06"
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 12.1 g/dL (NORMAL); Ferritin 34 ng/mL (NORMAL). Linked document references: DOC-MOD-008-005.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-005"
+      ],
+      "prior_visit_id": "VST-MOD-008-004"
+    },
+    {
+      "visit_id": "VST-MOD-008-006",
+      "visit_date": "2024-08-04",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Yasser Amin",
+      "diagnoses": [
+        "IDA"
+      ],
+      "vitals": {
+        "bp_systolic": 118,
+        "bp_diastolic": 76,
+        "heart_rate": 78,
+        "weight_kg": 70.0,
+        "bmi": 23.5
+      },
+      "labs": [
+        {
+          "lab_type": "Hemoglobin",
+          "value": 12.1,
+          "unit": "g/dL",
+          "reference_range": "12.0-16.0 g/dL",
+          "flag": "NORMAL"
+        },
+        {
+          "lab_type": "Ferritin",
+          "value": 34,
+          "unit": "ng/mL",
+          "reference_range": "30-300 ng/mL",
+          "flag": "NORMAL"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Ferrous sulfate",
+          "medication_class": "Iron supplement",
+          "dose": "200 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2024-08-04",
+          "stop_date": "2024-08-04"
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: Hemoglobin 12.1 g/dL (NORMAL); Ferritin 34 ng/mL (NORMAL). Linked document references: DOC-MOD-008-006.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": [
+        "DOC-MOD-008-006"
+      ],
+      "prior_visit_id": "VST-MOD-008-005"
+    }
+  ],
+  "metadata": {
+    "tier": "moderate"
+  }
+}

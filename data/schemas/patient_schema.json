@@ -1,0 +1,807 @@
+{
+  "$schema": "[https://json-schema.org/draft/2020-12/schema](https://json-schema.org/draft/2020-12/schema)",
+  "$id": "[https://depi.local/schemas/patient_schema.json](https://depi.local/schemas/patient_schema.json)",
+  "title": "AI Based Clinical Record Summarization System — Patient Record Schema",
+  "description": "Final locked JSON Schema for synthetic patient records used by deterministic generators, validators, SOAP generation, chunking, ChromaDB ingestion, RAG retrieval, grounded answer generation, timeline generation, allergy retrieval, lab trend retrieval, OCR linkage, and stable citation generation.",
+  "$comment": "FINAL LOCKED SCHEMA CONTRACT. BP must exist only inside visits[].vitals.bp_systolic and visits[].vitals.bp_diastolic. BP must never appear in labs, lab_type enum, metadata, or chunk metadata. CKD requires T2DM, HTN, and metadata.tier='chronic'. timeline_events is forbidden. demographics.age is forbidden. Valid medication routes are oral and inhaled only. subcutaneous is forbidden.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "patient_id",
+    "demographics",
+    "conditions",
+    "allergy_registry",
+    "visits",
+    "metadata"
+  ],
+  "not": {
+    "required": ["timeline_events"]
+  },
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Locked schema version."
+    },
+    "patient_id": {
+      "type": "string",
+      "pattern": "^PAT-(NRM|MOD|CHR)-\d{3}$",
+      "description": "Stable patient identifier used for patient-scoped retrieval, metadata extraction, filtering, and citation grouping."
+    },
+    "demographics": {
+      "$ref": "#/$defs/demographics"
+    },
+    "conditions": {
+      "type": "array",
+      "description": "Canonical patient-level condition values used by generators, validators, retrieval filters, metadata extraction, and RAG grounding.",
+      "items": {
+        "$ref": "#/$defs/condition"
+      },
+      "uniqueItems": true,
+      "minItems": 0,
+      "maxItems": 6
+    },
+    "allergy_registry": {
+      "type": "array",
+      "description": "Documented allergy records used to generate dedicated allergy chunks and support allergy retrieval.",
+      "items": {
+        "$ref": "#/$defs/allergy_record"
+      },
+      "minItems": 0,
+      "maxItems": 20
+    },
+    "visits": {
+      "type": "array",
+      "description": "Chronological visit records. Each visit is the atomic unit for timeline generation, SOAP doctor-note chunking, lab-result chunking, prescription chunking, OCR document linkage, and citation anchors.",
+      "items": {
+        "$ref": "#/$defs/visit"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "metadata": {
+      "$ref": "#/$defs/patient_metadata"
+    }
+  },
+  "allOf": [
+    {
+      "$comment": "CKD co-occurrence rule. If CKD appears in conditions, T2DM and HTN must also appear, and metadata.tier must be chronic.",
+      "if": {
+        "properties": {
+          "conditions": {
+            "contains": {
+              "const": "CKD"
+            }
+          }
+        },
+        "required": ["conditions"]
+      },
+      "then": {
+        "properties": {
+          "conditions": {
+            "allOf": [
+              {
+                "contains": {
+                  "const": "T2DM"
+                }
+              },
+              {
+                "contains": {
+                  "const": "HTN"
+                }
+              }
+            ]
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["tier"],
+            "properties": {
+              "tier": {
+                "const": "chronic"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "date_yyyy_mm_dd": {
+      "type": "string",
+      "pattern": "^\d{4}-\d{2}-\d{2}$",
+      "format": "date",
+      "description": "Strict YYYY-MM-DD date string."
+    },
+    "condition": {
+      "type": "string",
+      "enum": ["T2DM", "HTN", "Asthma", "IDA", "GERD", "CKD"]
+    },
+    "visit_type": {
+      "type": "string",
+      "enum": ["initial", "follow_up", "emergency", "hospitalization"]
+    },
+    "lab_type": {
+      "$comment": "BP is intentionally excluded. Blood pressure is a vital sign and belongs only in visits[].vitals.",
+      "type": "string",
+      "enum": ["HbA1c", "FBG", "Creatinine", "Hemoglobin", "Ferritin"]
+    },
+    "lab_flag": {
+      "type": "string",
+      "enum": ["NORMAL", "HIGH", "LOW"]
+    },
+    "frequency": {
+      "type": "string",
+      "enum": ["once_daily", "twice_daily", "as_needed"]
+    },
+    "route": {
+      "$comment": "Final locked route enum. subcutaneous is forbidden.",
+      "type": "string",
+      "enum": ["oral", "inhaled"]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["mild", "moderate", "severe"]
+    },
+    "sex": {
+      "type": "string",
+      "enum": ["male", "female"]
+    },
+    "patient_tier": {
+      "type": "string",
+      "enum": ["normal", "moderate", "chronic"]
+    },
+    "visit_id": {
+      "type": "string",
+      "pattern": "^VST-(NRM|MOD|CHR)-\d{3}-\d{3}$"
+    },
+    "document_id": {
+      "type": "string",
+      "pattern": "^DOC-(NRM|MOD|CHR)-\d{3}-\d{3}$"
+    },
+    "demographics": {
+      "$comment": "demographics.age is forbidden. Age must be derived from date_of_birth and visit_date by validators or downstream services.",
+      "type": "object",
+      "additionalProperties": false,
+      "not": {
+        "required": ["age"]
+      },
+      "required": ["name", "date_of_birth", "sex"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "date_of_birth": {
+          "$ref": "#/$defs/date_yyyy_mm_dd"
+        },
+        "sex": {
+          "$ref": "#/$defs/sex"
+        }
+      }
+    },
+    "patient_metadata": {
+      "$comment": "Patient metadata is intentionally minimal and safe for retrieval filtering. BP is forbidden here.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier"],
+      "properties": {
+        "tier": {
+          "$ref": "#/$defs/patient_tier"
+        }
+      }
+    },
+    "allergy_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allergen",
+        "reaction",
+        "severity",
+        "recorded_date",
+        "source_visit_id"
+      ],
+      "properties": {
+        "allergen": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "reaction": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 240
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "recorded_date": {
+          "$ref": "#/$defs/date_yyyy_mm_dd"
+        },
+        "source_visit_id": {
+          "$ref": "#/$defs/visit_id"
+        }
+      }
+    },
+    "visit": {
+      "$comment": "A visit is the atomic boundary for timeline generation, citation anchors, OCR document linkage, and per-visit chunking.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "visit_id",
+        "visit_date",
+        "visit_type",
+        "attending_physician",
+        "diagnoses",
+        "vitals",
+        "labs",
+        "medications",
+        "soap_note",
+        "linked_documents",
+        "prior_visit_id"
+      ],
+      "properties": {
+        "visit_id": {
+          "$ref": "#/$defs/visit_id"
+        },
+        "visit_date": {
+          "$ref": "#/$defs/date_yyyy_mm_dd"
+        },
+        "visit_type": {
+          "$ref": "#/$defs/visit_type"
+        },
+        "attending_physician": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "diagnoses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          },
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 6
+        },
+        "vitals": {
+          "$ref": "#/$defs/vitals"
+        },
+        "labs": {
+          "$comment": "BP is forbidden in labs. lab_type excludes BP and lab objects reject additional fields.",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/lab_result"
+          },
+          "minItems": 0,
+          "maxItems": 20
+        },
+        "medications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/medication"
+          },
+          "minItems": 0,
+          "maxItems": 20
+        },
+        "soap_note": {
+          "$ref": "#/$defs/soap_note"
+        },
+        "linked_documents": {
+          "type": "array",
+          "description": "OCR and source-document linkage used by citation and ingestion layers.",
+          "items": {
+            "$ref": "#/$defs/document_id"
+          },
+          "uniqueItems": true,
+          "minItems": 0,
+          "maxItems": 20
+        },
+        "prior_visit_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/visit_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "vitals": {
+      "$comment": "Authoritative BP location. BP must not be duplicated in labs, patient metadata, chunk metadata, or any other field.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bp_systolic",
+        "bp_diastolic",
+        "heart_rate",
+        "weight_kg",
+        "bmi"
+      ],
+      "properties": {
+        "bp_systolic": {
+          "type": "integer",
+          "minimum": 70,
+          "maximum": 230
+        },
+        "bp_diastolic": {
+          "type": "integer",
+          "minimum": 40,
+          "maximum": 140
+        },
+        "heart_rate": {
+          "type": "integer",
+          "minimum": 30,
+          "maximum": 200
+        },
+        "weight_kg": {
+          "type": "number",
+          "exclusiveMinimum": 25,
+          "maximum": 250
+        },
+        "bmi": {
+          "type": "number",
+          "minimum": 14,
+          "maximum": 55
+        }
+      }
+    },
+    "lab_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lab_type", "value", "unit", "reference_range", "flag"],
+      "properties": {
+        "lab_type": {
+          "$ref": "#/$defs/lab_type"
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40
+        },
+        "reference_range": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "flag": {
+          "$ref": "#/$defs/lab_flag"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "lab_type": {
+                "const": "HbA1c"
+              }
+            },
+            "required": ["lab_type"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "minimum": 3.5,
+                "maximum": 15.0
+              },
+              "unit": {
+                "const": "%"
+              },
+              "reference_range": {
+                "const": "4.0-5.6 %"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lab_type": {
+                "const": "FBG"
+              }
+            },
+            "required": ["lab_type"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "minimum": 50,
+                "maximum": 500
+              },
+              "unit": {
+                "const": "mg/dL"
+              },
+              "reference_range": {
+                "const": "70-99 mg/dL"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lab_type": {
+                "const": "Creatinine"
+              }
+            },
+            "required": ["lab_type"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "minimum": 0.3,
+                "maximum": 10.0
+              },
+              "unit": {
+                "const": "mg/dL"
+              },
+              "reference_range": {
+                "const": "0.6-1.2 mg/dL"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lab_type": {
+                "const": "Hemoglobin"
+              }
+            },
+            "required": ["lab_type"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "minimum": 5.0,
+                "maximum": 20.0
+              },
+              "unit": {
+                "const": "g/dL"
+              },
+              "reference_range": {
+                "const": "12.0-16.0 g/dL"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "lab_type": {
+                "const": "Ferritin"
+              }
+            },
+            "required": ["lab_type"]
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "unit": {
+                "const": "ng/mL"
+              },
+              "reference_range": {
+                "const": "30-300 ng/mL"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "medication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "medication_name",
+        "medication_class",
+        "dose",
+        "frequency",
+        "route",
+        "start_date",
+        "stop_date"
+      ],
+      "properties": {
+        "medication_name": {
+          "type": "string",
+          "enum": [
+            "Metformin",
+            "Glibenclamide",
+            "Lisinopril",
+            "Amlodipine",
+            "Losartan",
+            "Salbutamol inhaler",
+            "Budesonide inhaler",
+            "Ferrous sulfate",
+            "Omeprazole"
+          ]
+        },
+        "medication_class": {
+          "type": "string",
+          "enum": [
+            "Biguanide",
+            "Sulfonylurea",
+            "ACE Inhibitor",
+            "Calcium Channel Blocker",
+            "ARB",
+            "SABA",
+            "ICS",
+            "Iron supplement",
+            "PPI"
+          ]
+        },
+        "dose": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 60,
+          "pattern": "^[0-9]+(\.[0-9]+)?\s?(mg|mcg|g|mL|units?)$"
+        },
+        "frequency": {
+          "$ref": "#/$defs/frequency"
+        },
+        "route": {
+          "$ref": "#/$defs/route"
+        },
+        "start_date": {
+          "$ref": "#/$defs/date_yyyy_mm_dd"
+        },
+        "stop_date": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/date_yyyy_mm_dd"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Metformin"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "Biguanide"
+              },
+              "frequency": {
+                "const": "twice_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Glibenclamide"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "Sulfonylurea"
+              },
+              "frequency": {
+                "const": "once_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Lisinopril"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "ACE Inhibitor"
+              },
+              "frequency": {
+                "const": "once_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Amlodipine"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "Calcium Channel Blocker"
+              },
+              "frequency": {
+                "const": "once_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Losartan"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "ARB"
+              },
+              "frequency": {
+                "const": "once_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Salbutamol inhaler"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "SABA"
+              },
+              "frequency": {
+                "const": "as_needed"
+              },
+              "route": {
+                "const": "inhaled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Budesonide inhaler"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "ICS"
+              },
+              "frequency": {
+                "const": "twice_daily"
+              },
+              "route": {
+                "const": "inhaled"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Ferrous sulfate"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "Iron supplement"
+              },
+              "frequency": {
+                "const": "twice_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "medication_name": {
+                "const": "Omeprazole"
+              }
+            },
+            "required": ["medication_name"]
+          },
+          "then": {
+            "properties": {
+              "medication_class": {
+                "const": "PPI"
+              },
+              "frequency": {
+                "const": "once_daily"
+              },
+              "route": {
+                "const": "oral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "soap_note": {
+      "$comment": "SOAP contains narrative text only. It supports doctor_note chunks and must not modify structured data.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subjective", "objective", "assessment", "plan"],
+      "properties": {
+        "subjective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2500
+        },
+        "objective": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2500
+        },
+        "assessment": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2500
+        },
+        "plan": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2500
+        }
+      }
+    }
+  }
+}
