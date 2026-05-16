@@ -9,7 +9,15 @@
   "conditions": [
     "GERD"
   ],
-  "allergy_registry": [],
+  "allergy_registry": [
+    {
+      "allergen": "Sulfa",
+      "reaction": "itching",
+      "severity": "moderate",
+      "recorded_date": "2023-12-10",
+      "source_visit_id": "VST-MOD-012-001"
+    }
+  ],
   "visits": [
     {
       "visit_id": "VST-MOD-012-001",
@@ -20,11 +28,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 126,
-        "bp_diastolic": 82,
+        "bp_systolic": 122,
+        "bp_diastolic": 78,
         "heart_rate": 82,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 62.0,
+        "bmi": 22.4
       },
       "labs": [],
       "medications": [
@@ -40,7 +48,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 32-year-old female patient attending a initial visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 126/82 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-001.",
+        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 82 bpm, weight 62.0 kg, and BMI 22.4. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-001.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -58,11 +66,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 124,
-        "bp_diastolic": 80,
+        "bp_systolic": 121,
+        "bp_diastolic": 77,
         "heart_rate": 81,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 61.6,
+        "bmi": 22.3
       },
       "labs": [],
       "medications": [
@@ -78,7 +86,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 124/80 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-002.",
+        "objective": "Objective structured data records blood pressure 121/77 mmHg, heart rate 81 bpm, weight 61.6 kg, and BMI 22.3. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-002.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -96,11 +104,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 122,
-        "bp_diastolic": 78,
+        "bp_systolic": 120,
+        "bp_diastolic": 76,
         "heart_rate": 80,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 61.2,
+        "bmi": 22.2
       },
       "labs": [],
       "medications": [
@@ -116,7 +124,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-003.",
+        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 80 bpm, weight 61.2 kg, and BMI 22.2. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-003.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -134,11 +142,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 120,
-        "bp_diastolic": 78,
+        "bp_systolic": 119,
+        "bp_diastolic": 75,
         "heart_rate": 79,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 60.8,
+        "bmi": 22.0
       },
       "labs": [],
       "medications": [
@@ -154,7 +162,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-004.",
+        "objective": "Objective structured data records blood pressure 119/75 mmHg, heart rate 79 bpm, weight 60.8 kg, and BMI 22.0. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-004.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -172,11 +180,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 120,
-        "bp_diastolic": 76,
+        "bp_systolic": 118,
+        "bp_diastolic": 74,
         "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 60.4,
+        "bmi": 21.9
       },
       "labs": [],
       "medications": [
@@ -192,7 +200,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-005.",
+        "objective": "Objective structured data records blood pressure 118/74 mmHg, heart rate 78 bpm, weight 60.4 kg, and BMI 21.9. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-005.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -210,11 +218,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 76,
+        "bp_systolic": 117,
+        "bp_diastolic": 74,
         "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 60.0,
+        "bmi": 21.8
       },
       "labs": [],
       "medications": [
@@ -230,7 +238,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-006.",
+        "objective": "Objective structured data records blood pressure 117/74 mmHg, heart rate 78 bpm, weight 60.0 kg, and BMI 21.8. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-006.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -248,11 +256,11 @@
         "GERD"
       ],
       "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 76,
+        "bp_systolic": 117,
+        "bp_diastolic": 74,
         "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 59.6,
+        "bmi": 21.7
       },
       "labs": [],
       "medications": [
@@ -268,7 +276,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 34-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-007.",
+        "objective": "Objective structured data records blood pressure 117/74 mmHg, heart rate 78 bpm, weight 59.6 kg, and BMI 21.7. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-007.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },

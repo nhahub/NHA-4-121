@@ -143,6 +143,30 @@ def export_patients(
     return valid_count, invalid_count
 
 
+def _has_existing_generated_outputs() -> bool:
+    """
+    Return True if generated patient or issue files already exist.
+
+    This prevents accidental mixed datasets when switching between pilot/full
+    modes without --clean.
+    """
+    patterns = (
+        "PAT-*.json",
+        "*.validation_issues.json",
+        "*.soap_issues.json",
+    )
+
+    for directory in (PATIENTS_DIR, QUARANTINE_DIR):
+        if not directory.exists():
+            continue
+
+        for pattern in patterns:
+            if any(directory.glob(pattern)):
+                return True
+
+    return False
+
+
 def clean_output_directories() -> None:
     """Remove previously generated patient/quarantine files."""
     for directory in (PATIENTS_DIR, QUARANTINE_DIR):
@@ -273,6 +297,13 @@ def main() -> int:
 
     if args.clean:
         clean_output_directories()
+    elif _has_existing_generated_outputs():
+        print(
+            "ERROR: Existing generated patient/quarantine files were found. "
+            "Re-run with --clean to avoid mixing stale records with a new dataset.",
+            file=sys.stderr,
+        )
+        return 1
 
     expected_count = _expected_patient_count_for_mode(args.mode)
     patients = generate_all_patients(mode=args.mode)

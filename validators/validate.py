@@ -35,27 +35,86 @@ from validators.validation_report import (
 
 
 def load_patient_file(path: Path) -> dict[str, Any]:
-    """Load one patient JSON file."""
+    """
+    Load one patient JSON file.
+
+    JSONDecodeError is allowed to propagate to load_patient_files(), where it is
+    converted into a validation-style failure record.
+    """
     with path.open("r", encoding=JSON_ENCODING) as file:
         return json.load(file)
 
 
 def load_patient_files(directory: Path = PATIENTS_DIR) -> list[tuple[Path, dict[str, Any]]]:
-    """Load all patient JSON files in a directory."""
+    """
+    Load all patient JSON files in a directory.
+
+    Malformed JSON files are converted into minimal records that will fail
+    validation instead of crashing the whole validation run.
+    """
     if not directory.exists():
         return []
 
     loaded: list[tuple[Path, dict[str, Any]]] = []
 
     for path in sorted(directory.glob("PAT-*.json")):
-        loaded.append((path, load_patient_file(path)))
+        try:
+            loaded.append((path, load_patient_file(path)))
+        except json.JSONDecodeError as exc:
+            loaded.append(
+                (
+                    path,
+                    {
+                        "schema_version": "<invalid-json>",
+                        "patient_id": path.stem,
+                        "demographics": {},
+                        "conditions": [],
+                        "allergy_registry": [],
+                        "visits": [],
+                        "metadata": {},
+                        "_load_error": f"Invalid JSON: {exc}",
+                    },
+                )
+            )
 
     return loaded
 
+def _load_error_issues(patients: list[dict[str, Any]]) -> list[ValidationIssue]:
+    """Convert JSON load errors into validation issues."""
+    issues: list[ValidationIssue] = []
+
+    for patient in patients:
+        if "_load_error" in patient:
+            issues.append(
+                ValidationIssue(
+                    rule_id="LOAD",
+                    severity="FAIL",
+                    patient_id=str(patient.get("patient_id", "<unknown>")),
+                    location="_load_error",
+                    message=str(patient["_load_error"]),
+                )
+            )
+
+    return issues
 
 def validate_patients(patients: list[dict[str, Any]]) -> ValidationReport:
     """Validate in-memory patient dictionaries."""
+    if not patients:
+        return build_validation_report(
+            patients_checked=0,
+            issues=[
+                ValidationIssue(
+                    rule_id="DATASET",
+                    severity="FAIL",
+                    patient_id="<dataset>",
+                    location="patients",
+                    message="No in-memory patient records were provided for validation.",
+                )
+            ],
+        )
+
     all_issues: list[ValidationIssue] = []
+    all_issues.extend(_load_error_issues(patients))
 
     for patient in patients:
         all_issues.extend(validate_patient(patient))
@@ -64,7 +123,6 @@ def validate_patients(patients: list[dict[str, Any]]) -> ValidationReport:
         patients_checked=len(patients),
         issues=all_issues,
     )
-
 
 def validate_patient_files(
     directory: Path = PATIENTS_DIR,
@@ -81,8 +139,23 @@ def validate_patient_files(
     ensure_project_directories()
 
     loaded = load_patient_files(directory)
-    patients = [patient for _, patient in loaded]
-    report = validate_patients(patients)
+
+    if not loaded:
+        report = build_validation_report(
+            patients_checked=0,
+            issues=[
+                ValidationIssue(
+                    rule_id="DATASET",
+                    severity="FAIL",
+                    patient_id="<dataset>",
+                    location=str(directory),
+                    message="No patient JSON files were found for validation.",
+                )
+            ],
+        )
+    else:
+        patients = [patient for _, patient in loaded]
+        report = validate_patients(patients)
 
     if quarantine_invalid:
         _quarantine_failed_files(loaded, report.issues)

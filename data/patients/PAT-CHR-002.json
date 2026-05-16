@@ -6,29 +6,29 @@
     "date_of_birth": "1974-07-11",
     "sex": "female"
   },
-  "conditions": [
-    "T2DM",
-    "HTN",
-    "CKD"
+  "conditions": ["T2DM", "HTN", "CKD"],
+  "allergy_registry": [
+    {
+      "allergen": "Sulfa",
+      "reaction": "itching",
+      "severity": "moderate",
+      "recorded_date": "2021-02-15",
+      "source_visit_id": "VST-CHR-002-001"
+    }
   ],
-  "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-CHR-002-001",
       "visit_date": "2021-02-15",
       "visit_type": "initial",
       "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 152,
-        "bp_diastolic": 94,
-        "heart_rate": 82,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "bp_systolic": 146,
+        "bp_diastolic": 92,
+        "heart_rate": 84,
+        "weight_kg": 74.2,
+        "bmi": 26.4
       },
       "labs": [
         {
@@ -75,13 +75,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 46-year-old female patient attending a initial visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 152/94 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-001.",
+        "objective": "Objective structured data records blood pressure 146/92 mmHg, heart rate 84 bpm, weight 74.2 kg, and BMI 26.4. Laboratory data for this visit: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-001.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-001"
-      ],
+      "linked_documents": ["DOC-CHR-002-001"],
       "prior_visit_id": null
     },
     {
@@ -89,29 +87,25 @@
       "visit_date": "2021-05-16",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 92,
-        "heart_rate": 81,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "bp_systolic": 144,
+        "bp_diastolic": 91,
+        "heart_rate": 83,
+        "weight_kg": 73.5,
+        "bmi": 26.3
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 7.7,
+          "value": 7.8,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 150,
+          "value": 156,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -146,13 +140,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 46-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 148/92 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 150 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Linked document references: DOC-CHR-002-002.",
+        "objective": "Objective structured data records blood pressure 144/91 mmHg, heart rate 83 bpm, weight 73.5 kg, and BMI 26.3. Laboratory data for this visit: HbA1c 7.8 % (HIGH); FBG 156 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Linked document references: DOC-CHR-002-002.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-002"
-      ],
+      "linked_documents": ["DOC-CHR-002-002"],
       "prior_visit_id": "VST-CHR-002-001"
     },
     {
@@ -160,29 +152,25 @@
       "visit_date": "2021-08-14",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 144,
+        "bp_systolic": 142,
         "bp_diastolic": 90,
-        "heart_rate": 80,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "heart_rate": 82,
+        "weight_kg": 72.8,
+        "bmi": 26.2
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 7.2,
+          "value": 7.6,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 132,
+          "value": 147,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -217,13 +205,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 47-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 144/90 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 7.2 % (HIGH); FBG 132 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). Linked document references: DOC-CHR-002-003.",
+        "objective": "Objective structured data records blood pressure 142/90 mmHg, heart rate 82 bpm, weight 72.8 kg, and BMI 26.2. Laboratory data for this visit: HbA1c 7.6 % (HIGH); FBG 147 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). Linked document references: DOC-CHR-002-003.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-003"
-      ],
+      "linked_documents": ["DOC-CHR-002-003"],
       "prior_visit_id": "VST-CHR-002-002"
     },
     {
@@ -231,29 +217,25 @@
       "visit_date": "2021-11-12",
       "visit_type": "hospitalization",
       "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 158,
-        "bp_diastolic": 96,
-        "heart_rate": 79,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "bp_systolic": 148,
+        "bp_diastolic": 93,
+        "heart_rate": 81,
+        "weight_kg": 72.1,
+        "bmi": 26.0
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.9,
+          "value": 7.3,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 118,
+          "value": 138,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -277,6 +259,15 @@
           "stop_date": null
         },
         {
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2021-11-12",
+          "stop_date": null
+        },
+        {
           "medication_name": "Lisinopril",
           "medication_class": "ACE Inhibitor",
           "dose": "10 mg",
@@ -288,13 +279,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 47-year-old female patient attending a hospitalization visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 158/96 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.7 mg/dL (HIGH). Linked document references: DOC-CHR-002-004.",
+        "objective": "Objective structured data records blood pressure 148/93 mmHg, heart rate 81 bpm, weight 72.1 kg, and BMI 26.0. Laboratory data for this visit: HbA1c 7.3 % (HIGH); FBG 138 mg/dL (HIGH); Creatinine 1.7 mg/dL (HIGH). Linked document references: DOC-CHR-002-004.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-004"
-      ],
+      "linked_documents": ["DOC-CHR-002-004"],
       "prior_visit_id": "VST-CHR-002-003"
     },
     {
@@ -302,29 +291,108 @@
       "visit_date": "2022-02-10",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 140,
+        "bp_systolic": 138,
         "bp_diastolic": 88,
-        "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "heart_rate": 80,
+        "weight_kg": 71.4,
+        "bmi": 25.9
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.9,
+          "value": 7.1,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 118,
+          "value": 129,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 1.6,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2022-02-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-02-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Lisinopril",
+          "medication_class": "ACE Inhibitor",
+          "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-02-10",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-02-10",
+          "stop_date": null
+        }
+      ],
+      "soap_note": {
+        "subjective": "The synthetic record documents a 47-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
+        "objective": "Objective structured data records blood pressure 138/88 mmHg, heart rate 80 bpm, weight 71.4 kg, and BMI 25.9. Laboratory data for this visit: HbA1c 7.1 % (HIGH); FBG 129 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). Linked document references: DOC-CHR-002-005.",
+        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-002-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+      },
+      "linked_documents": ["DOC-CHR-002-005"],
+      "prior_visit_id": "VST-CHR-002-004"
+    },
+    {
+      "visit_id": "VST-CHR-002-006",
+      "visit_date": "2022-05-11",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Yasser Amin",
+      "diagnoses": ["T2DM", "HTN", "CKD"],
+      "vitals": {
+        "bp_systolic": 136,
+        "bp_diastolic": 87,
+        "heart_rate": 79,
+        "weight_kg": 70.7,
+        "bmi": 25.8
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 6.8,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 120,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -344,76 +412,14 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-02-10",
+          "start_date": "2022-05-11",
           "stop_date": null
         },
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
           "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The synthetic record documents a 47-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 140/88 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Linked document references: DOC-CHR-002-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-005"
-      ],
-      "prior_visit_id": "VST-CHR-002-004"
-    },
-    {
-      "visit_id": "VST-CHR-002-006",
-      "visit_date": "2022-05-11",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 84,
-        "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.9,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 118,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.4,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
           "route": "oral",
           "start_date": "2022-05-11",
           "stop_date": null
@@ -426,17 +432,24 @@
           "route": "oral",
           "start_date": "2022-05-11",
           "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-05-11",
+          "stop_date": null
         }
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 47-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-006.",
+        "objective": "Objective structured data records blood pressure 136/87 mmHg, heart rate 79 bpm, weight 70.7 kg, and BMI 25.8. Laboratory data for this visit: HbA1c 6.8 % (HIGH); FBG 120 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Linked document references: DOC-CHR-002-006.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-002-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-006"
-      ],
+      "linked_documents": ["DOC-CHR-002-006"],
       "prior_visit_id": "VST-CHR-002-005"
     },
     {
@@ -444,36 +457,32 @@
       "visit_date": "2022-08-09",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 84,
-        "heart_rate": 78,
+        "bp_systolic": 134,
+        "bp_diastolic": 86,
+        "heart_rate": 79,
         "weight_kg": 70.0,
-        "bmi": 23.5
+        "bmi": 25.7
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.9,
+          "value": 6.6,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 118,
+          "value": 111,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
           "lab_type": "Creatinine",
-          "value": 1.4,
+          "value": 1.5,
           "unit": "mg/dL",
           "reference_range": "0.6-1.2 mg/dL",
           "flag": "HIGH"
@@ -490,9 +499,27 @@
           "stop_date": null
         },
         {
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-08-09",
+          "stop_date": null
+        },
+        {
           "medication_name": "Lisinopril",
           "medication_class": "ACE Inhibitor",
           "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-08-09",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
           "start_date": "2022-08-09",
@@ -501,13 +528,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 48-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-007.",
+        "objective": "Objective structured data records blood pressure 134/86 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 25.7. Laboratory data for this visit: HbA1c 6.6 % (HIGH); FBG 111 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Linked document references: DOC-CHR-002-007.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-002-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-007"
-      ],
+      "linked_documents": ["DOC-CHR-002-007"],
       "prior_visit_id": "VST-CHR-002-006"
     },
     {
@@ -515,29 +540,25 @@
       "visit_date": "2022-11-07",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 84,
-        "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "bp_systolic": 132,
+        "bp_diastolic": 85,
+        "heart_rate": 79,
+        "weight_kg": 69.3,
+        "bmi": 25.6
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.9,
+          "value": 6.4,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 118,
+          "value": 105,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -561,9 +582,27 @@
           "stop_date": null
         },
         {
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-11-07",
+          "stop_date": null
+        },
+        {
           "medication_name": "Lisinopril",
           "medication_class": "ACE Inhibitor",
           "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2022-11-07",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
           "start_date": "2022-11-07",
@@ -572,13 +611,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 48-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-008.",
+        "objective": "Objective structured data records blood pressure 132/85 mmHg, heart rate 79 bpm, weight 69.3 kg, and BMI 25.6. Laboratory data for this visit: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-008.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-007. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-002-007. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-008"
-      ],
+      "linked_documents": ["DOC-CHR-002-008"],
       "prior_visit_id": "VST-CHR-002-007"
     },
     {
@@ -586,29 +623,25 @@
       "visit_date": "2023-02-05",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
+      "diagnoses": ["T2DM", "HTN", "CKD"],
       "vitals": {
-        "bp_systolic": 136,
+        "bp_systolic": 130,
         "bp_diastolic": 84,
-        "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "heart_rate": 79,
+        "weight_kg": 68.6,
+        "bmi": 25.4
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.9,
+          "value": 6.4,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 118,
+          "value": 105,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -632,9 +665,27 @@
           "stop_date": null
         },
         {
+          "medication_name": "Glibenclamide",
+          "medication_class": "Sulfonylurea",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-05",
+          "stop_date": null
+        },
+        {
           "medication_name": "Lisinopril",
           "medication_class": "ACE Inhibitor",
           "dose": "10 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-05",
+          "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
           "start_date": "2023-02-05",
@@ -643,13 +694,11 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 48-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, CKD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-009.",
+        "objective": "Objective structured data records blood pressure 130/84 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 25.4. Laboratory data for this visit: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Linked document references: DOC-CHR-002-009.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, CKD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-002-008. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-002-008. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
-      "linked_documents": [
-        "DOC-CHR-002-009"
-      ],
+      "linked_documents": ["DOC-CHR-002-009"],
       "prior_visit_id": "VST-CHR-002-008"
     }
   ],

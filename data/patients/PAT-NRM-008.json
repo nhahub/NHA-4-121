@@ -16,23 +16,23 @@
       "attending_physician": "Dr. Salma Nabil",
       "diagnoses": [],
       "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 76,
-        "heart_rate": 74,
+        "bp_systolic": 122,
+        "bp_diastolic": 80,
+        "heart_rate": 75,
         "weight_kg": 62.0,
-        "bmi": 22.6
+        "bmi": 22.9
       },
       "labs": [
         {
           "lab_type": "Hemoglobin",
-          "value": 12.8,
+          "value": 13.0,
           "unit": "g/dL",
           "reference_range": "12.0-16.0 g/dL",
           "flag": "NORMAL"
         },
         {
           "lab_type": "Ferritin",
-          "value": 64,
+          "value": 65,
           "unit": "ng/mL",
           "reference_range": "30-300 ng/mL",
           "flag": "NORMAL"
@@ -41,7 +41,7 @@
       "medications": [],
       "soap_note": {
         "subjective": "The synthetic record documents a 27-year-old female patient attending a initial visit. The structured condition list records no chronic conditions. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 74 bpm, weight 62.0 kg, and BMI 22.6. Laboratory data for this visit: Hemoglobin 12.8 g/dL (NORMAL); Ferritin 64 ng/mL (NORMAL). Linked document references: DOC-NRM-008-001.",
+        "objective": "Objective structured data records blood pressure 122/80 mmHg, heart rate 75 bpm, weight 62.0 kg, and BMI 22.9. Laboratory data for this visit: Hemoglobin 13.0 g/dL (NORMAL); Ferritin 65 ng/mL (NORMAL). Linked document references: DOC-NRM-008-001.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: no chronic diagnosis listed. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: no active whitelisted medications recorded. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -57,11 +57,11 @@
       "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [],
       "vitals": {
-        "bp_systolic": 119,
-        "bp_diastolic": 77,
-        "heart_rate": 73,
+        "bp_systolic": 121,
+        "bp_diastolic": 79,
+        "heart_rate": 74,
         "weight_kg": 62.0,
-        "bmi": 22.6
+        "bmi": 22.8
       },
       "labs": [
         {
@@ -73,7 +73,7 @@
         },
         {
           "lab_type": "Ferritin",
-          "value": 67,
+          "value": 66,
           "unit": "ng/mL",
           "reference_range": "30-300 ng/mL",
           "flag": "NORMAL"
@@ -82,7 +82,7 @@
       "medications": [],
       "soap_note": {
         "subjective": "The synthetic record documents a 27-year-old female patient attending a follow_up visit. The structured condition list records no chronic conditions. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 119/77 mmHg, heart rate 73 bpm, weight 62.0 kg, and BMI 22.6. Laboratory data for this visit: Hemoglobin 13.0 g/dL (NORMAL); Ferritin 67 ng/mL (NORMAL). Linked document references: DOC-NRM-008-002.",
+        "objective": "Objective structured data records blood pressure 121/79 mmHg, heart rate 74 bpm, weight 62.0 kg, and BMI 22.8. Laboratory data for this visit: Hemoglobin 13.0 g/dL (NORMAL); Ferritin 66 ng/mL (NORMAL). Linked document references: DOC-NRM-008-002.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: no chronic diagnosis listed. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: no active whitelisted medications recorded. Prior visit reference is VST-NRM-008-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -100,9 +100,9 @@
       "vitals": {
         "bp_systolic": 120,
         "bp_diastolic": 78,
-        "heart_rate": 72,
+        "heart_rate": 73,
         "weight_kg": 62.0,
-        "bmi": 22.6
+        "bmi": 22.7
       },
       "labs": [
         {
@@ -123,7 +123,7 @@
       "medications": [],
       "soap_note": {
         "subjective": "The synthetic record documents a 27-year-old female patient attending a follow_up visit. The structured condition list records no chronic conditions. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 72 bpm, weight 62.0 kg, and BMI 22.6. Laboratory data for this visit: Hemoglobin 13.0 g/dL (NORMAL); Ferritin 67 ng/mL (NORMAL). Linked document references: DOC-NRM-008-003.",
+        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 73 bpm, weight 62.0 kg, and BMI 22.7. Laboratory data for this visit: Hemoglobin 13.0 g/dL (NORMAL); Ferritin 67 ng/mL (NORMAL). Linked document references: DOC-NRM-008-003.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: no chronic diagnosis listed. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: no active whitelisted medications recorded. Prior visit reference is VST-NRM-008-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },

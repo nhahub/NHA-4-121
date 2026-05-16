@@ -1,34 +1,80 @@
 """
 soap/soap_generator.py
 
-SOAP narrative generation support.
+Deterministic SOAP narrative generation.
 
-This implementation is deterministic and offline. It generates SOAP narrative
-text only from existing structured data. It never selects medications, labs,
-diagnoses, vitals, or conditions.
+Current architecture:
+    Structured JSON
+        ↓
+    build_fact_context()
+        ↓
+    deterministic template selection
+        ↓
+    template rendering
+        ↓
+    SOAP note dictionary
+
+Safety contract:
+    - Deterministic only.
+    - Offline only.
+    - No LLM logic.
+    - No randomization.
+    - No Python built-in hash().
+    - No medical fact generation.
+    - No diagnosis inference.
+    - No medication selection.
+    - No lab selection.
+    - No vital sign selection.
+    - No schema changes.
+    - No metadata changes.
+    - No mutation of structured patient facts.
+
+Architecture role:
+    soap_contract.py   -> owns shared SOAP sections/types/template dataclass
+    soap_renderers.py  -> owns fact extraction and exact formatting
+    soap_templates.py  -> owns template registry only
+    soap_selector.py   -> owns deterministic template selection only
+    soap_generator.py  -> owns final SOAP assembly/rendering
+    soap_auditor.py    -> owns safety checks
+
+Important:
+    The medical truth must come only from structured JSON through
+    build_fact_context(). Templates may change wording, but they must never
+    create or modify medical meaning.
 """
 
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import datetime
-from typing import Any
+from typing import Any, Mapping
 
-from config.constants import DATE_FORMAT
+from soap.soap_contract import SOAP_SECTIONS, SoapSection, SoapTemplate
+from soap.soap_renderers import SoapFactContext, build_fact_context
+from soap.soap_selector import select_templates_from_fact_context
 
 
 def add_soap_notes_to_patient(patient: dict[str, Any]) -> dict[str, Any]:
     """
-    Return a patient copy with SOAP notes populated for each visit.
+    Return a deep-copied patient dictionary with SOAP notes populated.
 
-    Structured facts are not modified.
+    This function preserves all structured facts and only writes the generated
+    SOAP note into each visit["soap_note"] field.
+
+    Args:
+        patient: Patient JSON dictionary.
+
+    Returns:
+        Deep-copied patient dictionary with deterministic SOAP notes added.
     """
-    updated = deepcopy(patient)
+    updated_patient = deepcopy(patient)
 
-    for visit in updated.get("visits", []):
-        visit["soap_note"] = generate_soap_note(patient=updated, visit=visit)
+    for visit in updated_patient.get("visits", []):
+        visit["soap_note"] = generate_soap_note(
+            patient=updated_patient,
+            visit=visit,
+        )
 
-    return updated
+    return updated_patient
 
 
 def generate_soap_note(
@@ -36,96 +82,124 @@ def generate_soap_note(
     visit: dict[str, Any],
 ) -> dict[str, str]:
     """
-    Generate SOAP sections from existing structured data only.
+    Generate a deterministic diversified SOAP note from structured facts.
+
+    The function:
+        1. Builds a fact context from structured patient/visit JSON.
+        2. Selects one deterministic template per SOAP section.
+        3. Renders templates using fact-context values only.
+        4. Returns the final SOAP dictionary.
+
+    Args:
+        patient: Patient JSON dictionary.
+        visit: Visit dictionary from patient["visits"].
+
+    Returns:
+        SOAP note dictionary with exactly four sections:
+            - subjective
+            - objective
+            - assessment
+            - plan
     """
-    demographics = patient["demographics"]
-    conditions = patient.get("conditions", [])
-    vitals = visit.get("vitals", {})
-    labs = visit.get("labs", [])
-    medications = visit.get("medications", [])
+    fact_context = build_fact_context(patient=patient, visit=visit)
+    selected_templates = select_templates_from_fact_context(fact_context)
 
-    age = _age_at_visit(
-        demographics["date_of_birth"],
-        visit["visit_date"],
+    return render_soap_note_from_templates(
+        fact_context=fact_context,
+        selected_templates=selected_templates,
     )
 
-    condition_text = _format_list(conditions, empty_text="no chronic conditions")
-    lab_text = _format_labs(labs)
-    medication_text = _format_medications(medications)
-    prior_text = (
-        f"Prior visit reference is {visit['prior_visit_id']}."
-        if visit.get("prior_visit_id")
-        else "This is the first recorded visit in the synthetic record."
-    )
 
-    subjective = (
-        f"The synthetic record documents a {age}-year-old {demographics['sex']} patient "
-        f"attending a {visit['visit_type']} visit. The structured condition list records "
-        f"{condition_text}. The note is generated only from stored synthetic facts and does "
-        f"not add diagnosis, prediction, or clinical judgment beyond the record."
-    )
+def render_soap_note_from_templates(
+    *,
+    fact_context: SoapFactContext,
+    selected_templates: Mapping[SoapSection, SoapTemplate],
+) -> dict[str, str]:
+    """
+    Render a SOAP note from selected templates and a fact context.
 
-    objective = (
-        f"Objective structured data records blood pressure "
-        f"{vitals.get('bp_systolic')}/{vitals.get('bp_diastolic')} mmHg, heart rate "
-        f"{vitals.get('heart_rate')} bpm, weight {vitals.get('weight_kg')} kg, and BMI "
-        f"{vitals.get('bmi')}. Laboratory data for this visit: {lab_text}. "
-        f"Linked document references: {_format_list(visit.get('linked_documents', []))}."
-    )
+    This function performs placeholder replacement only. It does not select
+    templates, calculate medical values, infer facts, or modify structured data.
 
-    assessment = (
-        f"The assessment section summarizes only documented diagnoses for this visit: "
-        f"{_format_list(visit.get('diagnoses', []), empty_text='no chronic diagnosis listed')}. "
-        f"The visit remains grounded in the structured JSON record and does not infer "
-        f"unstated conditions."
-    )
+    Args:
+        fact_context: Fact context produced by build_fact_context().
+        selected_templates: Mapping from SOAP section to selected template.
 
-    plan = (
-        f"The documented plan records the whitelisted medication list exactly as stored: "
-        f"{medication_text}. {prior_text} Follow-up context should be interpreted only "
-        f"as part of this synthetic academic dataset, not as medical advice."
-    )
+    Returns:
+        SOAP note dictionary with exactly four rendered sections.
+
+    Raises:
+        ValueError: If a required SOAP section is missing.
+        KeyError: If a template references a missing fact-context key.
+    """
+    _validate_selected_templates(selected_templates)
 
     return {
-        "subjective": subjective,
-        "objective": objective,
-        "assessment": assessment,
-        "plan": plan,
+        section: _render_template(
+            template=selected_templates[section],
+            fact_context=fact_context,
+        )
+        for section in SOAP_SECTIONS
     }
 
 
-def _format_labs(labs: list[dict[str, Any]]) -> str:
-    if not labs:
-        return "no lab results recorded"
+def _render_template(
+    *,
+    template: SoapTemplate,
+    fact_context: Mapping[str, Any],
+) -> str:
+    """
+    Render a single SOAP template using fact-context values.
 
-    return "; ".join(
-        f"{lab['lab_type']} {lab['value']} {lab['unit']} ({lab['flag']})"
-        for lab in labs
-    )
+    Args:
+        template: Selected SOAP template.
+        fact_context: Fact context mapping.
+
+    Returns:
+        Rendered SOAP section text.
+
+    Raises:
+        KeyError: If a required placeholder is missing from fact_context.
+    """
+    try:
+        rendered = template.text.format(**fact_context)
+    except KeyError as exc:
+        missing_key = exc.args[0]
+        raise KeyError(
+            f"Template {template.template_id!r} references missing "
+            f"fact-context key {missing_key!r}."
+        ) from exc
+
+    return rendered
 
 
-def _format_medications(medications: list[dict[str, Any]]) -> str:
-    if not medications:
-        return "no active whitelisted medications recorded"
+def _validate_selected_templates(
+    selected_templates: Mapping[SoapSection, SoapTemplate],
+) -> None:
+    """
+    Validate that all required SOAP sections have selected templates.
 
-    return "; ".join(
-        f"{med['medication_name']} {med['dose']} "
-        f"{med['frequency']} via {med['route']}"
-        for med in medications
-    )
+    Args:
+        selected_templates: Mapping from SOAP section to selected template.
+
+    Raises:
+        ValueError: If any SOAP section is missing.
+    """
+    missing_sections = [
+        section
+        for section in SOAP_SECTIONS
+        if section not in selected_templates
+    ]
+
+    if missing_sections:
+        raise ValueError(
+            "Missing selected SOAP templates for sections: "
+            + ", ".join(missing_sections)
+        )
 
 
-def _format_list(values: list[Any], empty_text: str = "none") -> str:
-    if not values:
-        return empty_text
-
-    return ", ".join(str(value) for value in values)
-
-
-def _age_at_visit(date_of_birth: str, visit_date: str) -> int:
-    dob = datetime.strptime(date_of_birth, DATE_FORMAT).date()
-    visit = datetime.strptime(visit_date, DATE_FORMAT).date()
-
-    years = visit.year - dob.year
-    before_birthday = (visit.month, visit.day) < (dob.month, dob.day)
-    return years - int(before_birthday)
+__all__ = [
+    "add_soap_notes_to_patient",
+    "generate_soap_note",
+    "render_soap_note_from_templates",
+]

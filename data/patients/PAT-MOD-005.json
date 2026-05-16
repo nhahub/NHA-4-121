@@ -9,7 +9,15 @@
   "conditions": [
     "HTN"
   ],
-  "allergy_registry": [],
+  "allergy_registry": [
+    {
+      "allergen": "Latex",
+      "reaction": "contact dermatitis",
+      "severity": "mild",
+      "recorded_date": "2023-05-10",
+      "source_visit_id": "VST-MOD-005-001"
+    }
+  ],
   "visits": [
     {
       "visit_id": "VST-MOD-005-001",
@@ -20,13 +28,21 @@
         "HTN"
       ],
       "vitals": {
-        "bp_systolic": 152,
-        "bp_diastolic": 94,
+        "bp_systolic": 146,
+        "bp_diastolic": 92,
         "heart_rate": 82,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 77.1,
+        "bmi": 24.9
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -40,7 +56,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 38-year-old male patient attending a initial visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 152/94 mmHg, heart rate 82 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-001.",
+        "objective": "Objective structured data records blood pressure 146/92 mmHg, heart rate 82 bpm, weight 77.1 kg, and BMI 24.9. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-001.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -58,13 +74,21 @@
         "HTN"
       ],
       "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 92,
+        "bp_systolic": 144,
+        "bp_diastolic": 91,
         "heart_rate": 81,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 76.7,
+        "bmi": 24.8
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -78,7 +102,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 148/92 mmHg, heart rate 81 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-002.",
+        "objective": "Objective structured data records blood pressure 144/91 mmHg, heart rate 81 bpm, weight 76.7 kg, and BMI 24.8. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-002.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -96,13 +120,21 @@
         "HTN"
       ],
       "vitals": {
-        "bp_systolic": 144,
+        "bp_systolic": 142,
         "bp_diastolic": 90,
         "heart_rate": 80,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 76.3,
+        "bmi": 24.7
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 1.0,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -116,7 +148,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 144/90 mmHg, heart rate 80 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-003.",
+        "objective": "Objective structured data records blood pressure 142/90 mmHg, heart rate 80 bpm, weight 76.3 kg, and BMI 24.7. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-003.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -134,13 +166,21 @@
         "HTN"
       ],
       "vitals": {
-        "bp_systolic": 158,
-        "bp_diastolic": 96,
+        "bp_systolic": 140,
+        "bp_diastolic": 89,
         "heart_rate": 79,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 75.9,
+        "bmi": 24.5
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 1.0,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -154,7 +194,7 @@
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 158/96 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-004.",
+        "objective": "Objective structured data records blood pressure 140/89 mmHg, heart rate 79 bpm, weight 75.9 kg, and BMI 24.5. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-004.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
         "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
@@ -172,13 +212,21 @@
         "HTN"
       ],
       "vitals": {
-        "bp_systolic": 140,
+        "bp_systolic": 138,
         "bp_diastolic": 88,
         "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 75.5,
+        "bmi": 24.4
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 0.9,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -188,13 +236,22 @@
           "route": "oral",
           "start_date": "2024-02-04",
           "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2024-02-04",
+          "stop_date": null
         }
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 140/88 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-005.",
+        "objective": "Objective structured data records blood pressure 138/88 mmHg, heart rate 78 bpm, weight 75.5 kg, and BMI 24.4. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-005.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-MOD-005-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
       "linked_documents": [
         "DOC-MOD-005-005"
@@ -211,12 +268,20 @@
       ],
       "vitals": {
         "bp_systolic": 136,
-        "bp_diastolic": 84,
+        "bp_diastolic": 87,
         "heart_rate": 78,
-        "weight_kg": 70.0,
-        "bmi": 23.5
+        "weight_kg": 75.1,
+        "bmi": 24.3
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "Creatinine",
+          "value": 1.0,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "NORMAL"
+        }
+      ],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -226,13 +291,22 @@
           "route": "oral",
           "start_date": "2024-05-04",
           "stop_date": null
+        },
+        {
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2024-05-04",
+          "stop_date": null
         }
       ],
       "soap_note": {
         "subjective": "The synthetic record documents a 39-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/84 mmHg, heart rate 78 bpm, weight 70.0 kg, and BMI 23.5. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-005-006.",
+        "objective": "Objective structured data records blood pressure 136/87 mmHg, heart rate 78 bpm, weight 75.1 kg, and BMI 24.3. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-006.",
         "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-MOD-005-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
       },
       "linked_documents": [
         "DOC-MOD-005-006"

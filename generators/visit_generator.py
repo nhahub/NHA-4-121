@@ -6,18 +6,23 @@ Visit timeline and vitals generation.
 Important BP rule:
 Blood pressure is generated only inside visit["vitals"].
 This module never writes BP into labs, metadata, or any other field.
+
+Freeze decision:
+Vitals are condition-driven and deterministic.
+Vitals do NOT depend on medications during the current implementation freeze.
 """
 
 from __future__ import annotations
 
 from copy import deepcopy
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from typing import Any
 
 from config.constants import (
     ATTENDING_PHYSICIANS,
     DATE_FORMAT,
     EMPTY_SOAP_NOTE,
+    HTN_BASELINE_BP_PROFILES,
     REQUIRED_VITAL_FIELDS,
     TIER_TO_ID_PREFIX,
     VISIT_DATE_OFFSETS_DAYS,
@@ -51,8 +56,10 @@ def add_visits_to_patient(
         visit = {
             "visit_id": visit_id,
             "visit_date": visit_date.strftime(DATE_FORMAT),
-            "visit_type": _visit_type_for_tier(blueprint.tier, index),
-            "attending_physician": ATTENDING_PHYSICIANS[index % len(ATTENDING_PHYSICIANS)],
+            "visit_type": _visit_type_for_blueprint(blueprint, index),
+            "attending_physician": ATTENDING_PHYSICIANS[
+                index % len(ATTENDING_PHYSICIANS)
+            ],
             "diagnoses": list(blueprint.conditions),
             "vitals": _generate_vitals(blueprint, index),
             "labs": [],
@@ -71,10 +78,10 @@ def add_visits_to_patient(
 
 
 def _visit_date_for_tier(
-    first_date,
+    first_date: date,
     tier: str,
     index: int,
-):
+) -> date:
     """
     Generate deterministic visit date using tier-specific offset patterns.
 
@@ -95,12 +102,25 @@ def _visit_date_for_tier(
     return first_date + timedelta(days=offsets[index])
 
 
-def _visit_type_for_tier(tier: str, index: int) -> str:
-    """Assign allowed visit_type enum values."""
+def _visit_type_for_blueprint(blueprint: PatientBlueprint, index: int) -> str:
+    """
+    Assign deterministic allowed visit_type values.
+
+    Rules:
+    - first visit is always initial
+    - asthma patients receive one emergency visit
+    - chronic patients receive one hospitalization visit
+    - all other visits are follow_up
+    """
     if index == 0:
         return "initial"
 
-    if tier == "chronic" and index == 3:
+    conditions = set(blueprint.conditions)
+
+    if "Asthma" in conditions and index == 2:
+        return "emergency"
+
+    if blueprint.tier == "chronic" and index == 3:
         return "hospitalization"
 
     return "follow_up"
@@ -110,68 +130,155 @@ def _generate_vitals(blueprint: PatientBlueprint, index: int) -> dict[str, float
     """
     Generate realistic but deterministic vital signs within V3 bounds.
 
+    Vitals are condition-driven and do not depend on medication records.
     BP remains only in this vitals object.
     """
-    conditions = set(blueprint.conditions)
-
-    if blueprint.tier == "normal":
-        return {
-            "bp_systolic": 118 + index,
-            "bp_diastolic": 76 + index,
-            "heart_rate": 74 - index,
-            "weight_kg": 74.0 if blueprint.sex == "male" else 62.0,
-            "bmi": 23.8 if blueprint.sex == "male" else 22.6,
-        }
-
-    if "HTN" in conditions:
-        systolic_values = [152, 148, 144, 158, 140, 136]
-        diastolic_values = [94, 92, 90, 96, 88, 84]
-    else:
-        systolic_values = [126, 124, 122, 120, 120, 118]
-        diastolic_values = [82, 80, 78, 78, 76, 76]
+    bp_systolic, bp_diastolic = _bp_for_patient(blueprint, index)
 
     return {
-        "bp_systolic": systolic_values[min(index, len(systolic_values) - 1)],
-        "bp_diastolic": diastolic_values[min(index, len(diastolic_values) - 1)],
-        "heart_rate": 82 - min(index, 4),
+        "bp_systolic": bp_systolic,
+        "bp_diastolic": bp_diastolic,
+        "heart_rate": _heart_rate_for_patient(blueprint, index),
         "weight_kg": _weight_for_patient(blueprint, index),
         "bmi": _bmi_for_patient(blueprint, index),
     }
 
 
+def _bp_for_patient(blueprint: PatientBlueprint, index: int) -> tuple[int, int]:
+    """
+    Generate deterministic BP values.
+
+    BP must remain only inside visit["vitals"].
+    """
+    patient_number = int(blueprint.patient_id.split("-")[-1])
+    conditions = set(blueprint.conditions)
+
+    if "HTN" in conditions:
+        profile = HTN_BASELINE_BP_PROFILES[
+            (patient_number - 1) % len(HTN_BASELINE_BP_PROFILES)
+        ]
+
+        baseline_systolic = int(profile["systolic"])
+        baseline_diastolic = int(profile["diastolic"])
+
+        systolic = baseline_systolic - (2 * min(index, 8))
+        diastolic = baseline_diastolic - min(index, 8)
+
+        if blueprint.tier == "chronic" and index == 3:
+            systolic += 8
+            diastolic += 4
+
+        return max(systolic, 128), max(diastolic, 78)
+
+    systolic = 122 + (patient_number % 4) - min(index, 5)
+    diastolic = 78 + (patient_number % 3) - min(index, 4)
+
+    return max(systolic, 116), max(diastolic, 74)
+
+
+def _heart_rate_for_patient(blueprint: PatientBlueprint, index: int) -> int:
+    """
+    Generate deterministic heart rate within V3 bounds.
+    """
+    patient_number = int(blueprint.patient_id.split("-")[-1])
+    conditions = set(blueprint.conditions)
+
+    if "Asthma" in conditions and index == 2:
+        return 96
+
+    if blueprint.tier == "normal":
+        return 72 + (patient_number % 5) - min(index, 2)
+
+    if blueprint.tier == "chronic":
+        return 84 - min(index, 5)
+
+    return 82 - min(index, 4)
+
+
 def _weight_for_patient(blueprint: PatientBlueprint, index: int) -> float:
-    if blueprint.patient_id == "PAT-MOD-001":
-        return round(88.0 - index * 1.2, 1)
+    """
+    Generate deterministic weight progression by condition, tier, sex, and visit index.
 
-    if blueprint.patient_id == "PAT-MOD-002":
-        return round(66.0 - index * 0.2, 1)
+    This improves dataset diversity without medication dependency.
+    """
+    patient_number = int(blueprint.patient_id.split("-")[-1])
+    conditions = set(blueprint.conditions)
 
-    if blueprint.patient_id == "PAT-CHR-001":
-        return round(91.0 - index * 0.8, 1)
+    base_weight = 74.0 if blueprint.sex == "male" else 62.0
 
-    return 70.0
+    if "T2DM" in conditions:
+        base_weight += 4.0
+
+    if "HTN" in conditions:
+        base_weight += 2.0
+
+    if "CKD" in conditions:
+        base_weight += 1.0
+
+    if "IDA" in conditions:
+        base_weight -= 3.0
+
+    if blueprint.tier == "chronic":
+        base_weight += 3.0
+
+    if "CKD" in conditions:
+        progression = min(index, 8) * 0.7
+    elif blueprint.tier in {"moderate", "chronic"}:
+        progression = min(index, 6) * 0.4
+    else:
+        progression = 0.0
+
+    variation = (patient_number % 4) * 1.1
+
+    return round(base_weight + variation - progression, 1)
 
 
 def _bmi_for_patient(blueprint: PatientBlueprint, index: int) -> float:
-    if blueprint.patient_id == "PAT-MOD-001":
-        return round(29.1 - index * 0.3, 1)
+    """
+    Generate deterministic BMI progression by condition, tier, sex, and visit index.
+    """
+    patient_number = int(blueprint.patient_id.split("-")[-1])
+    conditions = set(blueprint.conditions)
 
-    if blueprint.patient_id == "PAT-MOD-002":
-        return round(24.8 - index * 0.1, 1)
+    base_bmi = 23.6 if blueprint.sex == "male" else 22.4
 
-    if blueprint.patient_id == "PAT-CHR-001":
-        return round(30.2 - index * 0.2, 1)
+    if "T2DM" in conditions:
+        base_bmi += 1.2
 
-    return 23.5
+    if "HTN" in conditions:
+        base_bmi += 0.8
+
+    if "CKD" in conditions:
+        base_bmi += 0.5
+
+    if "IDA" in conditions:
+        base_bmi -= 1.0
+
+    if blueprint.tier == "chronic":
+        base_bmi += 1.0
+
+    progression = min(index, 8) * 0.12
+    variation = (patient_number % 3) * 0.25
+
+    return round(base_bmi + variation - progression, 1)
 
 
 def _assert_vitals_shape(vitals: dict[str, Any]) -> None:
-    """Internal safety check: vitals must contain only expected vital fields."""
-    missing = set(REQUIRED_VITAL_FIELDS) - set(vitals.keys())
+    """
+    Internal safety check: vitals must contain exactly the expected vital fields.
+    """
+    expected_fields = set(REQUIRED_VITAL_FIELDS)
+    actual_fields = set(vitals.keys())
+
+    missing = expected_fields - actual_fields
     if missing:
         raise ValueError(f"Generated vitals missing fields: {sorted(missing)}")
 
+    extra = actual_fields - expected_fields
+    if extra:
+        raise ValueError(f"Generated vitals contain unexpected fields: {sorted(extra)}")
+
     forbidden_lab_like_keys = {"lab_type", "flag", "reference_range"}
-    overlap = forbidden_lab_like_keys.intersection(vitals.keys())
+    overlap = forbidden_lab_like_keys.intersection(actual_fields)
     if overlap:
         raise ValueError(f"Generated vitals contain lab-like keys: {sorted(overlap)}")

@@ -1,6 +1,6 @@
 {
-  "$schema": "[https://json-schema.org/draft/2020-12/schema](https://json-schema.org/draft/2020-12/schema)",
-  "$id": "[https://depi.local/schemas/patient_schema.json](https://depi.local/schemas/patient_schema.json)",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://depi.local/schemas/patient_schema.json",
   "title": "AI Based Clinical Record Summarization System — Patient Record Schema",
   "description": "Final locked JSON Schema for synthetic patient records used by deterministic generators, validators, SOAP generation, chunking, ChromaDB ingestion, RAG retrieval, grounded answer generation, timeline generation, allergy retrieval, lab trend retrieval, OCR linkage, and stable citation generation.",
   "$comment": "FINAL LOCKED SCHEMA CONTRACT. BP must exist only inside visits[].vitals.bp_systolic and visits[].vitals.bp_diastolic. BP must never appear in labs, lab_type enum, metadata, or chunk metadata. CKD requires T2DM, HTN, and metadata.tier='chronic'. timeline_events is forbidden. demographics.age is forbidden. Valid medication routes are oral and inhaled only. subcutaneous is forbidden.",
@@ -26,7 +26,7 @@
     },
     "patient_id": {
       "type": "string",
-      "pattern": "^PAT-(NRM|MOD|CHR)-\d{3}$",
+      "pattern": "^PAT-(NRM|MOD|CHR)-\\d{3}$",
       "description": "Stable patient identifier used for patient-scoped retrieval, metadata extraction, filtering, and citation grouping."
     },
     "demographics": {
@@ -110,7 +110,7 @@
   "$defs": {
     "date_yyyy_mm_dd": {
       "type": "string",
-      "pattern": "^\d{4}-\d{2}-\d{2}$",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
       "format": "date",
       "description": "Strict YYYY-MM-DD date string."
     },
@@ -154,11 +154,11 @@
     },
     "visit_id": {
       "type": "string",
-      "pattern": "^VST-(NRM|MOD|CHR)-\d{3}-\d{3}$"
+      "pattern": "^VST-(NRM|MOD|CHR)-\\d{3}-\\d{3}$"
     },
     "document_id": {
       "type": "string",
-      "pattern": "^DOC-(NRM|MOD|CHR)-\d{3}-\d{3}$"
+      "pattern": "^DOC-(NRM|MOD|CHR)-\\d{3}-\\d{3}$"
     },
     "demographics": {
       "$comment": "demographics.age is forbidden. Age must be derived from date_of_birth and visit_date by validators or downstream services.",
@@ -543,7 +543,7 @@
           "type": "string",
           "minLength": 2,
           "maxLength": 60,
-          "pattern": "^[0-9]+(\.[0-9]+)?\s?(mg|mcg|g|mL|units?)$"
+          "pattern": "^[0-9]+(\\.[0-9]+)?\\s?(mg|mcg|g|mL|units?)$"
         },
         "frequency": {
           "$ref": "#/$defs/frequency"

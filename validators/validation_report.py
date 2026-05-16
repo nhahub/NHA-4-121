@@ -25,13 +25,17 @@ class ValidationReport:
 
     @property
     def passed(self) -> bool:
-        return self.fail_count == 0
-
+        """
+        Return True only when validation checked at least one patient
+        and no FAIL-level issues were found.
+        """
+        return self.patients_checked > 0 and self.fail_count == 0
 
 def build_validation_report(
     patients_checked: int,
     issues: list[ValidationIssue],
 ) -> ValidationReport:
+    """Build an aggregated validation report from collected issues."""
     fail_count = sum(issue.severity == "FAIL" for issue in issues)
     warn_count = sum(issue.severity == "WARN" for issue in issues)
 
@@ -87,6 +91,7 @@ def issues_for_patient(
     patient_id: str,
     issues: list[ValidationIssue],
 ) -> list[ValidationIssue]:
+    """Return all validation issues for one patient ID."""
     return [issue for issue in issues if issue.patient_id == patient_id]
 
 

@@ -1,8 +1,10 @@
 """
 config/paths.py
 
-Centralized filesystem paths for the data engineering layer.
-Uses pathlib only; no raw string path handling.
+Centralized filesystem paths for the data engineering layer and local project runtime.
+
+This module uses pathlib only and should be imported by scripts, validators,
+generators, ingestion utilities, and demo helpers instead of hardcoding paths.
 """
 
 from __future__ import annotations
@@ -17,10 +19,18 @@ GENERATORS_DIR = PROJECT_ROOT / "generators"
 VALIDATORS_DIR = PROJECT_ROOT / "validators"
 SOAP_DIR = PROJECT_ROOT / "soap"
 SCRIPTS_DIR = PROJECT_ROOT / "scripts"
+INGESTION_DIR = PROJECT_ROOT / "ingestion"
+RAG_DIR = PROJECT_ROOT / "rag"
+OCR_DIR = PROJECT_ROOT / "ocr"
+DOCS_DIR = PROJECT_ROOT / "docs"
 
 DATA_DIR = PROJECT_ROOT / "data"
 PATIENTS_DIR = DATA_DIR / "patients"
 QUARANTINE_DIR = DATA_DIR / "quarantine"
+SCHEMAS_DIR = DATA_DIR / "schemas"
+CHROMADB_DIR = DATA_DIR / "chromadb"
+
+PATIENT_SCHEMA_PATH = SCHEMAS_DIR / "patient_schema.json"
 
 LOGS_DIR = PROJECT_ROOT / "logs"
 VALIDATION_REPORTS_DIR = LOGS_DIR / "validation_reports"
@@ -36,6 +46,8 @@ def ensure_project_directories() -> None:
         DATA_DIR,
         PATIENTS_DIR,
         QUARANTINE_DIR,
+        SCHEMAS_DIR,
+        CHROMADB_DIR,
         LOGS_DIR,
         VALIDATION_REPORTS_DIR,
     ):
