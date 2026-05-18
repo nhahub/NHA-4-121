@@ -5,7 +5,8 @@ Shared SOAP contract definitions.
 
 Purpose:
     Define the stable SOAP-local contract used by the deterministic SOAP
-    template registry, selector, generator, auditor, and SOAP tests.
+    template registry, selector, generator, auditor, semantic context layer,
+    and SOAP tests.
 
 This module intentionally contains only shared structure, types, and constants.
 
@@ -14,6 +15,7 @@ It must not contain:
     - template selection logic
     - SHA-256 logic
     - rendering logic
+    - semantic text construction
     - fact extraction
     - lab formatting
     - medication formatting
@@ -74,7 +76,7 @@ class SoapTemplate:
     text: str
 
 
-ALLOWED_TEMPLATE_PLACEHOLDERS: Final[frozenset[str]] = frozenset(
+CORE_TEMPLATE_PLACEHOLDERS: Final[frozenset[str]] = frozenset(
     {
         # Identifiers
         "patient_id",
@@ -109,6 +111,29 @@ ALLOWED_TEMPLATE_PLACEHOLDERS: Final[frozenset[str]] = frozenset(
 )
 
 
+SEMANTIC_TEMPLATE_PLACEHOLDERS: Final[frozenset[str]] = frozenset(
+    {
+        # Condition-aware deterministic semantic context.
+        #
+        # These fields are produced by soap_semantics.py through
+        # build_fact_context() and are intended to improve RAG retrieval
+        # quality without adding clinical inference.
+        "condition_focus_text",
+        "diagnosis_focus_text",
+        "monitoring_focus_text",
+        "medication_focus_text",
+        "visit_context_text",
+        "timeline_context_text",
+        "retrieval_focus_text",
+    }
+)
+
+
+ALLOWED_TEMPLATE_PLACEHOLDERS: Final[frozenset[str]] = (
+    CORE_TEMPLATE_PLACEHOLDERS | SEMANTIC_TEMPLATE_PLACEHOLDERS
+)
+
+
 REQUIRED_FACTS_BY_SECTION: Final[Mapping[SoapSection, tuple[str, ...]]] = {
     "subjective": ("condition_text",),
     "objective": ("bp_text", "lab_text", "linked_documents_text"),
@@ -117,7 +142,7 @@ REQUIRED_FACTS_BY_SECTION: Final[Mapping[SoapSection, tuple[str, ...]]] = {
 }
 
 
-EXPECTED_TEMPLATE_COUNTS: Final[Mapping[PatientTier, int]] = {
+EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER: Final[Mapping[PatientTier, int]] = {
     "normal": 3,
     "moderate": 4,
     "chronic": 5,
@@ -133,8 +158,10 @@ __all__ = (
     "SoapTemplate",
     "SOAP_SECTIONS",
     "PATIENT_TIERS",
+    "CORE_TEMPLATE_PLACEHOLDERS",
+    "SEMANTIC_TEMPLATE_PLACEHOLDERS",
     "ALLOWED_TEMPLATE_PLACEHOLDERS",
     "REQUIRED_FACTS_BY_SECTION",
-    "EXPECTED_TEMPLATE_COUNTS",
+    "EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER",
     "EXPECTED_TOTAL_TEMPLATE_COUNT",
 )

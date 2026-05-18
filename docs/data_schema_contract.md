@@ -14,10 +14,10 @@
 | Primary Owner      | Ahmed Hesham Kamel — Data Engineering Lead                                                                                                                           |
 | Primary Audience   | Gamal Mohamed Gad — AI/RAG Engineer                                                                                                                                  |
 | Secondary Audience | Backend Developer, Frontend/OCR Developer, DevOps/Testing Member, DEPI Evaluators                                                                                    |
-| Status             | LOCKED — Official Schema Handoff Contract                                                                                                                            |
-| Version            | v1.0                                                                                                                                                                 |
+| Status             | READY FOR FINAL HANDOFF — Official Schema Handoff Contract                                                                                                           |
+| Version            | v1.1                                                                                                                                                                 |
 | Scope              | Patient JSON structure, schema meaning, RAG dependencies, ingestion assumptions, forbidden fields, stability rules                                                   |
-| Related Contracts  | `docs/team_ownership_and_architecture.md`, `docs/validation_rules.md`, `docs/chunking_and_metadata_contract.md`, `docs/citation_contract.md`, `docs/rag_pipeline.md` |
+| Related Contracts  | `docs/architecture_summary.md`, `docs/team_ownership_and_architecture.md`, `docs/project_scope_and_safety_rules.md`, `docs/validation_rules.md`, `docs/data_generation_pipeline.md`, `docs/rag_handoff_contract.md`, `docs/retrieval_enrichment_contract.md`, `docs/chunking_and_metadata_contract.md`, `docs/citation_contract.md`, `docs/rag_pipeline.md` |
 | Source of Truth    | `data/schemas/patient_schema.json`, `config/constants.py`, validated files in `data/patients/`                                                                       |
 
 ---
@@ -65,8 +65,13 @@ This document is part of a layered documentation system. It does not replace the
 
 | Document                                  | Relationship                                                                                                                                                                |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docs/architecture_summary.md`             | Provides the high-level system architecture and end-to-end workflow that this schema contract supports.                                                                    |
 | `docs/team_ownership_and_architecture.md` | Defines the full system architecture, folder ownership, team responsibilities, dependency order, and high-level RAG flow. This schema contract builds on that architecture. |
-| `docs/validation_rules.md`                | Defines V1–V11 validation behavior in detail. This document explains what the schema means; the validation document explains how schema correctness is enforced.            |
+| `docs/project_scope_and_safety_rules.md`  | Defines non-negotiable safety boundaries, medical-scope restrictions, and LLM/RAG/OCR safety rules.                                                                        |
+| `docs/validation_rules.md`                | Defines V1–V11 validation behavior and dataset-level checks in detail. This document explains what the schema means; the validation document explains how correctness is enforced. |
+| `docs/data_generation_pipeline.md`        | Explains how structured patients, visits, labs, medications, allergies, SOAP notes, and final exports are generated.                                                       |
+| `docs/rag_handoff_contract.md`            | Defines what Ahmed hands off to Gamal and what the RAG layer may safely assume.                                                                                            |
+| `docs/retrieval_enrichment_contract.md`   | Defines deterministic retrieval enrichment text and auditing rules used before chunking and ingestion.                                                                     |
 | `docs/chunking_and_metadata_contract.md`  | Will define exact chunk types, chunk IDs, metadata fields, and ChromaDB-ready chunk structure. This document defines the source patient data that chunking reads from.      |
 | `docs/citation_contract.md`               | Will define exact citation object structure and display behavior. This document defines the stable IDs and source fields citations depend on.                               |
 | `docs/rag_pipeline.md`                    | Will explain the end-to-end RAG flow. This schema contract explains the dataset assumptions underneath that flow.                                                           |
@@ -682,6 +687,22 @@ Hemoglobin
 Ferritin
 ```
 
+## Creatinine Generation Rule
+
+Creatinine is generated only for kidney-relevant documented contexts in the locked dataset scope.
+
+Expected behavior:
+
+```text
+CKD patients                         → Creatinine allowed and expected
+Patients with combined T2DM + HTN    → Creatinine allowed
+T2DM-only patients                   → Creatinine not required
+HTN-only patients                    → Creatinine not required
+Normal patients                      → Creatinine not expected
+```
+
+This rule is important for RAG because Creatinine retrieval should align with documented CKD complication tracking or combined T2DM + HTN context. It should not be treated as a universal lab for every T2DM-only or HTN-only patient.
+
 ## Lab Field Meaning
 
 | Field             | Type   | Meaning                                  |
@@ -775,8 +796,30 @@ medication
 | `dose`             | string         | Dose text such as `500 mg`.                 |
 | `frequency`        | string         | Locked frequency enum.                      |
 | `route`            | string         | Locked route enum.                          |
-| `start_date`       | string         | Date medication started.                    |
-| `stop_date`        | string or null | Date medication stopped, or null if active. |
+| `start_date`       | string         | First documented start date of the medication. |
+| `stop_date`        | string or null | Date medication stopped, or null if active.    |
+
+## Medication Timeline Semantics
+
+`start_date` represents the first documented start date of that medication in the synthetic record. It should not be reset to the current visit date every time the medication appears again.
+
+Expected behavior:
+
+```text
+Baseline medication      → start_date = first visit date
+Add-on medication        → start_date = visit date where the add-on first appears
+Continued medication     → start_date remains the original start date
+Stopped medication       → stop_date contains the documented stopping date
+Active medication        → stop_date = null
+```
+
+This distinction is important for medication timeline retrieval, including questions such as:
+
+```text
+When was Metformin started?
+When was Amlodipine added?
+Was Ferrous sulfate stopped?
+```
 
 ## Allowed Frequencies
 
@@ -939,6 +982,18 @@ soap_note
 ## Narrative-Only Rule
 
 SOAP is narrative-only.
+
+## Deterministic SOAP Implementation Rule
+
+In the current implementation, SOAP notes are generated deterministically from structured JSON using approved templates.
+
+```text
+No LLM is used during SOAP generation.
+No runtime randomness is used during SOAP generation.
+No SOAP component may modify structured patient data.
+```
+
+The LLM is used later only in the RAG answer generation layer, where answers must be grounded in retrieved evidence and citations.
 
 SOAP generation must not:
 
@@ -1326,7 +1381,58 @@ visits[].labs[].unit
 visits[].labs[].flag
 ```
 
-## 17.9 Backend Integration Dependency
+## 17.9 Retrieval Enrichment Dependency
+
+Retrieval enrichment is a deterministic support layer used to improve semantic retrieval quality before chunking and ChromaDB ingestion.
+
+Relevant files:
+
+```text
+ingestion/retrieval_enricher.py
+ingestion/retrieval_enrichment_auditor.py
+```
+
+Retrieval enrichment text must follow these rules:
+
+```text
+- It is not source truth.
+- It must be derived from structured patient JSON and SOAP only.
+- It must not invent medical facts.
+- It must not modify patient JSON.
+- It must not introduce diagnosis, prediction, or treatment recommendation claims.
+- It must be audited before being used in chunks or ingestion.
+```
+
+The schema fields most important for retrieval enrichment are:
+
+```text
+patient_id
+metadata.tier
+conditions
+visits[].visit_id
+visits[].visit_date
+visits[].visit_type
+visits[].diagnoses
+visits[].vitals
+visits[].labs
+visits[].medications
+visits[].soap_note
+allergy_registry
+prior_visit_id
+```
+
+Supported retrieval source types remain:
+
+```text
+doctor_note
+lab_result
+prescription
+allergy
+```
+
+Retrieval enrichment may strengthen semantic matching, but citations and grounded answers must still point back to the underlying patient record, visit, source type, and chunk evidence.
+
+## 17.10 Backend Integration Dependency
 
 Backend endpoints depend on RAG outputs that can trace back to this schema.
 
@@ -1373,6 +1479,39 @@ The V1–V11 validation rules protect:
 | Medication whitelist        | Ensures prescriptions are controlled.            | Protects medication retrieval consistency.        |
 
 Validation must run before ingestion.
+
+## Dataset-Level Validation Checks
+
+In addition to per-patient V1–V11 validation, the project also performs dataset-level checks in the command-line validation workflow.
+
+These checks protect the full dataset before handoff and ingestion:
+
+```text
+expected patient count for selected mode
+expected tier distribution
+unique patient_id values across files
+CKD patient count <= 2
+```
+
+These checks are not replacements for V1–V11. They are additional dataset-level safeguards that ensure the full patient set remains consistent with the locked project scope.
+
+Expected full dataset distribution:
+
+```text
+normal   = 10
+moderate = 13
+chronic  = 7
+```
+
+Expected pilot dataset distribution:
+
+```text
+normal   = 2
+moderate = 2
+chronic  = 1
+```
+
+The RAG engineer should treat a failed dataset-level check the same way as a validation gate failure: do not ingest until the dataset is corrected.
 
 ---
 
@@ -1762,7 +1901,7 @@ The document provides enough schema-level context for the ingestion engineer to 
 
 ## Handoff Readiness
 
-This document is ready to be used as the official schema handoff contract between Ahmed and Gamal.
+This document is ready to be used as the official schema handoff contract between Ahmed and Gamal after final team review confirms that related RAG, enrichment, validation, and metadata contracts are aligned.
 
 ## Documentation Professionalism
 
@@ -1774,4 +1913,4 @@ The document is professional, structured, implementation-oriented, and suitable 
 Strong Engineering Contract
 ```
 
-This document is stronger than an internal reference and suitable for official project handoff. It is not classified as a full production-grade schema contract only because detailed chunking, metadata, citation, and validation rules intentionally belong to separate contract documents.
+This document is stronger than an internal reference and suitable for official project handoff. It is not classified as a full production-grade schema contract only because detailed chunking, metadata, citation, retrieval enrichment, and validation rules intentionally belong to separate focused contract documents.

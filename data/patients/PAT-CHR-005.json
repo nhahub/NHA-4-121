@@ -80,10 +80,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 48-year-old male patient attending a initial visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 146/92 mmHg, heart rate 84 bpm, weight 84.1 kg, and BMI 27.1. Laboratory data for this visit: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-005-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this initial entry, the record identifies a 48-year-old male patient. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril and metformin; visit type: initial; timeline link: first documented visit.",
+        "objective": "Recorded vitals include blood pressure 146/92 mmHg, heart rate 84 bpm, weight 84.1 kg, and BMI 27.1. Laboratory results for the encounter: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-001.",
+        "assessment": "For this longitudinal record entry, the visit diagnoses are documented as T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation.",
+        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. This is the first recorded visit in the available record. This encounter has no prior_visit_id and is the first documented visit in the available timeline."
       },
       "linked_documents": [
         "DOC-CHR-005-001"
@@ -136,7 +136,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-08-13",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -145,15 +145,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-08-13",
+          "start_date": "2021-05-15",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 48-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 144/91 mmHg, heart rate 83 bpm, weight 83.7 kg, and BMI 27.0. Laboratory data for this visit: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-005-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-005-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 48-year-old male patient seen for a follow_up visit. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. This is documented as a follow-up encounter in the visit record.",
+        "objective": "The visit record lists blood pressure 144/91 mmHg, heart rate 83 bpm, weight 83.7 kg, and BMI 27.0. Documented lab results: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-002.",
+        "assessment": "The visit diagnosis summary includes T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril and metformin; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The plan data records medication entries without changing their documented form: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-001. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril and metformin; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-CHR-005-002"
@@ -206,7 +206,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-11-11",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -215,15 +215,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-11-11",
+          "start_date": "2021-05-15",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 48-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 142/90 mmHg, heart rate 82 bpm, weight 83.3 kg, and BMI 26.9. Laboratory data for this visit: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-005-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-005-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 48-year-old male patient seen for a follow_up visit. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. This is documented as a follow-up encounter in the visit record.",
+        "objective": "The objective record for this visit includes blood pressure 142/90 mmHg, heart rate 82 bpm, weight 83.3 kg, and BMI 26.9. Laboratory values are recorded as: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-003.",
+        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-002.",
+        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-002. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-002."
       },
       "linked_documents": [
         "DOC-CHR-005-003"
@@ -276,7 +276,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-02-09",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -294,15 +294,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-02-09",
+          "start_date": "2021-05-15",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 48-year-old male patient attending a hospitalization visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 148/93 mmHg, heart rate 81 bpm, weight 82.9 kg, and BMI 26.7. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-005-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-CHR-005-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this hospitalization entry, the record identifies a 48-year-old male patient. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: glibenclamide, lisinopril, and metformin; visit type: hospitalization; timeline link: prior visit documented.",
+        "objective": "Recorded vitals include blood pressure 148/93 mmHg, heart rate 81 bpm, weight 82.9 kg, and BMI 26.7. Laboratory results for the encounter: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-004.",
+        "assessment": "For this longitudinal record entry, the visit diagnoses are documented as T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation.",
+        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-003. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-003."
       },
       "linked_documents": [
         "DOC-CHR-005-004"
@@ -355,7 +355,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-05-10",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -364,7 +364,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-05-10",
+          "start_date": "2022-02-09",
           "stop_date": null
         },
         {
@@ -373,7 +373,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-05-10",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -387,10 +387,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 49-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 138/88 mmHg, heart rate 80 bpm, weight 82.5 kg, and BMI 26.6. Laboratory data for this visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-005-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-005-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this follow_up entry, the record identifies a 49-year-old male patient. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, glibenclamide, lisinopril, and metformin; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Recorded vitals include blood pressure 138/88 mmHg, heart rate 80 bpm, weight 82.5 kg, and BMI 26.6. Laboratory results for the encounter: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-005.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. The patient-level condition field documents type 2 diabetes and hypertension.",
+        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-004. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-004."
       },
       "linked_documents": [
         "DOC-CHR-005-005"
@@ -443,7 +443,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-08-08",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -452,7 +452,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-08-08",
+          "start_date": "2022-02-09",
           "stop_date": null
         },
         {
@@ -461,7 +461,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-08-08",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -470,15 +470,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-08-08",
+          "start_date": "2022-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 49-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/87 mmHg, heart rate 79 bpm, weight 82.1 kg, and BMI 26.5. Laboratory data for this visit: HbA1c 7.2 % (HIGH); FBG 127 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-005-006.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-005-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The longitudinal chart includes a follow_up visit for a 49-year-old male patient. Documented conditions are T2DM, HTN. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents type 2 diabetes and hypertension.",
+        "objective": "The objective record for this visit includes blood pressure 136/87 mmHg, heart rate 79 bpm, weight 82.1 kg, and BMI 26.5. Laboratory values are recorded as: HbA1c 7.2 % (HIGH); FBG 127 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-006.",
+        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-005.",
+        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-005. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-005."
       },
       "linked_documents": [
         "DOC-CHR-005-006"
@@ -531,7 +531,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-11-06",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -540,7 +540,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-11-06",
+          "start_date": "2022-02-09",
           "stop_date": null
         },
         {
@@ -549,7 +549,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-11-06",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -558,15 +558,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-11-06",
+          "start_date": "2022-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 49-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 134/86 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.4. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-005-007.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-005-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this follow_up entry, the record identifies a 49-year-old male patient. The condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. Retrieval focus includes patient-level conditions: type 2 diabetes and hypertension; visit diagnoses: type 2 diabetes and hypertension; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, glibenclamide, lisinopril, and metformin; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "The objective record for this visit includes blood pressure 134/86 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.4. Laboratory values are recorded as: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-007.",
+        "assessment": "For this longitudinal record entry, the visit diagnoses are documented as T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation.",
+        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-006. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-006."
       },
       "linked_documents": [
         "DOC-CHR-005-007"
@@ -619,7 +619,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-02-04",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -628,7 +628,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-02-04",
+          "start_date": "2022-02-09",
           "stop_date": null
         },
         {
@@ -637,7 +637,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-02-04",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -646,15 +646,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-02-04",
+          "start_date": "2022-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 49-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 132/85 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.3. Laboratory data for this visit: HbA1c 6.7 % (HIGH); FBG 109 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-005-008.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-005-007. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow_up encounter is recorded for a 49-year-old male patient. The charted condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-007.",
+        "objective": "Recorded vitals include blood pressure 132/85 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.3. Laboratory results for the encounter: HbA1c 6.7 % (HIGH); FBG 109 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-008.",
+        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-007.",
+        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-007. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-007."
       },
       "linked_documents": [
         "DOC-CHR-005-008"
@@ -707,7 +707,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-05-05",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -716,7 +716,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-05-05",
+          "start_date": "2022-02-09",
           "stop_date": null
         },
         {
@@ -725,7 +725,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-05-05",
+          "start_date": "2021-05-15",
           "stop_date": null
         },
         {
@@ -734,15 +734,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-05-05",
+          "start_date": "2022-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 50-year-old male patient attending a follow_up visit. The structured condition list records T2DM, HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 130/84 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.1. Laboratory data for this visit: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-005-009.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-CHR-005-008. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow_up encounter is recorded for a 50-year-old male patient. The charted condition list records T2DM, HTN. The patient-level condition field documents type 2 diabetes and hypertension. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-008.",
+        "objective": "The visit record lists blood pressure 130/84 mmHg, heart rate 79 bpm, weight 81.7 kg, and BMI 26.1. Documented lab results: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-005-009.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN. The visit diagnosis field documents type 2 diabetes and hypertension for this encounter. The patient-level condition field documents type 2 diabetes and hypertension.",
+        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-005-008. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-005-008."
       },
       "linked_documents": [
         "DOC-CHR-005-009"

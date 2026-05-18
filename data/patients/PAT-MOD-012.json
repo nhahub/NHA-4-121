@@ -47,10 +47,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 32-year-old female patient attending a initial visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 82 bpm, weight 62.0 kg, and BMI 22.4. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 32-year-old female patient is recorded for a initial visit. The documented condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
+        "objective": "Objective findings record blood pressure 122/78 mmHg, heart rate 82 bpm, weight 62.0 kg, and BMI 22.4. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-001.",
+        "assessment": "The visit diagnosis list records GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. The patient-level condition field documents gastroesophageal reflux disease.",
+        "plan": "The visit plan lists the medication entries documented in the record: Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. This is the first recorded visit in the available record. This encounter has no prior_visit_id and is the first documented visit in the available timeline."
       },
       "linked_documents": [
         "DOC-MOD-012-001"
@@ -80,15 +80,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-02-08",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 121/77 mmHg, heart rate 81 bpm, weight 61.6 kg, and BMI 22.3. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 33-year-old female patient. The condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Objective findings record blood pressure 121/77 mmHg, heart rate 81 bpm, weight 61.6 kg, and BMI 22.3. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-002.",
+        "assessment": "Diagnoses documented for this visit are summarized as GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "Medication details in the plan are recorded as Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-001."
       },
       "linked_documents": [
         "DOC-MOD-012-002"
@@ -118,15 +118,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-04-08",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 80 bpm, weight 61.2 kg, and BMI 22.2. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 33-year-old female patient. The condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Objective findings record blood pressure 120/76 mmHg, heart rate 80 bpm, weight 61.2 kg, and BMI 22.2. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-003.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. The patient-level condition field documents gastroesophageal reflux disease.",
+        "plan": "Medication details in the plan are recorded as Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-002."
       },
       "linked_documents": [
         "DOC-MOD-012-003"
@@ -156,15 +156,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-06-07",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 119/75 mmHg, heart rate 79 bpm, weight 60.8 kg, and BMI 22.0. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 33-year-old female patient seen for a follow_up visit. The condition list records GERD. The patient-level condition field documents gastroesophageal reflux disease. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Structured objective data lists blood pressure 119/75 mmHg, heart rate 79 bpm, weight 60.8 kg, and BMI 22.0. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-004.",
+        "assessment": "Diagnoses documented for this visit are summarized as GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The visit plan lists the medication entries documented in the record: Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-003. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-012-003."
       },
       "linked_documents": [
         "DOC-MOD-012-004"
@@ -194,15 +194,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-09-05",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 118/74 mmHg, heart rate 78 bpm, weight 60.4 kg, and BMI 21.9. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 33-year-old female patient is recorded for a follow_up visit. The documented condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-012-004.",
+        "objective": "Structured objective data lists blood pressure 118/74 mmHg, heart rate 78 bpm, weight 60.4 kg, and BMI 21.9. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-005.",
+        "assessment": "Diagnoses documented for this visit are summarized as GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The plan section records the active medication entries as documented: Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-004."
       },
       "linked_documents": [
         "DOC-MOD-012-005"
@@ -232,15 +232,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-12-04",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 33-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 117/74 mmHg, heart rate 78 bpm, weight 60.0 kg, and BMI 21.8. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-006.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 33-year-old female patient. The condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "The visit measurements include blood pressure 117/74 mmHg, heart rate 78 bpm, weight 60.0 kg, and BMI 21.8. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-006.",
+        "assessment": "The visit diagnosis list records GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. The patient-level condition field documents gastroesophageal reflux disease.",
+        "plan": "The documented plan includes the following medication entries: Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-005. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-012-006"
@@ -270,15 +270,15 @@
           "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2025-03-04",
+          "start_date": "2023-12-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 34-year-old female patient attending a follow_up visit. The structured condition list records GERD. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 117/74 mmHg, heart rate 78 bpm, weight 59.6 kg, and BMI 21.7. Laboratory data for this visit: no lab results recorded. Linked document references: DOC-MOD-012-007.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: GERD. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Omeprazole 20 mg once_daily via oral. Prior visit reference is VST-MOD-012-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 34-year-old female patient. The condition list includes GERD. The patient-level condition field documents gastroesophageal reflux disease. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Structured objective data lists blood pressure 117/74 mmHg, heart rate 78 bpm, weight 59.6 kg, and BMI 21.7. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-012-007.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. No laboratory entries are documented for this visit.",
+        "plan": "The documented plan includes the following medication entries: Omeprazole 20 mg once_daily via oral. The medication list includes documented entries related to gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-012-006. Retrieval focus includes patient-level conditions: gastroesophageal reflux disease; visit diagnoses: gastroesophageal reflux disease; medication entries: omeprazole; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-012-007"

@@ -31,8 +31,10 @@ import pytest
 
 from soap.soap_contract import (
     ALLOWED_TEMPLATE_PLACEHOLDERS,
+    CORE_TEMPLATE_PLACEHOLDERS,
     EXPECTED_TEMPLATE_COUNTS,
     PATIENT_TIERS,
+    SEMANTIC_TEMPLATE_PLACEHOLDERS,
     SOAP_SECTIONS,
     SoapTemplate,
 )
@@ -89,6 +91,38 @@ SAMPLE_FACT_CONTEXT: dict[str, Any] = {
     "heart_rate": 78,
     "weight_kg": 82.4,
     "bmi": 29.1,
+
+    # Semantic context fields produced by soap_semantics.py through
+    # build_fact_context(). These values are sample render inputs only;
+    # templates themselves must not hardcode any condition, lab, medication,
+    # patient, visit, or document value.
+    "condition_focus_text": (
+        "The patient-level condition field documents type 2 diabetes and "
+        "hypertension."
+    ),
+    "diagnosis_focus_text": (
+        "The visit diagnosis field documents type 2 diabetes and hypertension "
+        "for this encounter."
+    ),
+    "monitoring_focus_text": (
+        "The visit contains documented monitoring context for type 2 diabetes "
+        "laboratory follow-up."
+    ),
+    "medication_focus_text": (
+        "The medication list includes documented entries related to type 2 "
+        "diabetes medication documentation."
+    ),
+    "visit_context_text": (
+        "This is documented as a follow-up encounter in the visit record."
+    ),
+    "timeline_context_text": (
+        "This encounter is linked to a prior documented visit through "
+        "prior_visit_id VST-MOD-003-003."
+    ),
+    "retrieval_focus_text": (
+        "Retrieval focus includes patient-level conditions, visit diagnoses, "
+        "laboratory entries, medication entries, visit type, and timeline link."
+    ),
 }
 
 
@@ -161,7 +195,7 @@ def _normalize_for_phrase_check(text: str) -> str:
 
 def test_template_version_is_locked_and_non_empty() -> None:
     """Template version must be explicit for deterministic regression tracking."""
-    assert TEMPLATE_VERSION == "soap-templates-v1.0"
+    assert TEMPLATE_VERSION == "soap-templates-v1.1"
 
 
 def test_total_template_count_is_expected() -> None:
@@ -286,6 +320,21 @@ def test_templates_use_only_allowed_placeholders() -> None:
     for template in _iter_templates():
         placeholders = _extract_placeholders(template.text)
         assert placeholders <= ALLOWED_TEMPLATE_PLACEHOLDERS
+
+
+def test_semantic_placeholders_are_used_by_rag_oriented_templates() -> None:
+    """
+    Semantic placeholders should be used by the v1.1 registry.
+
+    This verifies that the registry actually benefits from soap_semantics.py
+    instead of merely allowing the new placeholders.
+    """
+    all_placeholders: set[str] = set()
+
+    for template in _iter_templates():
+        all_placeholders.update(_extract_placeholders(template.text))
+
+    assert SEMANTIC_TEMPLATE_PLACEHOLDERS <= all_placeholders
 
 
 def test_templates_include_required_placeholders_for_their_section() -> None:
@@ -478,9 +527,18 @@ def test_allowed_placeholder_set_contains_expected_fact_context_keys() -> None:
         "heart_rate",
         "weight_kg",
         "bmi",
+        "condition_focus_text",
+        "diagnosis_focus_text",
+        "monitoring_focus_text",
+        "medication_focus_text",
+        "visit_context_text",
+        "timeline_context_text",
+        "retrieval_focus_text",
     }
 
     assert expected_required_keys <= ALLOWED_TEMPLATE_PLACEHOLDERS
+    assert CORE_TEMPLATE_PLACEHOLDERS <= ALLOWED_TEMPLATE_PLACEHOLDERS
+    assert SEMANTIC_TEMPLATE_PLACEHOLDERS <= ALLOWED_TEMPLATE_PLACEHOLDERS
 
 
 def test_template_registry_contains_no_unknown_sections_or_tiers() -> None:

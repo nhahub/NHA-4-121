@@ -53,6 +53,9 @@ from config.constants import (
 )
 
 
+_MAX_CKD_PATIENTS = 2
+
+
 @dataclass(frozen=True)
 class PatientBlueprint:
     """
@@ -385,7 +388,7 @@ def _date_of_birth_for(tier: str, index: int, sex: str) -> str:
     """
     Generate deterministic adult date_of_birth values.
 
-    The values are designed to keep age_at_visit within 18–80 years.
+    The values are designed to keep age_at_visit within 18-80 years.
     """
     if tier == "normal":
         base_year = 1992 if sex == "male" else 1996
@@ -510,18 +513,29 @@ def _assert_unique_names(blueprints: list[PatientBlueprint]) -> None:
 
 def _assert_ckd_constraints(blueprints: list[PatientBlueprint]) -> None:
     """
-    Enforce CKD semantic rule before patient JSON generation.
+    Enforce CKD semantic rules before patient JSON generation.
 
     CKD is complication-only:
     - chronic tier only
     - requires T2DM
     - requires HTN
+    - allowed in at most two patients in the locked 30-patient dataset
     """
-    for blueprint in blueprints:
-        conditions = set(blueprint.conditions)
+    ckd_blueprints = [
+        blueprint
+        for blueprint in blueprints
+        if "CKD" in blueprint.conditions
+    ]
 
-        if "CKD" not in conditions:
-            continue
+    if len(ckd_blueprints) > _MAX_CKD_PATIENTS:
+        ckd_patient_ids = [blueprint.patient_id for blueprint in ckd_blueprints]
+        raise ValueError(
+            f"CKD patient count must not exceed {_MAX_CKD_PATIENTS}. "
+            f"Found {len(ckd_blueprints)}: {ckd_patient_ids}."
+        )
+
+    for blueprint in ckd_blueprints:
+        conditions = set(blueprint.conditions)
 
         if blueprint.tier != "chronic":
             raise ValueError(f"{blueprint.patient_id}: CKD requires chronic tier.")

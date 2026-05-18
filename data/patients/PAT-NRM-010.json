@@ -48,10 +48,10 @@
       ],
       "medications": [],
       "soap_note": {
-        "subjective": "The synthetic record documents a 25-year-old female patient attending a initial visit. The structured condition list records no chronic conditions. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 124/79 mmHg, heart rate 72 bpm, weight 64.2 kg, and BMI 22.6. Laboratory data for this visit: Hemoglobin 12.9 g/dL (NORMAL); Ferritin 62 ng/mL (NORMAL). Linked document references: DOC-NRM-010-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: no chronic diagnosis listed. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: no active whitelisted medications recorded. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 25-year-old female patient seen for a initial visit. The condition list records no chronic conditions. The record does not list chronic conditions in the patient-level condition field. This is documented as the first encounter type in the visit record.",
+        "objective": "Vitals for the encounter show blood pressure 124/79 mmHg, heart rate 72 bpm, weight 64.2 kg, and BMI 22.6. Available laboratory results: Hemoglobin 12.9 g/dL (NORMAL); Ferritin 62 ng/mL (NORMAL). The visit includes laboratory entries documented in the objective data. Linked document references: DOC-NRM-010-001.",
+        "assessment": "The documented diagnosis summary for this encounter is: no chronic diagnosis listed. The visit diagnosis field does not list a chronic diagnosis for this encounter. This is documented as the first encounter type in the visit record.",
+        "plan": "The plan section records the active medication entries as documented: no active whitelisted medications recorded. No active medication entries are documented for this visit. This is the first recorded visit in the available record."
       },
       "linked_documents": [
         "DOC-NRM-010-001"
@@ -89,10 +89,10 @@
       ],
       "medications": [],
       "soap_note": {
-        "subjective": "The synthetic record documents a 25-year-old female patient attending a follow_up visit. The structured condition list records no chronic conditions. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 123/78 mmHg, heart rate 71 bpm, weight 64.2 kg, and BMI 22.5. Laboratory data for this visit: Hemoglobin 12.9 g/dL (NORMAL); Ferritin 63 ng/mL (NORMAL). Linked document references: DOC-NRM-010-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: no chronic diagnosis listed. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: no active whitelisted medications recorded. Prior visit reference is VST-NRM-010-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 25-year-old female patient seen for a follow_up visit. The condition list records no chronic conditions. The record does not list chronic conditions in the patient-level condition field. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Objective findings record blood pressure 123/78 mmHg, heart rate 71 bpm, weight 64.2 kg, and BMI 22.5. Laboratory results for this visit: Hemoglobin 12.9 g/dL (NORMAL); Ferritin 63 ng/mL (NORMAL). The visit includes laboratory entries documented in the objective data. Linked document references: DOC-NRM-010-002.",
+        "assessment": "The documented diagnosis summary for this encounter is: no chronic diagnosis listed. The visit diagnosis field does not list a chronic diagnosis for this encounter. This is documented as a follow-up encounter in the visit record.",
+        "plan": "Medication information in the plan is documented as no active whitelisted medications recorded. No active medication entries are documented for this visit. Prior visit reference is VST-NRM-010-001. This encounter is linked to a prior documented visit through prior_visit_id VST-NRM-010-001."
       },
       "linked_documents": [
         "DOC-NRM-010-002"

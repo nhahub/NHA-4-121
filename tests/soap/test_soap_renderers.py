@@ -3,17 +3,20 @@ tests/test_soap_renderers.py
 
 Unit tests for deterministic SOAP fact-rendering utilities.
 
-These tests protect Phase 1 and Phase 2 preparation of the SOAP refactor:
-    - no wording changes,
-    - no formatting changes,
-    - no normalization changes,
-    - no schema changes,
+These tests protect the deterministic SOAP fact-rendering layer:
+    - exact lab formatting,
+    - exact medication formatting,
+    - exact BP formatting,
+    - stable age calculation,
+    - stable raw fact extraction,
+    - deterministic semantic context fields for RAG-oriented SOAP v1.1,
     - no probabilistic behavior,
     - no LLM behavior,
     - no template rendering behavior inside soap_renderers.py.
 
-The assertions in this file intentionally use exact string equality to preserve
-compatibility with the deterministic SOAP generation pipeline.
+The assertions in this file intentionally use exact string equality for core
+rendered facts and selected semantic fields to preserve compatibility with the
+deterministic SOAP generation pipeline.
 """
 
 from __future__ import annotations
@@ -378,6 +381,101 @@ def test_build_fact_context_preserves_exact_prior_visit_text(
     assert facts["prior_text"] == "Prior visit reference is VST-CHR-002-003."
 
 
+def test_build_fact_context_builds_exact_semantic_condition_context(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Semantic condition and diagnosis context must be deterministic and grounded."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    assert (
+        facts["condition_focus_text"]
+        == (
+            "The patient-level condition field documents type 2 diabetes, "
+            "hypertension, and asthma."
+        )
+    )
+    assert (
+        facts["diagnosis_focus_text"]
+        == (
+            "The visit diagnosis field documents type 2 diabetes and hypertension "
+            "for this encounter."
+        )
+    )
+
+
+def test_build_fact_context_builds_exact_semantic_monitoring_context(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Semantic monitoring context must reflect only documented lab entries."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    assert (
+        facts["monitoring_focus_text"]
+        == (
+            "The visit contains documented monitoring context for type 2 diabetes "
+            "laboratory follow-up and hypertension kidney-related laboratory "
+            "documentation."
+        )
+    )
+
+
+def test_build_fact_context_builds_exact_semantic_medication_context(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Semantic medication context must reflect only documented medications."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    assert (
+        facts["medication_focus_text"]
+        == (
+            "The medication list includes documented entries related to type 2 "
+            "diabetes medication documentation, hypertension medication "
+            "documentation, and asthma medication documentation."
+        )
+    )
+
+
+def test_build_fact_context_builds_exact_visit_and_timeline_semantic_context(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Visit and timeline semantic context must remain deterministic."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    assert (
+        facts["visit_context_text"]
+        == "This is documented as a follow-up encounter in the visit record."
+    )
+    assert (
+        facts["timeline_context_text"]
+        == (
+            "This encounter is linked to a prior documented visit through "
+            "prior_visit_id VST-CHR-002-003."
+        )
+    )
+
+
+def test_build_fact_context_builds_retrieval_focus_text(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Retrieval focus text must contain condition, lab, medication, and timeline signals."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    retrieval_focus_text = facts["retrieval_focus_text"]
+
+    assert retrieval_focus_text.startswith("Retrieval focus includes ")
+    assert "patient-level conditions:" in retrieval_focus_text
+    assert "visit diagnoses:" in retrieval_focus_text
+    assert "laboratory entries:" in retrieval_focus_text
+    assert "medication entries:" in retrieval_focus_text
+    assert "visit type: follow_up" in retrieval_focus_text
+    assert "timeline link: prior visit documented" in retrieval_focus_text
+
+
 def test_build_fact_context_empty_labs_preserves_exact_empty_state(
     sample_patient: dict[str, Any],
 ) -> None:
@@ -459,7 +557,7 @@ def test_build_fact_context_null_prior_visit_preserves_exact_first_visit_text(
     facts = build_fact_context(patient, visit)
 
     assert facts["prior_visit_id"] is None
-    assert facts["prior_text"] == "This is the first recorded visit in the synthetic record."
+    assert facts["prior_text"] == "This is the first recorded visit in the available record."
 
 
 def test_build_fact_context_combined_empty_state_behavior(
@@ -490,7 +588,31 @@ def test_build_fact_context_combined_empty_state_behavior(
     assert facts["lab_text"] == "no lab results recorded"
     assert facts["medication_text"] == "no active whitelisted medications recorded"
     assert facts["linked_documents_text"] == "none"
-    assert facts["prior_text"] == "This is the first recorded visit in the synthetic record."
+    assert facts["prior_text"] == "This is the first recorded visit in the available record."
+    assert (
+        facts["condition_focus_text"]
+        == "The record does not list chronic conditions in the patient-level condition field."
+    )
+    assert (
+        facts["diagnosis_focus_text"]
+        == "The visit diagnosis field does not list a chronic diagnosis for this encounter."
+    )
+    assert facts["monitoring_focus_text"] == "No laboratory entries are documented for this visit."
+    assert (
+        facts["medication_focus_text"]
+        == "No active medication entries are documented for this visit."
+    )
+    assert (
+        facts["visit_context_text"]
+        == "This is documented as the first encounter type in the visit record."
+    )
+    assert (
+        facts["timeline_context_text"]
+        == (
+            "This encounter has no prior_visit_id and is the first documented visit "
+            "in the available timeline."
+        )
+    )
 
 
 def test_build_fact_context_is_deterministic_for_same_input(
@@ -503,6 +625,31 @@ def test_build_fact_context_is_deterministic_for_same_input(
     second = build_fact_context(sample_patient, visit)
 
     assert first == second
+
+
+def test_build_fact_context_contains_all_semantic_keys(
+    sample_patient: dict[str, Any],
+) -> None:
+    """Fact context must expose all semantic placeholders used by templates."""
+    visit = sample_patient["visits"][0]
+    facts = build_fact_context(sample_patient, visit)
+
+    semantic_keys = (
+        "condition_focus_text",
+        "diagnosis_focus_text",
+        "monitoring_focus_text",
+        "medication_focus_text",
+        "visit_context_text",
+        "timeline_context_text",
+        "retrieval_focus_text",
+    )
+
+    for key in semantic_keys:
+        assert key in facts
+        assert isinstance(facts[key], str)
+        assert facts[key]
+        assert "{" not in facts[key]
+        assert "}" not in facts[key]
 
 
 def test_build_fact_context_does_not_mutate_patient_or_visit(

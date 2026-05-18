@@ -1,256 +1,433 @@
-# 1. Project Title
-
 # AI-Based Clinical Record Summarization System
 
-> A Retrieval-Augmented Generation (RAG) academic AI engineering project for retrieving, summarizing, and citing synthetic clinical records safely.
+> Academic Retrieval-Augmented Generation (RAG) system for safe retrieval, summarization, and citation of **synthetic clinical records**.
 
 ---
 
-# 2. Project Overview
+## 1. Project Overview
 
-**AI-Based Clinical Record Summarization System** is an academic AI engineering project designed to demonstrate how Retrieval-Augmented Generation can support safe retrieval and summarization of **synthetic medical records**.
+**AI-Based Clinical Record Summarization System** is a DEPI graduation project that demonstrates how Retrieval-Augmented Generation can retrieve and summarize synthetic clinical records while keeping answers grounded in documented evidence.
 
-The system allows users to ask questions about a selected synthetic patient record, retrieve relevant information from local clinical data, generate grounded summaries, and display source citations for transparency.
+The system allows a user to select a synthetic patient, ask a question, retrieve relevant record chunks, generate a grounded answer, and display citations that point back to the supporting patient record evidence.
 
 This project is built for:
 
 - DEPI graduation evaluation
-- AI engineering portfolio presentation
-- RAG system demonstration
-- Academic software architecture practice
+- Academic AI engineering demonstration
+- RAG system architecture practice
+- GitHub portfolio presentation
 - Safe AI response design using synthetic data
 
-The system does **not** diagnose, recommend treatment, predict disease, or perform medical inference. It only retrieves and summarizes documented information from available synthetic records.
+This system **does not** diagnose, recommend treatment, prescribe medication, predict disease, infer undocumented conditions, use real patient data, or connect to real hospital infrastructure. It only retrieves and summarizes documented synthetic records.
 
 ---
 
-# 3. Key Features
+## 2. Core Safety Rules
 
-- 🔎 **RAG-Based Record Retrieval**
-  Retrieves relevant synthetic patient record chunks using semantic search.
+The following rules are locked for this project:
 
-- 🧠 **Grounded Summarization**
-  Generates answers only from retrieved patient records.
-
-- 📌 **Source Citations**
-  Displays supporting record sources for AI-generated answers.
-
-- 🗓️ **Timeline Retrieval**
-  Provides patient visit history and documented medical progression.
-
-- ⚠️ **Allergy History Retrieval**
-  Surfaces documented allergy information from synthetic records.
-
-- 📄 **OCR-Supported Retrieval**
-  Supports scanned document extraction using Google Vision OCR and local cache.
-
-- 🖥️ **Streamlit Demo Interface**
-  Provides an interactive frontend for project demonstration.
-
-- 🚀 **FastAPI Backend**
-  Exposes clean API endpoints for query, timeline, and summary workflows.
-
-- 🐳 **Docker Reproducibility**
-  Supports reproducible local execution using Docker Compose.
+| Area | Rule |
+|---|---|
+| Medical safety | No diagnosis, treatment recommendation, prediction, or undocumented inference |
+| Data source | Synthetic patient records only |
+| Grounding | No retrieved evidence = no generated medical answer |
+| Citations | Every generated answer must include supporting citations |
+| Validation | Patient JSON files must pass validation before ingestion |
+| Blood pressure | BP exists only inside `visit.vitals` |
+| BP in labs | BP must never appear in `visit.labs` |
+| BP in metadata | BP must never appear in ChromaDB metadata |
+| Generators | Deterministic Python only; no LLM calls |
+| SOAP | Deterministic template-based SOAP generation from structured facts only |
+| RAG | LLM is used only for grounded answer generation from retrieved chunks |
+| Architecture | No Kubernetes, microservices, PostgreSQL, Redis, Celery, LangGraph, or agent orchestration |
 
 ---
 
-# 4. System Architecture Overview
+## 3. Key Features
+
+- **Patient-scoped RAG retrieval** using ChromaDB and semantic search.
+- **Grounded answer generation** using retrieved chunks only.
+- **Source citations** for answer transparency.
+- **Timeline retrieval** from chronological visit records.
+- **Allergy history retrieval** from documented allergy records.
+- **Lab trend retrieval** from structured lab result chunks.
+- **Prescription retrieval** from visit medication records.
+- **Deterministic SOAP notes** generated from structured JSON facts.
+- **Retrieval enrichment layer** to improve semantic retrieval quality.
+- **Retrieval enrichment auditor** to prevent unsupported enrichment text.
+- **Google Vision OCR with offline cache** for scanned synthetic document demo.
+- **FastAPI backend** for query, timeline, summary, and health endpoints.
+- **Streamlit frontend** for interactive academic demo.
+- **Docker Compose local demo** for reproducible execution.
+
+---
+
+## 4. Tech Stack
+
+| Area | Technology |
+|---|---|
+| Language | Python |
+| Backend | FastAPI |
+| Frontend | Streamlit |
+| Vector Store | ChromaDB |
+| Embeddings | Sentence Transformers |
+| Answer LLM | Groq API |
+| OCR | Google Vision OCR with local cache |
+| Data Storage | Local JSON files |
+| Validation | Plain Python validation rules |
+| Containerization | Docker, Docker Compose |
+
+---
+
+## 5. System Architecture
 
 ```text
-User
- │
- ▼
-Streamlit Frontend
- │
- │ HTTP Request
- ▼
+Synthetic Patient Generation
+        ↓
+Validation V1–V11
+        ↓
+Deterministic SOAP Generation
+        ↓
+SOAP Audit
+        ↓
+Final Validation
+        ↓
+Retrieval Enrichment
+        ↓
+Chunking and Metadata Construction
+        ↓
+Embedding
+        ↓
+ChromaDB Ingestion
+        ↓
+Patient-Scoped Retrieval
+        ↓
+Grounded Prompt Construction
+        ↓
+Groq LLM Answer Generation
+        ↓
+Citations
+        ↓
 FastAPI Backend
- │
- │ Calls RAG Services
- ▼
-RAG Engine
- │
- ├── Retrieval
- ├── Prompt Building
- ├── Answer Generation
- └── Citation Formatting
- │
- ▼
-ChromaDB Vector Store
- │
- ▼
-Synthetic Patient Records + OCR Cache
+        ↓
+Streamlit Frontend
 ```
 
-The system follows a modular academic prototype architecture:
-
-- **Frontend:** Streamlit user interface
-- **Backend:** FastAPI API layer
-- **RAG Layer:** Retrieval, prompting, answer generation, citations
-- **Vector Store:** Local ChromaDB database
-- **Data Layer:** Synthetic JSON patient records
-- **OCR Layer:** Google Vision OCR with offline cache support
-
-Detailed architecture documentation is available in [`docs/architecture/`](docs/architecture/).
+The architecture is intentionally modular and academic-demo friendly. It is designed for a small team with clear ownership boundaries and simple local reproducibility.
 
 ---
 
-# 5. Tech Stack
-
-| Area             | Technology             |
-| ---------------- | ---------------------- |
-| Language         | Python                 |
-| Backend          | FastAPI                |
-| Frontend         | Streamlit              |
-| Vector Database  | ChromaDB               |
-| Embeddings       | Sentence Transformers  |
-| LLM Provider     | Groq API               |
-| OCR              | Google Vision OCR      |
-| Data Storage     | Local JSON files       |
-| Containerization | Docker, Docker Compose |
-| Testing          | Python test scripts    |
-
----
-
-# 6. Simplified Repository Structure
+## 6. Repository Structure
 
 ```text
 AI-Based-Clinical-Record-Summarization-System/
-├── backend/        # FastAPI backend
-├── frontend/       # Streamlit frontend
-├── rag/            # Retrieval, prompts, answers, citations
-├── ingestion/      # Chunking and ChromaDB ingestion
-├── generators/     # Synthetic data generation
-├── validators/     # Data validation scripts
-├── ocr/            # OCR extraction and cache
-├── data/           # Synthetic records and local ChromaDB
-├── config/         # Shared constants, settings, prompts
-├── scripts/        # Utility scripts
-├── deployment/     # Docker files
-├── docs/           # Detailed engineering documentation
-├── tests/          # Validation, retrieval, and API tests
-├── logs/           # Runtime logs
+├── backend/        # FastAPI backend and API orchestration
+├── config/         # Constants, paths, settings, prompts, showcase config
+├── data/           # Patient JSON, schema, quarantine, ChromaDB
+├── deployment/     # Docker and Docker Compose files
+├── docs/           # Engineering documentation and handoff contracts
+├── frontend/       # Streamlit demo interface
+├── generators/     # Deterministic synthetic patient generation
+├── ingestion/      # Retrieval enrichment, chunking, metadata, ingestion
+├── logs/           # Validation and runtime logs
+├── ocr/            # OCR extraction, cache, offline loading
+├── rag/            # Retrieval, prompts, grounding, citations, answer generation
+├── scripts/        # Pipeline workflow scripts
+├── soap/           # Deterministic SOAP templates, rendering, audit
+├── tests/          # Validation, retrieval, chunking, API, smoke tests
+├── validators/     # V1–V11 validation rules and reports
 ├── requirements.txt
 └── README.md
 ```
 
-Each major folder has a focused responsibility to support clean teamwork, maintainability, and demo stability.
-
 ---
 
-# 7. RAG Pipeline Summary
+## 7. Data Pipeline
+
+The data pipeline is deterministic and validation-gated.
 
 ```text
-Synthetic Patient JSON
-        │
-        ▼
-Validation
-        │
-        ▼
-Chunking
-        │
-        ▼
-Embedding
-        │
-        ▼
-ChromaDB Storage
-        │
-        ▼
-Semantic Retrieval
-        │
-        ▼
-Prompt Construction
-        │
-        ▼
-Groq LLM Answer
-        │
-        ▼
-Citations Displayed
+patient shells
+→ visits
+→ medications
+→ labs
+→ allergies
+→ structured validation
+→ SOAP generation
+→ SOAP audit
+→ final validation
+→ approved export to data/patients
+→ invalid export to data/quarantine
 ```
 
-The project follows a **retrieval-first philosophy**:
+Important rules:
 
-> The system should retrieve the correct evidence before generating any answer.
-
-All AI responses must be grounded in retrieved records and must include citations. Detailed RAG design is available in [`docs/rag/`](docs/rag/).
+- `data/patients/` contains approved patient JSON files only.
+- `data/quarantine/` contains invalid or blocked patient files and issue reports.
+- `data/chromadb/` is runtime output produced by ingestion.
+- Validation is the hard gate before ingestion.
 
 ---
 
-# 8. Quick Start
+## 8. Validation System
 
-## Clone the Repository
+Validation rules are implemented as V1–V11.
+
+| Rule | Purpose | Severity |
+|---|---|---|
+| V1 | Chronological visit order | FAIL |
+| V2 | Medication/allergy conflict prevention | FAIL |
+| V3 | Impossible vitals and age bounds | FAIL |
+| V4 | Required fields and forbidden `demographics.age` | WARN/FAIL |
+| V5 | `prior_visit_id` and allergy `source_visit_id` integrity | WARN |
+| V6 | Duplicate `visit_id` prevention | FAIL |
+| V7 | Enum validation, ID pattern validation, CKD constraints | FAIL |
+| V8 | Date format validation | FAIL |
+| V9 | BP forbidden inside labs | FAIL |
+| V10 | `timeline_events` forbidden | FAIL |
+| V11 | Medication whitelist, frequency, and route validation | FAIL |
+
+Dataset-level checks are also run by `scripts/validate_all.py`:
+
+- Expected patient count for `pilot` or `full` mode
+- Expected tier distribution
+- Duplicate `patient_id` detection
+- CKD patient count limit
+
+---
+
+## 9. Locked Dataset Rules
+
+| Domain | Locked Values / Rules |
+|---|---|
+| Dataset size | Pilot: 5 patients; Full: 30 patients |
+| Full distribution | 10 normal, 13 moderate, 7 chronic |
+| Conditions | `T2DM`, `HTN`, `Asthma`, `IDA`, `GERD`, `CKD` |
+| CKD | Chronic-tier only; must co-occur with `T2DM` and `HTN`; max 2 patients |
+| Visit types | `initial`, `follow_up`, `emergency`, `hospitalization` |
+| Lab types | `HbA1c`, `FBG`, `Creatinine`, `Hemoglobin`, `Ferritin` |
+| Medication routes | `oral`, `inhaled` |
+| Source types | `doctor_note`, `lab_result`, `prescription`, `allergy` |
+| BP location | `visit.vitals.bp_systolic` and `visit.vitals.bp_diastolic` only |
+| Forbidden BP locations | labs, lab type enum, ChromaDB metadata, duplicate shadow fields |
+
+---
+
+## 10. SOAP Generation
+
+SOAP notes are generated deterministically from structured JSON facts.
+
+```text
+Structured patient JSON
+        ↓
+SOAP fact context
+        ↓
+Deterministic template selection
+        ↓
+Template rendering
+        ↓
+SOAP note dictionary
+        ↓
+SOAP audit
+```
+
+SOAP rules:
+
+- No LLM calls in the current SOAP implementation.
+- No randomization.
+- No Python built-in `hash()` for selection.
+- No medical fact generation.
+- No diagnosis inference.
+- No medication selection.
+- No lab selection.
+- No structured data mutation.
+- SOAP text must preserve structured patient facts exactly.
+
+---
+
+## 11. Retrieval Enrichment Layer
+
+Retrieval enrichment improves semantic retrieval quality without changing the source of truth.
+
+Relevant files:
+
+```text
+ingestion/retrieval_enricher.py
+ingestion/retrieval_enrichment_auditor.py
+```
+
+Supported source types:
+
+```text
+doctor_note
+lab_result
+prescription
+allergy
+```
+
+Rules:
+
+- Enrichment text is **retrieval support only**.
+- Structured patient JSON and SOAP notes remain the source of truth.
+- Enrichment must be deterministic.
+- Enrichment must not call an LLM.
+- Enrichment must not build metadata, embeddings, chunks, or ChromaDB records.
+- Enrichment must be audited before it is appended to chunks or ingested.
+- BP must not be added to ChromaDB metadata.
+
+---
+
+## 12. RAG Pipeline
+
+```text
+User query
+        ↓
+FastAPI /query
+        ↓
+Patient-scoped retrieval
+        ↓
+ChromaDB top-k chunks
+        ↓
+Grounding check
+        ↓
+Prompt construction
+        ↓
+Groq LLM answer
+        ↓
+Citation formatting
+        ↓
+Streamlit display
+```
+
+RAG rules:
+
+- Retrieval must be patient-scoped.
+- Allergy queries should prioritize `allergy` chunks.
+- Medication queries should prioritize `prescription` chunks.
+- Lab trend queries should prioritize `lab_result` chunks.
+- BP queries should retrieve `doctor_note` chunks because BP is present in SOAP objective text, not metadata.
+- If retrieved chunks do not support the question, the answer should clearly say that the available records do not contain enough evidence.
+
+---
+
+## 13. Quick Start
+
+### 13.1 Clone Repository
 
 ```bash
 git clone https://github.com/nhahub/NHA-4-121.git
 cd AI-Based-Clinical-Record-Summarization-System
 ```
 
-## Create a Virtual Environment
+### 13.2 Create Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
-## Activate the Environment
-
-### Windows
+Windows:
 
 ```bash
 .venv\Scripts\activate
 ```
 
-### macOS / Linux
+macOS / Linux:
 
 ```bash
 source .venv/bin/activate
 ```
 
-## Install Dependencies
+### 13.3 Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Configure Environment Variables
+### 13.4 Configure Environment
 
 ```bash
 cp .env.example .env
 ```
 
-Update `.env` with your local settings and API keys.
+Set required values such as:
 
-## Validate Data
-
-```bash
-python scripts/validate_all.py
+```text
+GROQ_API_KEY=
+GOOGLE_APPLICATION_CREDENTIALS=
+OFFLINE_MODE=true
 ```
 
-## Build the Vector Store
+---
+
+## 14. Full Local Pipeline
+
+Run the full dataset pipeline from the project root.
+
+### 14.1 Generate Full Dataset
+
+```bash
+python scripts/generate_all.py --mode full --clean
+```
+
+### 14.2 Validate Dataset
+
+```bash
+python scripts/validate_all.py --mode full
+```
+
+### 14.3 Dry-Run SOAP Regeneration
+
+```bash
+python scripts/generate_soap.py --dry-run
+```
+
+### 14.4 Generate SOAP Notes
+
+```bash
+python scripts/generate_soap.py
+```
+
+### 14.5 Final Validation
+
+```bash
+python scripts/validate_all.py --mode full
+```
+
+### 14.6 Build Vector Store
 
 ```bash
 python scripts/reset_chromadb.py
 python scripts/ingest_all.py
 ```
 
-## Run Backend
+### 14.7 Test Retrieval
+
+```bash
+python tests/test_retrieval.py
+```
+
+---
+
+## 15. Pilot Pipeline
+
+For a small 5-patient development dataset:
+
+```bash
+python scripts/generate_all.py --mode pilot --clean
+python scripts/validate_all.py --mode pilot
+python scripts/generate_soap.py --dry-run
+python scripts/generate_soap.py
+python scripts/validate_all.py --mode pilot
+```
+
+---
+
+## 16. Run Backend and Frontend
+
+### Backend
 
 ```bash
 uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-## Run Frontend
-
-Open another terminal:
-
-```bash
-streamlit run frontend/app.py
-```
-
-Frontend:
-
-```text
-http://localhost:8501
 ```
 
 Backend API docs:
@@ -259,11 +436,25 @@ Backend API docs:
 http://localhost:8000/docs
 ```
 
+### Frontend
+
+Open another terminal:
+
+```bash
+streamlit run frontend/app.py
+```
+
+Frontend URL:
+
+```text
+http://localhost:8501
+```
+
 ---
 
-# 9. Docker Quick Start
+## 17. Docker Quick Start
 
-Docker is used for reproducible local execution.
+Docker is used for reproducible local demo execution.
 
 ```bash
 cd deployment
@@ -272,247 +463,236 @@ docker compose up --build
 
 Expected services:
 
-| Service            | URL                          |
-| ------------------ | ---------------------------- |
-| FastAPI Backend    | `http://localhost:8000`      |
-| Streamlit Frontend | `http://localhost:8501`      |
-| API Docs           | `http://localhost:8000/docs` |
+| Service | URL |
+|---|---|
+| FastAPI Backend | `http://localhost:8000` |
+| Streamlit Frontend | `http://localhost:8501` |
+| API Docs | `http://localhost:8000/docs` |
 
-Docker setup details are available in [`docs/docker/`](docs/docker/).
+Docker must remain local-first and simple. This project does not use Kubernetes, cloud orchestration, Redis, Celery, or microservices.
 
 ---
 
-# 10. Example API Endpoints
+## 18. API Endpoints
 
-| Method | Endpoint                 | Purpose                           |
-| ------ | ------------------------ | --------------------------------- |
-| `GET`  | `/health`                | Check backend status              |
-| `GET`  | `/patients`              | List available synthetic patients |
-| `POST` | `/query`                 | Ask a grounded RAG question       |
-| `GET`  | `/timeline/{patient_id}` | Retrieve patient timeline         |
-| `GET`  | `/summary/{patient_id}`  | Generate patient summary          |
-| `GET`  | `/ocr/{doc_id}`          | Retrieve cached OCR text          |
+| Method | Endpoint | Purpose |
+|---|---|---|
+| `GET` | `/health` | Check backend and runtime status |
+| `GET` | `/patients` | List available synthetic patients |
+| `POST` | `/query` | Ask a grounded RAG question |
+| `GET` | `/timeline/{patient_id}` | Retrieve chronological patient visit history |
+| `GET` | `/summary/{patient_id}` | Generate grounded patient summary |
+| `GET` | `/ocr/{doc_id}` | Retrieve cached OCR text |
 
-## Example Query Request
-
-```http
-POST /query
-```
+Example query request:
 
 ```json
 {
   "patient_id": "PAT-MOD-001",
-  "query": "Does this patient have any recorded allergies?",
-  "top_k": 5
+  "question": "What medications are documented for this patient?"
 }
 ```
 
-## Example Response
+Expected response shape:
 
 ```json
 {
-  "answer": "The retrieved records show a documented allergy in the patient's allergy registry.",
+  "answer": "Grounded answer based on retrieved records.",
   "citations": [
     {
-      "source_type": "allergy",
-      "visit_id": "VST-MOD-001-002",
-      "visit_date": "2024-02-15"
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-001",
+      "visit_date": "2023-01-10",
+      "source_type": "prescription",
+      "chunk_id": "VST-MOD-001-001-prescription-01"
     }
-  ],
-  "safety_notice": "This answer is based only on retrieved synthetic patient records."
+  ]
 }
 ```
 
-Full API documentation is available in [`docs/api/`](docs/api/).
+---
+
+## 19. OCR Workflow
+
+OCR is used for the scanned-document demo.
+
+```text
+Synthetic scanned document
+        ↓
+Google Vision OCR during preparation
+        ↓
+Raw extracted text
+        ↓
+Light OCR cleaning
+        ↓
+Local OCR cache
+        ↓
+Offline demo retrieval
+```
+
+OCR rules:
+
+- Use Google Vision OCR only during preparation.
+- Cache all OCR outputs before demo.
+- Demo should run with `OFFLINE_MODE=true`.
+- The live demo must not depend on a live Google Vision API call.
+- OCR cleaning should remain lightweight and deterministic.
+- No LLM-based OCR correction.
 
 ---
 
-# 11. Example Queries
+## 20. Demo Workflow
+
+Recommended demo sequence:
+
+1. Start backend.
+2. Start frontend.
+3. Select a showcase patient.
+4. Ask a RAG question.
+5. Show grounded answer.
+6. Show citations.
+7. Open timeline view.
+8. Show chronological visit history.
+9. Ask an allergy-history question.
+10. Show documented allergy retrieval.
+11. Open OCR demo tab.
+12. Show cached OCR text.
+13. Ask a question based on OCR content.
+14. Show cited answer.
+
+Demo rules:
+
+- Use showcase patients only.
+- Use rehearsed queries.
+- Keep fallback screenshots ready.
+- Do not claim diagnosis, treatment recommendation, prediction, or clinical decision support.
+- Use wording such as “retrieves documented records” and “summarizes available synthetic records.”
+
+---
+
+## 21. Important Documentation
+
+| Document | Purpose |
+|---|---|
+| `docs/architecture_summary.md` | High-level system architecture |
+| `docs/team_ownership_and_architecture.md` | Team ownership and folder responsibilities |
+| `docs/project_scope_and_safety_rules.md` | Medical safety and scope boundaries |
+| `docs/data_schema_contract.md` | Patient JSON schema handoff contract |
+| `docs/validation_rules.md` | V1–V11 validation rule explanation |
+| `docs/data_generation_pipeline.md` | Data generation and validation workflow |
+| `docs/rag_handoff_contract.md` | Data-to-RAG handoff for AI/RAG engineer |
+| `docs/retrieval_enrichment_contract.md` | Retrieval enrichment layer contract |
+| `docs/chunking_and_metadata_contract.md` | Chunk and metadata rules |
+| `docs/rag_pipeline.md` | End-to-end RAG behavior |
+| `docs/citation_contract.md` | Citation object and display format |
+| `docs/api_contract.md` | API request/response contract |
+| `docs/demo_script.md` | Final demo script |
+| `docs/fallback_plan.md` | Demo fallback and recovery plan |
+| `docs/llm_project_context.md` | Compact context file for LLM tools used by the team |
+
+---
+
+## 22. Team Ownership Summary
+
+| Area | Primary Owner |
+|---|---|
+| `config/` | Ahmed Hesham |
+| `data/` | Ahmed Hesham |
+| `generators/` | Ahmed Hesham |
+| `validators/` | Ahmed Hesham |
+| `soap/` | Ahmed Hesham |
+| `docs/` | Ahmed Hesham with team input |
+| `ingestion/` | AI/RAG Engineer |
+| `rag/` | AI/RAG Engineer |
+| `backend/` | Backend Developer |
+| `frontend/` | Frontend Developer |
+| `ocr/` | Frontend/OCR Developer |
+| `deployment/` | DevOps/Testing Engineer |
+| `tests/` | DevOps/Testing Engineer with all members |
+
+---
+
+## 23. Development Order
 
 ```text
-Summarize this patient's medical history.
+1. Lock constants and schema
+2. Implement validation rules V1–V11
+3. Generate pilot dataset
+4. Validate pilot dataset
+5. Generate full dataset
+6. Validate full dataset
+7. Generate deterministic SOAP notes
+8. Audit SOAP notes
+9. Validate again
+10. Build retrieval enrichment, chunking, and metadata
+11. Ingest into ChromaDB
+12. Test retrieval quality
+13. Build FastAPI backend
+14. Test API endpoints
+15. Build Streamlit frontend
+16. Integrate OCR cache workflow
+17. Build Docker workflow
+18. Run smoke tests
+19. Prepare demo script
+20. Rehearse final demo
 ```
 
-```text
-What medications has this patient been prescribed?
-```
+Important rule:
 
 ```text
-Does this patient have any recorded allergies?
-```
-
-```text
-Summarize this patient's HbA1c history.
-```
-
-```text
-What happened during the latest visit?
-```
-
-```text
-Show this patient's timeline.
-```
-
-```text
-Summarize the scanned clinical note.
+Do not build or polish the frontend before retrieval works.
 ```
 
 ---
 
-# 12. Documentation Structure
-
-Detailed engineering documentation is stored inside the `docs/` directory.
-
-```text
-docs/
-├── architecture/   # System architecture and module boundaries
-├── rag/            # RAG pipeline, retrieval, prompts, citations
-├── validation/     # Data schema and validation strategy
-├── api/            # API contract and examples
-├── ocr/            # OCR workflow and offline cache strategy
-├── docker/         # Docker setup and local deployment
-├── testing/        # Testing and evaluation strategy
-├── workflow/       # Git workflow and team collaboration
-├── demo/           # Demo script, showcase patients, fallback plan
-└── reports/        # Final technical reports
-```
-
-Recommended documents:
-
-| Area              | Document                                          |
-| ----------------- | ------------------------------------------------- |
-| Architecture      | `docs/architecture/System_Architecture.docx`      |
-| Data & Validation | `docs/validation/Data_Generation_Validation.docx` |
-| RAG               | `docs/rag/RAG_Pipeline_Design.docx`               |
-| API               | `docs/api/API_Contract.docx`                      |
-| OCR               | `docs/ocr/OCR_Architecture.docx`                  |
-| Docker            | `docs/docker/Docker_Deployment_Guide.docx`        |
-| Testing           | `docs/testing/Testing_Evaluation.docx`            |
-| Workflow          | `docs/workflow/Team_Workflow_Git_Strategy.docx`   |
-| Demo              | `docs/demo/Demo_Script.docx`                      |
-| Safety            | `docs/architecture/Safety_and_Scope.docx`         |
-| Final Report      | `docs/reports/Final_Technical_Report.docx`        |
-
----
-
-# 13. Demo Highlights
-
-The final demo focuses on a small number of stable, high-value scenarios:
-
-1. **Grounded RAG Query**
-   - Ask a clinical-record question and show an answer with citations.
-
-2. **Allergy History Retrieval**
-   - Retrieve documented allergy information from synthetic patient records.
-
-3. **Timeline View**
-   - Display patient visit history and progression.
-
-4. **OCR Demo**
-   - Show cached OCR text from a scanned document and retrieve answers from it.
-
-5. **Lab Trend Summary**
-   - Summarize documented lab values across visits.
-
-Before the demo, run:
+## 24. Testing Commands
 
 ```bash
-python scripts/validate_all.py
-python scripts/ingest_all.py
-python tests/test_retrieval.py
-python scripts/warmup_demo.py
+python -m py_compile config/*.py
+python -m py_compile generators/*.py
+python -m py_compile validators/*.py
+python -m py_compile soap/*.py
+python -m py_compile ingestion/*.py
+python -m py_compile scripts/*.py
+```
+
+Dataset validation:
+
+```bash
+python scripts/validate_all.py --mode full
+```
+
+Retrieval enrichment debug:
+
+```bash
+python scripts/check_retrieval_enricher_output.py --patient-id PAT-MOD-001 --visit-index 0
+```
+
+Backend smoke test:
+
+```bash
+curl http://localhost:8000/health
 ```
 
 ---
 
-# 14. Safety & Scope Notice
+## 25. Project Status
 
-This project uses **synthetic medical records only**.
-
-The system is designed for academic demonstration and AI engineering evaluation.
-
-## The System Does
-
-- Retrieve documented synthetic patient information
-- Summarize retrieved records
-- Display source citations
-- Support timeline and allergy history retrieval
-- Support OCR-based document retrieval
-
-## The System Does Not
-
-- Diagnose diseases
-- Recommend treatment
-- Predict disease progression
-- Infer undocumented conditions
-- Replace clinical judgment
-- Use real patient data
-- Connect to real hospital infrastructure
-
-All AI-generated answers must be grounded in retrieved records. If the required information is not found in the retrieved context, the system should state that the available records do not contain enough information.
-
----
-
-# 15. Contributors
-
-| Member                   | Role                                    | Main Ownership                                            | Main Deliverables                                                         |
-| ------------------------ | --------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------- |
-| Ahmed Hesham Kamel       | Team Leader & Data Engineering Lead     | `generators/`, `validators/`, `data/`, `config/`, `docs/` | Valid dataset, schema, validation rules, showcase patients, documentation |
-| Gamal Mohamed Gad        | Retrieval-Augmented Generation Engineer | `ingestion/`, `rag/`, `data/chromadb/`, retrieval tests   | Chunking, embeddings, ChromaDB ingestion, retrieval, grounding, citations |
-| Mahmoud Tarek Mahmoud    | FastAPI Backend Engineer                | `backend/`, API services, API testing                     | API routes, schemas, backend orchestration                                |
-| Youssef Yassin Ibrahim   | Streamlit and OCR Engineer              | `frontend/`, `ocr/`                                       | Demo UI, API client, OCR cache flow, OCR display                          |
-| Mahmoud Mohamed El Faham | Deployment and Testing Engineer         | `deployment/`, `scripts/`, `tests/`, `logs/`              | Docker setup, reproducible local demo, tests, smoke checks                |
-
-Detailed workflow and ownership rules are available in [`docs/workflow/`](docs/workflow/).
-
----
-
-# 16. Future Improvements
-
-Potential post-demo improvements include:
-
-- More synthetic patient records
-- Better retrieval evaluation metrics
-- Improved timeline visualization
-- Enhanced OCR text cleaning
-- Stronger automated testing
-- More detailed citation inspection
-- Optional reranking after baseline retrieval is stable
-- Exportable summary reports
-
-These improvements are intentionally outside the current MVP scope and should not compromise demo stability.
-
----
-
-# 17. Contributors
-
-This project was developed as part of a DEPI academic graduation project.
-
-## Contributors
-
--Team Leader & Data Engineering Lead
-
-- AI/RAG Engineer
-- Backend Developer
-- Frontend & OCR Engineer
-- DevOps & Testing Engineer
-
----
-
-# 18. License
-
-This project is intended for academic and educational use.
-
-Recommended license:
+Current implementation direction:
 
 ```text
-MIT License
+Status: Academic DEPI RAG demo
+Architecture: Local-first, modular, validation-gated
+Dataset: Synthetic patient JSON records
+Validation: V1–V11 + dataset-level checks
+SOAP: Deterministic template-based generation
+RAG: Patient-scoped, citation-based, grounded answers
+OCR: Google Vision with offline cache
+Demo: Streamlit + FastAPI + ChromaDB
 ```
 
-## Academic Disclaimer
+---
 
-This project is not a medical product, not a diagnostic system, and not a clinical decision support tool. It uses synthetic records only and is designed for academic AI engineering demonstration.
+## 26. License
 
-```
-
-```
+This project is intended for academic learning, DEPI evaluation, and portfolio demonstration. It must not be used for real clinical care, diagnosis, treatment, or medical decision-making.

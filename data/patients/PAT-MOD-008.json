@@ -54,10 +54,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 36-year-old female patient attending a initial visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 122/80 mmHg, heart rate 82 bpm, weight 59.0 kg, and BMI 21.9. Laboratory data for this visit: Hemoglobin 9.9 g/dL (LOW); Ferritin 12 ng/mL (LOW). Linked document references: DOC-MOD-008-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This initial note describes a 36-year-old female patient. Conditions recorded in the chart are IDA. This is documented as the first encounter type in the visit record. The patient-level condition field documents iron-deficiency anemia.",
+        "objective": "Objective findings record blood pressure 122/80 mmHg, heart rate 82 bpm, weight 59.0 kg, and BMI 21.9. Laboratory results for this visit: Hemoglobin 9.9 g/dL (LOW); Ferritin 12 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-001.",
+        "assessment": "Diagnoses documented for this visit are summarized as IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: initial; timeline link: first documented visit.",
+        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. This is the first recorded visit in the available record. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: initial; timeline link: first documented visit."
       },
       "linked_documents": [
         "DOC-MOD-008-001"
@@ -102,15 +102,15 @@
           "dose": "200 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-10-09",
+          "start_date": "2023-08-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 36-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 121/79 mmHg, heart rate 81 bpm, weight 58.6 kg, and BMI 21.8. Laboratory data for this visit: Hemoglobin 10.3 g/dL (LOW); Ferritin 17 ng/mL (LOW). Linked document references: DOC-MOD-008-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 36-year-old female patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Objective data from the encounter records blood pressure 121/79 mmHg, heart rate 81 bpm, weight 58.6 kg, and BMI 21.8. Laboratory results: Hemoglobin 10.3 g/dL (LOW); Ferritin 17 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-002.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
+        "plan": "The plan section records the active medication entries as documented: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-001."
       },
       "linked_documents": [
         "DOC-MOD-008-002"
@@ -155,15 +155,15 @@
           "dose": "200 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-12-08",
+          "start_date": "2023-08-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 36-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/78 mmHg, heart rate 80 bpm, weight 58.2 kg, and BMI 21.7. Laboratory data for this visit: Hemoglobin 10.8 g/dL (LOW); Ferritin 22 ng/mL (LOW). Linked document references: DOC-MOD-008-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow_up note describes a 36-year-old female patient. Conditions recorded in the chart are IDA. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents iron-deficiency anemia.",
+        "objective": "Objective findings record blood pressure 120/78 mmHg, heart rate 80 bpm, weight 58.2 kg, and BMI 21.7. Laboratory results for this visit: Hemoglobin 10.8 g/dL (LOW); Ferritin 22 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-003.",
+        "assessment": "Diagnoses documented for this visit are summarized as IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "Medication details in the plan are recorded as Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-002."
       },
       "linked_documents": [
         "DOC-MOD-008-003"
@@ -208,15 +208,15 @@
           "dose": "200 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2024-02-06",
+          "start_date": "2023-08-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 119/77 mmHg, heart rate 79 bpm, weight 57.8 kg, and BMI 21.5. Laboratory data for this visit: Hemoglobin 11.2 g/dL (LOW); Ferritin 27 ng/mL (LOW). Linked document references: DOC-MOD-008-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 37-year-old female patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Structured objective data lists blood pressure 119/77 mmHg, heart rate 79 bpm, weight 57.8 kg, and BMI 21.5. Lab results documented for the visit: Hemoglobin 11.2 g/dL (LOW); Ferritin 27 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-004.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
+        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-003. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-008-004"
@@ -261,15 +261,15 @@
           "dose": "200 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2024-05-06",
+          "start_date": "2023-08-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 57.4 kg, and BMI 21.4. Laboratory data for this visit: Hemoglobin 11.7 g/dL (LOW); Ferritin 32 ng/mL (NORMAL). Linked document references: DOC-MOD-008-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 37-year-old female patient. The condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Objective data from the encounter records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 57.4 kg, and BMI 21.4. Laboratory results: Hemoglobin 11.7 g/dL (LOW); Ferritin 32 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-005.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
+        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-004. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-008-005"
@@ -314,15 +314,15 @@
           "dose": "200 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2024-08-04",
+          "start_date": "2023-08-10",
           "stop_date": "2024-08-04"
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 37-year-old female patient attending a follow_up visit. The structured condition list records IDA. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 117/76 mmHg, heart rate 78 bpm, weight 57.0 kg, and BMI 21.3. Laboratory data for this visit: Hemoglobin 12.2 g/dL (NORMAL); Ferritin 37 ng/mL (NORMAL). Linked document references: DOC-MOD-008-006.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: IDA. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Ferrous sulfate 200 mg twice_daily via oral. Prior visit reference is VST-MOD-008-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 37-year-old female patient. The condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "The visit measurements include blood pressure 117/76 mmHg, heart rate 78 bpm, weight 57.0 kg, and BMI 21.3. Laboratory entries are recorded as: Hemoglobin 12.2 g/dL (NORMAL); Ferritin 37 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-006.",
+        "assessment": "The visit diagnosis list records IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
+        "plan": "Medication details in the plan are recorded as Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-005."
       },
       "linked_documents": [
         "DOC-MOD-008-006"

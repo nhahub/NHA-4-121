@@ -72,8 +72,8 @@ CHRONIC_FACT_CONTEXT: dict[str, Any] = {
 
 
 def test_template_version_is_available_for_selection_seed() -> None:
-    """The selector must use the locked template registry version."""
-    assert TEMPLATE_VERSION == "soap-templates-v1.0"
+    """The selector must use the semantic v1.1 template registry version."""
+    assert TEMPLATE_VERSION == "soap-templates-v1.1"
 
 
 def test_build_template_seed_key_preserves_exact_field_order() -> None:
@@ -93,7 +93,7 @@ def test_build_template_seed_key_preserves_exact_field_order() -> None:
 
     assert (
         seed_key
-        == "soap-templates-v1.0|PAT-MOD-003|VST-MOD-003-004|"
+        == "soap-templates-v1.1|PAT-MOD-003|VST-MOD-003-004|"
         "objective|moderate|follow_up"
     )
 
@@ -111,7 +111,7 @@ def test_build_template_seed_key_trims_edge_whitespace() -> None:
 
     assert (
         seed_key
-        == "soap-templates-v1.0|PAT-MOD-003|VST-MOD-003-004|"
+        == "soap-templates-v1.1|PAT-MOD-003|VST-MOD-003-004|"
         "objective|moderate|follow_up"
     )
 
@@ -119,7 +119,7 @@ def test_build_template_seed_key_trims_edge_whitespace() -> None:
 def test_stable_index_is_deterministic_for_same_seed() -> None:
     """The same seed and group size must always produce the same index."""
     seed_key = (
-        "soap-templates-v1.0|PAT-MOD-003|VST-MOD-003-004|"
+        "soap-templates-v1.1|PAT-MOD-003|VST-MOD-003-004|"
         "objective|moderate|follow_up"
     )
 
@@ -128,7 +128,7 @@ def test_stable_index_is_deterministic_for_same_seed() -> None:
     third = stable_index(seed_key=seed_key, size=4)
 
     assert first == second == third
-    assert first == 1
+    assert first == 3
 
 
 def test_stable_index_returns_value_inside_group_bounds() -> None:
@@ -207,11 +207,11 @@ def test_select_template_with_metadata_returns_complete_selection_record() -> No
     assert selection.section == "objective"
     assert selection.tier == "moderate"
     assert selection.visit_type == "follow_up"
-    assert selection.template == SOAP_TEMPLATES["objective"]["moderate"][1]
-    assert selection.template_index == 1
+    assert selection.template == SOAP_TEMPLATES["objective"]["moderate"][3]
+    assert selection.template_index == 3
     assert selection.template_version == TEMPLATE_VERSION
     assert selection.seed_key == (
-        "soap-templates-v1.0|PAT-MOD-003|VST-MOD-003-004|"
+        "soap-templates-v1.1|PAT-MOD-003|VST-MOD-003-004|"
         "objective|moderate|follow_up"
     )
 
@@ -283,9 +283,9 @@ def test_select_templates_from_fact_context_uses_required_context_keys() -> None
     selected = select_templates_from_fact_context(MODERATE_FACT_CONTEXT)
 
     assert tuple(selected.keys()) == SOAP_SECTIONS
-    assert selected["subjective"].template_id == "SUBJ-MOD-001"
-    assert selected["objective"].template_id == "OBJ-MOD-002"
-    assert selected["assessment"].template_id == "ASM-MOD-001"
+    assert selected["subjective"].template_id == "SUBJ-MOD-002"
+    assert selected["objective"].template_id == "OBJ-MOD-004"
+    assert selected["assessment"].template_id == "ASM-MOD-003"
     assert selected["plan"].template_id == "PLAN-MOD-001"
 
 
@@ -310,9 +310,9 @@ def test_selection_for_moderate_fixture_is_regression_stable() -> None:
     """Template IDs for the moderate regression fixture must remain stable."""
     selected = select_templates_from_fact_context(MODERATE_FACT_CONTEXT)
 
-    assert selected["subjective"].template_id == "SUBJ-MOD-001"
-    assert selected["objective"].template_id == "OBJ-MOD-002"
-    assert selected["assessment"].template_id == "ASM-MOD-001"
+    assert selected["subjective"].template_id == "SUBJ-MOD-002"
+    assert selected["objective"].template_id == "OBJ-MOD-004"
+    assert selected["assessment"].template_id == "ASM-MOD-003"
     assert selected["plan"].template_id == "PLAN-MOD-001"
 
 
@@ -321,8 +321,8 @@ def test_selection_for_normal_fixture_is_regression_stable() -> None:
     selected = select_templates_from_fact_context(NORMAL_FACT_CONTEXT)
 
     assert selected["subjective"].template_id == "SUBJ-NRM-001"
-    assert selected["objective"].template_id == "OBJ-NRM-001"
-    assert selected["assessment"].template_id == "ASM-NRM-002"
+    assert selected["objective"].template_id == "OBJ-NRM-002"
+    assert selected["assessment"].template_id == "ASM-NRM-003"
     assert selected["plan"].template_id == "PLAN-NRM-001"
 
 
@@ -332,8 +332,8 @@ def test_selection_for_chronic_fixture_is_regression_stable() -> None:
 
     assert selected["subjective"].template_id == "SUBJ-CHR-004"
     assert selected["objective"].template_id == "OBJ-CHR-003"
-    assert selected["assessment"].template_id == "ASM-CHR-004"
-    assert selected["plan"].template_id == "PLAN-CHR-004"
+    assert selected["assessment"].template_id == "ASM-CHR-001"
+    assert selected["plan"].template_id == "PLAN-CHR-005"
 
 
 def test_different_visit_ids_can_select_different_templates_without_randomness() -> None:

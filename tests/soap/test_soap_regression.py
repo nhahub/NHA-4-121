@@ -32,7 +32,6 @@ from soap.soap_generator import (
     generate_soap_note,
 )
 from soap.soap_renderers import build_fact_context
-from soap.soap_safety import FORBIDDEN_CLINICAL_PHRASES
 from soap.soap_selector import select_templates_from_fact_context
 
 
@@ -283,28 +282,33 @@ def test_moderate_patient_soap_output_matches_golden_dictionary(
 
     expected = {
         "subjective": (
-            "The synthetic record documents a 56-year-old male patient "
-            "attending a follow_up visit. The structured condition list records "
-            "T2DM, HTN. The note is generated only from stored synthetic facts and does "
-            "not add diagnosis, prediction, or clinical judgment beyond the record."
+            "A 56-year-old male patient is recorded for a follow_up visit. "
+            "The documented condition list includes T2DM, HTN. "
+            "The patient-level condition field documents type 2 diabetes and hypertension. "
+            "This encounter is linked to a prior documented visit through "
+            "prior_visit_id VST-MOD-003-003."
         ),
         "objective": (
-            "Objective measurements for this visit include blood pressure "
-            "142/88 mmHg, heart rate 78 bpm, weight 82.4 kg, and BMI 29.1. "
-            "Laboratory data for this visit: HbA1c 7.8 % (HIGH); FBG 148 mg/dL (HIGH). "
+            "Objective data from the encounter records blood pressure 142/88 mmHg, "
+            "heart rate 78 bpm, weight 82.4 kg, and BMI 29.1. Laboratory results: "
+            "HbA1c 7.8 % (HIGH); FBG 148 mg/dL (HIGH). The visit contains documented "
+            "monitoring context for type 2 diabetes laboratory follow-up. "
             "Linked document references: DOC-MOD-003-004."
         ),
         "assessment": (
-            "The assessment section summarizes only documented diagnoses for this visit: "
-            "T2DM, HTN. "
-            "The visit remains grounded in the structured JSON record and does not infer "
-            "unstated conditions."
+            "Diagnoses documented for this visit are summarized as T2DM, HTN. "
+            "The visit diagnosis field documents type 2 diabetes and hypertension for this "
+            "encounter. Retrieval focus includes patient-level conditions: type 2 diabetes "
+            "and hypertension; visit diagnoses: type 2 diabetes and hypertension; "
+            "laboratory entries: fbg and hba1c; medication entries: lisinopril and "
+            "metformin; visit type: follow_up; timeline link: prior visit documented."
         ),
         "plan": (
-            "The documented plan records the whitelisted medication list exactly as stored: "
+            "The plan section records the active medication entries as documented: "
             "Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. "
-            "Prior visit reference is VST-MOD-003-003. Follow-up context should be interpreted only "
-            "as part of this synthetic academic dataset, not as medical advice."
+            "The medication list includes documented entries related to type 2 diabetes "
+            "medication documentation and hypertension medication documentation. "
+            "Prior visit reference is VST-MOD-003-003."
         ),
     }
 
@@ -321,28 +325,27 @@ def test_normal_empty_state_soap_output_matches_golden_dictionary(
 
     expected = {
         "subjective": (
-            "The synthetic record documents a 33-year-old female patient "
-            "attending a initial visit. The structured condition list records "
-            "no chronic conditions. The note is generated only from stored synthetic facts and does "
-            "not add diagnosis, prediction, or clinical judgment beyond the record."
+            "The chart documents a 33-year-old female patient seen for a initial visit. "
+            "The condition list records no chronic conditions. The record does not list "
+            "chronic conditions in the patient-level condition field. This is documented "
+            "as the first encounter type in the visit record."
         ),
         "objective": (
-            "Objective structured data records blood pressure "
-            "118/76 mmHg, heart rate "
-            "72 bpm, weight 64.5 kg, and BMI "
-            "23.4. Laboratory data for this visit: no lab results recorded. "
+            "Recorded measurements include blood pressure 118/76 mmHg, heart rate 72 bpm, "
+            "weight 64.5 kg, and BMI 23.4. The lab section records: no lab results "
+            "recorded. No laboratory entries are documented for this visit. "
             "Linked document references: none."
         ),
         "assessment": (
-            "Assessment is limited to documented diagnoses for this visit: "
-            "no chronic diagnosis listed. The visit remains grounded in the structured JSON record "
-            "and does not infer unstated conditions."
+            "The documented diagnosis summary for this encounter is: no chronic diagnosis "
+            "listed. The visit diagnosis field does not list a chronic diagnosis for this "
+            "encounter. This is documented as the first encounter type in the visit record."
         ),
         "plan": (
-            "The documented plan records the whitelisted medication list exactly as stored: "
-            "no active whitelisted medications recorded. "
-            "This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only "
-            "as part of this synthetic academic dataset, not as medical advice."
+            "The plan section records the active medication entries as documented: "
+            "no active whitelisted medications recorded. No active medication entries are "
+            "documented for this visit. This is the first recorded visit in the available "
+            "record."
         ),
     }
 
@@ -359,28 +362,36 @@ def test_chronic_patient_soap_output_matches_golden_dictionary(
 
     expected = {
         "subjective": (
-            "For this follow_up entry, the stored synthetic data identifies a "
-            "56-year-old male patient. The structured condition list records "
-            "T2DM, HTN, Asthma. The section remains limited to documented facts."
+            "For this follow_up entry, the record identifies a 56-year-old male patient. "
+            "The condition list records T2DM, HTN, Asthma. The patient-level condition "
+            "field documents type 2 diabetes, hypertension, and asthma. Retrieval focus "
+            "includes patient-level conditions: type 2 diabetes, hypertension, and asthma; "
+            "visit diagnoses: type 2 diabetes and hypertension; laboratory entries: "
+            "creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and "
+            "salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented."
         ),
         "objective": (
-            "The structured visit record lists blood pressure 142/88 mmHg, "
-            "heart rate 78 bpm, weight 82.4 kg, and BMI 29.1. "
-            "Laboratory data for this visit: HbA1c 7.8 % (HIGH); "
-            "FBG 148 mg/dL (HIGH); Creatinine 1.1 mg/dL (NORMAL). "
-            "Linked document references: DOC-CHR-002-004."
+            "The visit record lists blood pressure 142/88 mmHg, heart rate 78 bpm, "
+            "weight 82.4 kg, and BMI 29.1. Documented lab results: HbA1c 7.8 % (HIGH); "
+            "FBG 148 mg/dL (HIGH); Creatinine 1.1 mg/dL (NORMAL). The visit contains "
+            "documented monitoring context for type 2 diabetes laboratory follow-up and "
+            "hypertension kidney-related laboratory documentation. Linked document "
+            "references: DOC-CHR-002-004."
         ),
         "assessment": (
-            "The visit diagnosis summary includes only the structured diagnoses: "
-            "T2DM, HTN. The section remains grounded in the JSON record and does "
-            "not add unstated conditions."
+            "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN. "
+            "The visit diagnosis field documents type 2 diabetes and hypertension for this "
+            "encounter. The patient-level condition field documents type 2 diabetes, "
+            "hypertension, and asthma."
         ),
         "plan": (
-            "The structured plan data records the whitelisted medication list without change: "
-            "Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; "
-            "Salbutamol inhaler 100 mcg as_needed via inhaled. "
-            "Prior visit reference is VST-CHR-002-003. Follow-up context is included only for the "
-            "synthetic academic dataset and should not be used as medical advice."
+            "The documented plan keeps the medication list as recorded: Metformin 500 mg "
+            "twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler "
+            "100 mcg as_needed via inhaled. The medication list includes documented entries "
+            "related to type 2 diabetes medication documentation, hypertension medication "
+            "documentation, and asthma medication documentation. Prior visit reference is "
+            "VST-CHR-002-003. This encounter is linked to a prior documented visit through "
+            "prior_visit_id VST-CHR-002-003."
         ),
     }
 
@@ -464,9 +475,9 @@ def test_template_selection_for_moderate_patient_is_regression_stable(
     facts = build_fact_context(moderate_patient, visit)
     selected_templates = select_templates_from_fact_context(facts)
 
-    assert selected_templates["subjective"].template_id == "SUBJ-MOD-001"
-    assert selected_templates["objective"].template_id == "OBJ-MOD-002"
-    assert selected_templates["assessment"].template_id == "ASM-MOD-001"
+    assert selected_templates["subjective"].template_id == "SUBJ-MOD-002"
+    assert selected_templates["objective"].template_id == "OBJ-MOD-004"
+    assert selected_templates["assessment"].template_id == "ASM-MOD-003"
     assert selected_templates["plan"].template_id == "PLAN-MOD-001"
 
 
@@ -481,8 +492,8 @@ def test_template_selection_for_normal_patient_is_regression_stable(
     selected_templates = select_templates_from_fact_context(facts)
 
     assert selected_templates["subjective"].template_id == "SUBJ-NRM-001"
-    assert selected_templates["objective"].template_id == "OBJ-NRM-001"
-    assert selected_templates["assessment"].template_id == "ASM-NRM-002"
+    assert selected_templates["objective"].template_id == "OBJ-NRM-002"
+    assert selected_templates["assessment"].template_id == "ASM-NRM-003"
     assert selected_templates["plan"].template_id == "PLAN-NRM-001"
 
 
@@ -498,8 +509,8 @@ def test_template_selection_for_chronic_patient_is_regression_stable(
 
     assert selected_templates["subjective"].template_id == "SUBJ-CHR-004"
     assert selected_templates["objective"].template_id == "OBJ-CHR-003"
-    assert selected_templates["assessment"].template_id == "ASM-CHR-004"
-    assert selected_templates["plan"].template_id == "PLAN-CHR-004"
+    assert selected_templates["assessment"].template_id == "ASM-CHR-001"
+    assert selected_templates["plan"].template_id == "PLAN-CHR-005"
 
 
 def test_empty_state_strings_are_preserved_exactly(
@@ -517,7 +528,7 @@ def test_empty_state_strings_are_preserved_exactly(
     assert "no chronic conditions" in soap_text
     assert "no chronic diagnosis listed" in soap_text
     assert "Linked document references: none." in soap_text
-    assert "This is the first recorded visit in the synthetic record." in soap_text
+    assert "This is the first recorded visit in the available record." in soap_text
 
 
 def test_medication_formatting_regression_exact_phrase(
@@ -591,7 +602,7 @@ def test_first_visit_prior_rendering_regression_exact_phrase(
     visit = normal_empty_state_patient["visits"][0]
     soap_note = generate_soap_note(normal_empty_state_patient, visit)
 
-    assert "This is the first recorded visit in the synthetic record." in soap_note["plan"]
+    assert "This is the first recorded visit in the available record." in soap_note["plan"]
 
 
 def test_subjective_section_regression_exact_text(
@@ -604,10 +615,11 @@ def test_subjective_section_regression_exact_text(
     soap_note = generate_soap_note(moderate_patient, visit)
 
     assert soap_note["subjective"] == (
-        "The synthetic record documents a 56-year-old male patient "
-        "attending a follow_up visit. The structured condition list records "
-        "T2DM, HTN. The note is generated only from stored synthetic facts and does "
-        "not add diagnosis, prediction, or clinical judgment beyond the record."
+        "A 56-year-old male patient is recorded for a follow_up visit. "
+        "The documented condition list includes T2DM, HTN. "
+        "The patient-level condition field documents type 2 diabetes and hypertension. "
+        "This encounter is linked to a prior documented visit through "
+        "prior_visit_id VST-MOD-003-003."
     )
 
 
@@ -621,9 +633,10 @@ def test_objective_section_regression_exact_text(
     soap_note = generate_soap_note(moderate_patient, visit)
 
     assert soap_note["objective"] == (
-        "Objective measurements for this visit include blood pressure "
-        "142/88 mmHg, heart rate 78 bpm, weight 82.4 kg, and BMI 29.1. "
-        "Laboratory data for this visit: HbA1c 7.8 % (HIGH); FBG 148 mg/dL (HIGH). "
+        "Objective data from the encounter records blood pressure 142/88 mmHg, "
+        "heart rate 78 bpm, weight 82.4 kg, and BMI 29.1. Laboratory results: "
+        "HbA1c 7.8 % (HIGH); FBG 148 mg/dL (HIGH). The visit contains documented "
+        "monitoring context for type 2 diabetes laboratory follow-up. "
         "Linked document references: DOC-MOD-003-004."
     )
 
@@ -638,10 +651,12 @@ def test_assessment_section_regression_exact_text(
     soap_note = generate_soap_note(moderate_patient, visit)
 
     assert soap_note["assessment"] == (
-        "The assessment section summarizes only documented diagnoses for this visit: "
-        "T2DM, HTN. "
-        "The visit remains grounded in the structured JSON record and does not infer "
-        "unstated conditions."
+        "Diagnoses documented for this visit are summarized as T2DM, HTN. "
+        "The visit diagnosis field documents type 2 diabetes and hypertension for this "
+        "encounter. Retrieval focus includes patient-level conditions: type 2 diabetes "
+        "and hypertension; visit diagnoses: type 2 diabetes and hypertension; "
+        "laboratory entries: fbg and hba1c; medication entries: lisinopril and "
+        "metformin; visit type: follow_up; timeline link: prior visit documented."
     )
 
 
@@ -655,10 +670,11 @@ def test_plan_section_regression_exact_text(
     soap_note = generate_soap_note(moderate_patient, visit)
 
     assert soap_note["plan"] == (
-        "The documented plan records the whitelisted medication list exactly as stored: "
+        "The plan section records the active medication entries as documented: "
         "Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. "
-        "Prior visit reference is VST-MOD-003-003. Follow-up context should be interpreted only "
-        "as part of this synthetic academic dataset, not as medical advice."
+        "The medication list includes documented entries related to type 2 diabetes "
+        "medication documentation and hypertension medication documentation. "
+        "Prior visit reference is VST-MOD-003-003."
     )
 
 
@@ -714,6 +730,30 @@ def test_generated_soap_preserves_required_facts_across_sections(
     assert "VST-CHR-002-003" in soap_text
 
 
+def test_generated_soap_contains_no_synthetic_dataset_disclaimer_text(
+    moderate_patient: dict[str, Any],
+    normal_empty_state_patient: dict[str, Any],
+    chronic_patient: dict[str, Any],
+) -> None:
+    """Generated SOAP text must not expose dataset/disclaimer wording to RAG."""
+    patients = (moderate_patient, normal_empty_state_patient, chronic_patient)
+    forbidden_fragments = (
+        "synthetic record",
+        "synthetic facts",
+        "synthetic academic dataset",
+        "medical advice",
+        "generated by ai",
+    )
+
+    for patient in patients:
+        visit = patient["visits"][0]
+        soap_note = generate_soap_note(patient, visit)
+        normalized_text = " ".join(" ".join(soap_note.values()).lower().split())
+
+        for fragment in forbidden_fragments:
+            assert fragment not in normalized_text
+
+
 def test_generated_soap_avoids_unsafe_interpretive_phrases(
     chronic_patient: dict[str, Any],
 ) -> None:
@@ -724,7 +764,32 @@ def test_generated_soap_avoids_unsafe_interpretive_phrases(
     soap_note = generate_soap_note(chronic_patient, visit)
     normalized_text = " ".join(" ".join(soap_note.values()).lower().split())
 
-    for phrase in FORBIDDEN_CLINICAL_PHRASES:
+    forbidden_phrases = (
+        "likely",
+        "suggestive of",
+        "consistent with",
+        "suspected",
+        "appears to have",
+        "probably",
+        "may indicate",
+        "may suggest",
+        "poorly controlled",
+        "well controlled",
+        "uncontrolled",
+        "deteriorating",
+        "worsening",
+        "improving clinically",
+        "requires treatment",
+        "should start",
+        "recommend starting",
+        "recommend treatment",
+        "needs medication",
+        "needs treatment",
+        "rule out",
+        "diagnosed with",
+    )
+
+    for phrase in forbidden_phrases:
         assert phrase not in normalized_text
 
 

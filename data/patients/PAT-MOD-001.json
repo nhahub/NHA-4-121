@@ -40,13 +40,6 @@
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
         }
       ],
       "medications": [
@@ -61,10 +54,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 41-year-old male patient attending a initial visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 123/79 mmHg, heart rate 82 bpm, weight 79.1 kg, and BMI 25.1. Laboratory data for this visit: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-001-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 41-year-old male patient is recorded for a initial visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
+        "objective": "Structured objective data lists blood pressure 123/79 mmHg, heart rate 82 bpm, weight 79.1 kg, and BMI 25.1. Lab results documented for the visit: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-001.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "The visit plan lists the medication entries documented in the record: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. This is the first recorded visit in the available record. This encounter has no prior_visit_id and is the first documented visit in the available timeline."
       },
       "linked_documents": [
         "DOC-MOD-001-001"
@@ -100,13 +93,6 @@
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
         }
       ],
       "medications": [
@@ -116,15 +102,15 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-03-11",
+          "start_date": "2023-01-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 41-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 122/78 mmHg, heart rate 81 bpm, weight 78.7 kg, and BMI 24.9. Laboratory data for this visit: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-001-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-001-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 41-year-old male patient is recorded for a follow_up visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-001.",
+        "objective": "Objective findings record blood pressure 122/78 mmHg, heart rate 81 bpm, weight 78.7 kg, and BMI 24.9. Laboratory results for this visit: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-002.",
+        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-001."
       },
       "linked_documents": [
         "DOC-MOD-001-002"
@@ -160,13 +146,6 @@
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
         }
       ],
       "medications": [
@@ -176,15 +155,15 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-05-10",
+          "start_date": "2023-01-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 42-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 121/77 mmHg, heart rate 80 bpm, weight 78.3 kg, and BMI 24.8. Laboratory data for this visit: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-001-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral. Prior visit reference is VST-MOD-001-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 42-year-old male patient is recorded for a follow_up visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-002.",
+        "objective": "Objective findings record blood pressure 121/77 mmHg, heart rate 80 bpm, weight 78.3 kg, and BMI 24.8. Laboratory results for this visit: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-003.",
+        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
+        "plan": "The visit plan lists the medication entries documented in the record: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-002. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-002."
       },
       "linked_documents": [
         "DOC-MOD-001-003"
@@ -220,13 +199,6 @@
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
         }
       ],
       "medications": [
@@ -236,7 +208,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-07-09",
+          "start_date": "2023-01-10",
           "stop_date": null
         },
         {
@@ -250,10 +222,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 42-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 120/76 mmHg, heart rate 79 bpm, weight 77.9 kg, and BMI 24.7. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-001-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. Prior visit reference is VST-MOD-001-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 42-year-old male patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "The visit measurements include blood pressure 120/76 mmHg, heart rate 79 bpm, weight 77.9 kg, and BMI 24.7. Laboratory entries are recorded as: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-004.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-003. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-001-004"
@@ -289,13 +261,6 @@
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
         }
       ],
       "medications": [
@@ -305,7 +270,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-10-07",
+          "start_date": "2023-01-10",
           "stop_date": null
         },
         {
@@ -314,15 +279,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-10-07",
+          "start_date": "2023-07-09",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 42-year-old male patient attending a follow_up visit. The structured condition list records T2DM. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 119/75 mmHg, heart rate 78 bpm, weight 77.5 kg, and BMI 24.6. Laboratory data for this visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-001-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. Prior visit reference is VST-MOD-001-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 42-year-old male patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Structured objective data lists blood pressure 119/75 mmHg, heart rate 78 bpm, weight 77.5 kg, and BMI 24.6. Lab results documented for the visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-005.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
+        "plan": "Medication details in the plan are recorded as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-004."
       },
       "linked_documents": [
         "DOC-MOD-001-005"

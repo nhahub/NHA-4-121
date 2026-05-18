@@ -15,11 +15,16 @@ Pipeline:
 3. medications
 4. labs
 5. allergies
-6. SOAP notes
-7. SOAP audit
-8. validation
-9. export valid files to data/patients/
-10. export invalid files to data/quarantine/
+6. structured validation hard gate
+7. SOAP notes for structurally valid patients only
+8. SOAP audit
+9. final validation
+10. export valid files to data/patients/
+11. export invalid files to data/quarantine/
+
+Safety rule:
+    SOAP generation must never run for a patient that already has FAIL-level
+    structured validation issues. Validation is the hard gate before SOAP.
 """
 
 from __future__ import annotations
@@ -28,7 +33,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -59,9 +64,14 @@ from generators.patient_generator import (  # noqa: E402
     generate_patient_shells,
 )
 from generators.visit_generator import add_visits_to_patient  # noqa: E402
-from soap.soap_auditor import audit_patient_soap  # noqa: E402
+from soap.soap_auditor import (  # noqa: E402
+    SoapAuditIssue,
+    SoapAuditSeverity,
+    audit_patient_soap,
+    flatten_issues,
+)
 from soap.soap_generator import add_soap_notes_to_patient  # noqa: E402
-from validators.rules import validate_patient  # noqa: E402
+from validators.rules import ValidationIssue, validate_patient  # noqa: E402
 
 
 def generate_all_patients(
@@ -70,10 +80,43 @@ def generate_all_patients(
     """
     Generate the selected dataset in dependency order.
 
+    The function first generates structured patient records, validates them,
+    and only then generates SOAP notes for records with zero FAIL-level
+    validation issues.
+
     Args:
         mode:
             - "pilot": generate 5 pilot patients
             - "full": generate 30 full-dataset patients
+
+    Returns:
+        Generated patient dictionaries. Patients with structured validation
+        failures are returned without regenerated SOAP notes so they can be
+        exported to quarantine with clean validation reports.
+    """
+    structured_patients = generate_structured_patients(mode=mode)
+    generated: list[dict[str, Any]] = []
+
+    for patient in structured_patients:
+        structured_issues = validate_patient(patient)
+
+        if _has_fail_validation_issues(structured_issues):
+            generated.append(patient)
+            continue
+
+        generated.append(add_soap_notes_to_patient(patient))
+
+    return generated
+
+
+def generate_structured_patients(
+    mode: str = DEFAULT_DATASET_MODE,
+) -> list[dict[str, Any]]:
+    """
+    Generate structured patient records before SOAP generation.
+
+    This stage is deterministic and does not call the SOAP layer. It is the
+    validation input for the hard gate before SOAP notes are created.
     """
     expected_count = _expected_patient_count_for_mode(mode)
 
@@ -90,7 +133,6 @@ def generate_all_patients(
         patient = add_medications_to_patient(patient)
         patient = add_labs_to_patient(patient)
         patient = add_allergies_to_patient(patient)
-        patient = add_soap_notes_to_patient(patient)
 
         generated.append(patient)
 
@@ -110,35 +152,46 @@ def export_patients(
     patients: list[dict[str, Any]],
 ) -> tuple[int, int]:
     """
-    Validate and export patients.
+    Validate, audit, and export patients.
 
     Valid patients go to data/patients.
     Invalid patients go to data/quarantine with issue reports.
+
+    Important:
+        SOAP audit is skipped when final validation already has FAIL issues.
+        This avoids noisy SOAP failures for structurally invalid records and
+        preserves validation as the hard gate.
     """
     valid_count = 0
     invalid_count = 0
 
     for patient in patients:
-        patient_id = patient["patient_id"]
-        soap_issues = audit_patient_soap(patient)
+        patient_id = str(patient.get("patient_id", "UNKNOWN_PATIENT"))
         validation_issues = validate_patient(patient)
+        fail_validation = _fail_validation_issues(validation_issues)
 
-        fail_soap = [issue for issue in soap_issues if issue.severity == "FAIL"]
-        fail_validation = [
-            issue
-            for issue in validation_issues
-            if issue.severity == "FAIL"
-        ]
+        soap_issues: list[SoapAuditIssue] = []
+        fail_soap: list[SoapAuditIssue] = []
 
-        is_valid = not fail_soap and not fail_validation
+        if not fail_validation:
+            soap_results = audit_patient_soap(patient)
+            soap_issues = flatten_issues(soap_results)
+            fail_soap = _fail_soap_issues(soap_issues)
+
+        is_valid = not fail_validation and not fail_soap
 
         if is_valid:
             _write_patient_json(patient_file_path(patient_id), patient)
             valid_count += 1
-        else:
-            _write_patient_json(quarantine_file_path(patient_id), patient)
-            _write_issue_report(patient_id, soap_issues, validation_issues)
-            invalid_count += 1
+            continue
+
+        _write_patient_json(quarantine_file_path(patient_id), patient)
+        _write_issue_report(
+            patient_id=patient_id,
+            soap_issues=soap_issues,
+            validation_issues=validation_issues,
+        )
+        invalid_count += 1
 
     return valid_count, invalid_count
 
@@ -192,28 +245,15 @@ def _write_patient_json(path: Path, patient: dict[str, Any]) -> None:
 
 def _write_issue_report(
     patient_id: str,
-    soap_issues,
-    validation_issues,
+    soap_issues: Iterable[SoapAuditIssue],
+    validation_issues: Iterable[ValidationIssue],
 ) -> None:
+    """Write combined validation/SOAP issue report for quarantined patients."""
     payload = {
         "patient_id": patient_id,
-        "soap_issues": [
-            {
-                "severity": issue.severity,
-                "patient_id": issue.patient_id,
-                "visit_id": issue.visit_id,
-                "message": issue.message,
-            }
-            for issue in soap_issues
-        ],
+        "soap_issues": [_serialize_soap_issue(issue) for issue in soap_issues],
         "validation_issues": [
-            {
-                "rule_id": issue.rule_id,
-                "severity": issue.severity,
-                "patient_id": issue.patient_id,
-                "message": issue.message,
-                "location": issue.location,
-            }
+            _serialize_validation_issue(issue)
             for issue in validation_issues
         ],
     }
@@ -223,6 +263,47 @@ def _write_issue_report(
         json.dumps(payload, indent=JSON_INDENT, ensure_ascii=False),
         encoding=JSON_ENCODING,
     )
+
+
+def _serialize_soap_issue(issue: SoapAuditIssue) -> dict[str, Any]:
+    return {
+        "rule_id": issue.rule_id,
+        "severity": issue.severity.value,
+        "patient_id": issue.patient_id,
+        "visit_id": issue.visit_id,
+        "section": issue.section,
+        "message": issue.message,
+    }
+
+
+def _serialize_validation_issue(issue: ValidationIssue) -> dict[str, Any]:
+    return {
+        "rule_id": issue.rule_id,
+        "severity": issue.severity,
+        "patient_id": issue.patient_id,
+        "message": issue.message,
+        "location": issue.location,
+    }
+
+
+def _fail_validation_issues(
+    issues: Iterable[ValidationIssue],
+) -> list[ValidationIssue]:
+    return [issue for issue in issues if issue.severity == "FAIL"]
+
+
+def _has_fail_validation_issues(issues: Iterable[ValidationIssue]) -> bool:
+    return bool(_fail_validation_issues(issues))
+
+
+def _fail_soap_issues(
+    issues: Iterable[SoapAuditIssue],
+) -> list[SoapAuditIssue]:
+    return [
+        issue
+        for issue in issues
+        if issue.severity == SoapAuditSeverity.FAIL
+    ]
 
 
 def _expected_patient_count_for_mode(mode: str) -> int:

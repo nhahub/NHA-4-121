@@ -85,11 +85,16 @@ def _generate_labs_for_visit(
 
 def _should_generate_creatinine(conditions: set[str]) -> bool:
     """
-    Generate Creatinine for patients where kidney monitoring is useful.
+    Generate Creatinine only for CKD complication tracking or combined T2DM+HTN.
 
-    This remains schema-safe because Creatinine is a locked lab type.
+    This keeps Creatinine aligned with the locked project scope:
+    - CKD patients always receive Creatinine tracking.
+    - Non-CKD patients receive Creatinine only when both T2DM and HTN are present.
+    - T2DM-only or HTN-only patients do not receive Creatinine labs.
+
+    BP remains excluded from labs entirely.
     """
-    return bool({"T2DM", "HTN", "CKD"}.intersection(conditions))
+    return "CKD" in conditions or {"T2DM", "HTN"}.issubset(conditions)
 
 
 def _normal_patient_labs(patient_id: str, visit_index: int) -> list[dict[str, Any]]:

@@ -1,11 +1,15 @@
 """
 soap/soap_templates.py
 
-Deterministic SOAP template registry.
+Deterministic condition-aware SOAP template registry.
 
 Purpose:
-    Store approved deterministic SOAP templates for future diversified SOAP
-    generation.
+    Store approved deterministic SOAP templates for diversified, RAG-oriented
+    SOAP generation.
+
+This version uses semantic placeholders produced by soap_semantics.py through
+build_fact_context(). The goal is to improve semantic diversity and retrieval
+quality while preserving deterministic safety.
 
 Safety contract:
     - Templates contain wording only.
@@ -16,16 +20,19 @@ Safety contract:
     - Templates do not modify structured facts.
     - Templates do not contain real patient data.
     - Templates do not contain hardcoded clinical values.
+    - Templates do not contain hardcoded condition names, lab names, medication
+      names, patient IDs, visit IDs, document IDs, or BP values.
     - Templates do not call LLMs.
     - Templates do not use randomization.
 
 Important:
-    The medical truth must continue to come only from structured JSON through
-    build_fact_context() in soap_renderers.py.
+    The medical truth must continue to come only from structured patient JSON
+    through build_fact_context() in soap_renderers.py.
 
 Architecture:
     soap_contract.py   -> owns shared SOAP sections/types/template dataclass
     soap_safety.py     -> owns shared SOAP safety phrase constants
+    soap_semantics.py  -> owns condition-aware semantic phrase construction
     soap_renderers.py  -> owns fact extraction and exact formatting
     soap_templates.py  -> owns template registry only
     soap_selector.py   -> owns deterministic template selection
@@ -46,7 +53,7 @@ Supported tiers:
     - moderate
     - chronic
 
-Initial template count:
+Template count:
     - normal:   3 templates per SOAP section
     - moderate: 4 templates per SOAP section
     - chronic:  5 templates per SOAP section
@@ -62,7 +69,7 @@ from typing import Final, Mapping
 from soap.soap_contract import PatientTier, SoapSection, SoapTemplate
 
 
-TEMPLATE_VERSION: Final[str] = "soap-templates-v1.0"
+TEMPLATE_VERSION: Final[str] = "soap-templates-v1.1"
 
 
 SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTemplate, ...]]]] = {
@@ -73,10 +80,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="normal",
                 text=(
-                    "The synthetic record documents a {age}-year-old {sex} patient "
-                    "attending a {visit_type} visit. The structured condition list records "
-                    "{condition_text}. The note is generated only from stored synthetic facts and does "
-                    "not add diagnosis, prediction, or clinical judgment beyond the record."
+                    "The chart documents a {age}-year-old {sex} patient seen for a "
+                    "{visit_type} visit. The condition list records {condition_text}. "
+                    "{condition_focus_text} {visit_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -84,9 +90,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="normal",
                 text=(
-                    "This {visit_type} encounter describes a {age}-year-old {sex} patient. "
-                    "The structured condition list records {condition_text}. The narrative is limited "
-                    "to stored synthetic facts and does not add diagnosis, prediction, or clinical judgment."
+                    "For this {visit_type} encounter, the record describes a "
+                    "{age}-year-old {sex} patient. Documented conditions are listed as "
+                    "{condition_text}. {condition_focus_text} {timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -94,9 +100,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="normal",
                 text=(
-                    "For this {visit_type} visit, the synthetic chart records a {age}-year-old "
-                    "{sex} patient. Documented conditions in the structured list are {condition_text}. "
-                    "No diagnosis, prediction, or clinical judgment is added beyond the stored record."
+                    "This visit note concerns a {age}-year-old {sex} patient presenting "
+                    "for a {visit_type} encounter. The recorded condition list includes "
+                    "{condition_text}. {visit_context_text} {condition_focus_text}"
                 ),
             ),
         ),
@@ -106,10 +112,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="moderate",
                 text=(
-                    "The synthetic record documents a {age}-year-old {sex} patient "
-                    "attending a {visit_type} visit. The structured condition list records "
-                    "{condition_text}. The note is generated only from stored synthetic facts and does "
-                    "not add diagnosis, prediction, or clinical judgment beyond the record."
+                    "The chart documents a {age}-year-old {sex} patient seen for a "
+                    "{visit_type} visit. The condition list records {condition_text}. "
+                    "{condition_focus_text} {visit_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -117,9 +122,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="moderate",
                 text=(
-                    "A {age}-year-old {sex} patient is documented in the structured record for a "
-                    "{visit_type} visit. The condition list records {condition_text}. This section "
-                    "uses only stored synthetic facts and adds no diagnosis, prediction, or clinical judgment."
+                    "A {age}-year-old {sex} patient is recorded for a {visit_type} visit. "
+                    "The documented condition list includes {condition_text}. "
+                    "{condition_focus_text} {timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -127,9 +132,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="moderate",
                 text=(
-                    "This {visit_type} record describes a {age}-year-old {sex} patient with "
-                    "structured conditions listed as {condition_text}. The wording remains grounded "
-                    "in the stored synthetic JSON facts without adding clinical interpretation."
+                    "This {visit_type} note describes a {age}-year-old {sex} patient. "
+                    "Conditions recorded in the chart are {condition_text}. "
+                    "{visit_context_text} {condition_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -137,9 +142,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="moderate",
                 text=(
-                    "The encounter entry records a {age}-year-old {sex} patient attending a "
-                    "{visit_type} visit. The structured condition list includes {condition_text}. "
-                    "No unstated diagnosis, prediction, or medical judgment is introduced."
+                    "During this {visit_type} encounter, the record identifies a "
+                    "{age}-year-old {sex} patient. The condition list includes "
+                    "{condition_text}. {condition_focus_text} {retrieval_focus_text}"
                 ),
             ),
         ),
@@ -149,10 +154,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="chronic",
                 text=(
-                    "The synthetic record documents a {age}-year-old {sex} patient "
-                    "attending a {visit_type} visit. The structured condition list records "
-                    "{condition_text}. The note is generated only from stored synthetic facts and does "
-                    "not add diagnosis, prediction, or clinical judgment beyond the record."
+                    "The chart documents a {age}-year-old {sex} patient seen for a "
+                    "{visit_type} visit. The condition list records {condition_text}. "
+                    "{condition_focus_text} {visit_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -160,9 +164,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="chronic",
                 text=(
-                    "This {visit_type} visit is recorded for a {age}-year-old {sex} patient. "
-                    "The structured condition list records {condition_text}. The narrative reflects "
-                    "only documented synthetic facts and does not introduce additional clinical judgment."
+                    "This {visit_type} encounter is recorded for a {age}-year-old {sex} "
+                    "patient. The charted condition list records {condition_text}. "
+                    "{condition_focus_text} {timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -170,9 +174,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="chronic",
                 text=(
-                    "The structured chart documents a {age}-year-old {sex} patient seen for a "
-                    "{visit_type} encounter. Listed conditions are {condition_text}. This SOAP text "
-                    "does not add diagnosis, prediction, or interpretation beyond the record."
+                    "The longitudinal chart includes a {visit_type} visit for a "
+                    "{age}-year-old {sex} patient. Documented conditions are "
+                    "{condition_text}. {visit_context_text} {condition_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -180,9 +184,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="chronic",
                 text=(
-                    "For this {visit_type} entry, the stored synthetic data identifies a "
-                    "{age}-year-old {sex} patient. The structured condition list records "
-                    "{condition_text}. The section remains limited to documented facts."
+                    "For this {visit_type} entry, the record identifies a {age}-year-old "
+                    "{sex} patient. The condition list records {condition_text}. "
+                    "{condition_focus_text} {retrieval_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -190,9 +194,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="subjective",
                 tier="chronic",
                 text=(
-                    "This longitudinal record entry describes a {age}-year-old {sex} patient at a "
-                    "{visit_type} visit. The condition list in the structured JSON records "
-                    "{condition_text}. No additional diagnosis, prediction, or clinical judgment is added."
+                    "This follow-up record section describes a {age}-year-old {sex} "
+                    "patient at a {visit_type} visit. The documented condition list "
+                    "includes {condition_text}. {timeline_context_text} "
+                    "{condition_focus_text}"
                 ),
             ),
         ),
@@ -204,11 +209,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="normal",
                 text=(
-                    "Objective structured data records blood pressure "
-                    "{bp_systolic}/{bp_diastolic} mmHg, heart rate "
-                    "{heart_rate} bpm, weight {weight_kg} kg, and BMI "
-                    "{bmi}. Laboratory data for this visit: {lab_text}. "
-                    "Linked document references: {linked_documents_text}."
+                    "Objective findings record blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
+                    "Laboratory results for this visit: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: "
+                    "{linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -216,10 +221,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="normal",
                 text=(
-                    "Recorded objective findings include blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "Recorded measurements include blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
                     "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
-                    "{linked_documents_text}."
+                    "The lab section records: {lab_text}. {monitoring_focus_text} "
+                    "Linked document references: {linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -227,10 +232,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="normal",
                 text=(
-                    "Visit vitals show blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "Vitals for the encounter show blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
                     "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
-                    "{linked_documents_text}."
+                    "Available laboratory results: {lab_text}. {monitoring_focus_text} "
+                    "Linked document references: {linked_documents_text}."
                 ),
             ),
         ),
@@ -240,11 +245,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="moderate",
                 text=(
-                    "Objective structured data records blood pressure "
-                    "{bp_systolic}/{bp_diastolic} mmHg, heart rate "
-                    "{heart_rate} bpm, weight {weight_kg} kg, and BMI "
-                    "{bmi}. Laboratory data for this visit: {lab_text}. "
-                    "Linked document references: {linked_documents_text}."
+                    "Objective findings record blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
+                    "Laboratory results for this visit: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: "
+                    "{linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -252,10 +257,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="moderate",
                 text=(
-                    "Objective measurements for this visit include blood pressure "
-                    "{bp_systolic}/{bp_diastolic} mmHg, heart rate {heart_rate} bpm, "
-                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory data for this visit: "
-                    "{lab_text}. Linked document references: {linked_documents_text}."
+                    "The visit measurements include blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
+                    "Laboratory entries are recorded as: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: "
+                    "{linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -263,10 +269,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="moderate",
                 text=(
-                    "Structured vital signs document blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "Structured objective data lists blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
                     "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
-                    "{linked_documents_text}."
+                    "Lab results documented for the visit: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: {linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -274,9 +280,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="moderate",
                 text=(
-                    "The objective section records blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
-                    "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
+                    "Objective data from the encounter records blood pressure "
+                    "{bp_systolic}/{bp_diastolic} mmHg, heart rate {heart_rate} bpm, "
+                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory results: "
+                    "{lab_text}. {monitoring_focus_text} Linked document references: "
                     "{linked_documents_text}."
                 ),
             ),
@@ -287,11 +294,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="chronic",
                 text=(
-                    "Objective structured data records blood pressure "
-                    "{bp_systolic}/{bp_diastolic} mmHg, heart rate "
-                    "{heart_rate} bpm, weight {weight_kg} kg, and BMI "
-                    "{bmi}. Laboratory data for this visit: {lab_text}. "
-                    "Linked document references: {linked_documents_text}."
+                    "Objective findings record blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
+                    "Laboratory results for this visit: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: "
+                    "{linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -299,10 +306,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="chronic",
                 text=(
-                    "Objective data from this visit include blood pressure "
+                    "For this encounter, recorded objective data includes blood pressure "
                     "{bp_systolic}/{bp_diastolic} mmHg, heart rate {heart_rate} bpm, "
-                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory data for this visit: "
-                    "{lab_text}. Linked document references: {linked_documents_text}."
+                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory results: "
+                    "{lab_text}. {monitoring_focus_text} Linked document references: "
+                    "{linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -310,10 +318,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="chronic",
                 text=(
-                    "The structured visit record lists blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "The visit record lists blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
                     "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
-                    "{linked_documents_text}."
+                    "Documented lab results: {lab_text}. {monitoring_focus_text} "
+                    "Linked document references: {linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -321,10 +329,10 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="chronic",
                 text=(
-                    "Recorded vital signs include blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
+                    "Recorded vitals include blood pressure {bp_systolic}/{bp_diastolic} mmHg, "
                     "heart rate {heart_rate} bpm, weight {weight_kg} kg, and BMI {bmi}. "
-                    "Laboratory data for this visit: {lab_text}. Linked document references: "
-                    "{linked_documents_text}."
+                    "Laboratory results for the encounter: {lab_text}. "
+                    "{monitoring_focus_text} Linked document references: {linked_documents_text}."
                 ),
             ),
             SoapTemplate(
@@ -332,10 +340,11 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="objective",
                 tier="chronic",
                 text=(
-                    "For this encounter, objective structured values include blood pressure "
+                    "The objective record for this visit includes blood pressure "
                     "{bp_systolic}/{bp_diastolic} mmHg, heart rate {heart_rate} bpm, "
-                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory data for this visit: "
-                    "{lab_text}. Linked document references: {linked_documents_text}."
+                    "weight {weight_kg} kg, and BMI {bmi}. Laboratory values are "
+                    "recorded as: {lab_text}. {monitoring_focus_text} Linked document "
+                    "references: {linked_documents_text}."
                 ),
             ),
         ),
@@ -347,10 +356,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="normal",
                 text=(
-                    "The assessment section summarizes only documented diagnoses for this visit: "
-                    "{diagnosis_text}. "
-                    "The visit remains grounded in the structured JSON record and does not infer "
-                    "unstated conditions."
+                    "Assessment summarizes the diagnoses documented for this visit: "
+                    "{diagnosis_text}. {diagnosis_focus_text} {condition_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -358,9 +365,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="normal",
                 text=(
-                    "Assessment is limited to documented diagnoses for this visit: "
-                    "{diagnosis_text}. The visit remains grounded in the structured JSON record "
-                    "and does not infer unstated conditions."
+                    "The assessment entry lists the visit diagnoses as {diagnosis_text}. "
+                    "{diagnosis_focus_text} {retrieval_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -368,9 +374,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="normal",
                 text=(
-                    "The documented diagnosis list for this visit is summarized as: "
-                    "{diagnosis_text}. The section remains grounded in the structured JSON record "
-                    "and does not infer unstated conditions."
+                    "The documented diagnosis summary for this encounter is: "
+                    "{diagnosis_text}. {diagnosis_focus_text} {visit_context_text}"
                 ),
             ),
         ),
@@ -380,10 +385,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="moderate",
                 text=(
-                    "The assessment section summarizes only documented diagnoses for this visit: "
-                    "{diagnosis_text}. "
-                    "The visit remains grounded in the structured JSON record and does not infer "
-                    "unstated conditions."
+                    "Assessment summarizes the diagnoses documented for this visit: "
+                    "{diagnosis_text}. {diagnosis_focus_text} {condition_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -391,9 +394,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="moderate",
                 text=(
-                    "The assessment is restricted to the recorded visit diagnoses: "
-                    "{diagnosis_text}. The visit remains grounded in the structured JSON record "
-                    "and does not infer unstated conditions."
+                    "The recorded assessment for this encounter is based on the visit "
+                    "diagnosis list: {diagnosis_text}. {diagnosis_focus_text} "
+                    "{monitoring_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -401,9 +404,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="moderate",
                 text=(
-                    "Documented diagnoses for this encounter are summarized as: "
-                    "{diagnosis_text}. This section uses only the structured JSON record and "
-                    "does not infer unstated conditions."
+                    "Diagnoses documented for this visit are summarized as "
+                    "{diagnosis_text}. {diagnosis_focus_text} {retrieval_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -411,9 +413,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="moderate",
                 text=(
-                    "The structured visit diagnosis list records: {diagnosis_text}. "
-                    "The assessment text remains grounded in the structured JSON record and "
-                    "does not infer unstated conditions."
+                    "The visit diagnosis list records {diagnosis_text}. "
+                    "{diagnosis_focus_text} {condition_focus_text}"
                 ),
             ),
         ),
@@ -423,10 +424,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="chronic",
                 text=(
-                    "The assessment section summarizes only documented diagnoses for this visit: "
-                    "{diagnosis_text}. "
-                    "The visit remains grounded in the structured JSON record and does not infer "
-                    "unstated conditions."
+                    "Assessment summarizes the diagnoses documented for this visit: "
+                    "{diagnosis_text}. {diagnosis_focus_text} {condition_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -434,9 +433,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="chronic",
                 text=(
-                    "Assessment content is limited to documented diagnoses for this visit: "
-                    "{diagnosis_text}. The visit remains grounded in the structured JSON record "
-                    "and does not infer unstated conditions."
+                    "The assessment entry is limited to the diagnoses recorded for this "
+                    "visit: {diagnosis_text}. {diagnosis_focus_text} "
+                    "{timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -444,9 +443,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="chronic",
                 text=(
-                    "For this longitudinal record entry, the documented visit diagnoses are: "
-                    "{diagnosis_text}. The assessment does not infer unstated conditions beyond "
-                    "the structured JSON record."
+                    "For this longitudinal record entry, the visit diagnoses are "
+                    "documented as {diagnosis_text}. {diagnosis_focus_text} "
+                    "{monitoring_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -454,9 +453,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="chronic",
                 text=(
-                    "The visit diagnosis summary includes only the structured diagnoses: "
-                    "{diagnosis_text}. The section remains grounded in the JSON record and does "
-                    "not add unstated conditions."
+                    "The visit diagnosis summary includes {diagnosis_text}. "
+                    "{diagnosis_focus_text} {retrieval_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -464,9 +462,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="assessment",
                 tier="chronic",
                 text=(
-                    "The recorded diagnoses for this visit are summarized as: {diagnosis_text}. "
-                    "This assessment is descriptive only and does not infer conditions outside "
-                    "the structured record."
+                    "Recorded diagnoses for this encounter are summarized as "
+                    "{diagnosis_text}. {diagnosis_focus_text} {condition_focus_text}"
                 ),
             ),
         ),
@@ -478,9 +475,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="normal",
                 text=(
-                    "The documented plan records the whitelisted medication list exactly as stored: "
-                    "{medication_text}. {prior_text} Follow-up context should be interpreted only "
-                    "as part of this synthetic academic dataset, not as medical advice."
+                    "The plan section records the active medication entries as documented: "
+                    "{medication_text}. {medication_focus_text} {prior_text}"
                 ),
             ),
             SoapTemplate(
@@ -488,9 +484,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="normal",
                 text=(
-                    "The plan section lists the stored whitelisted medications exactly as recorded: "
-                    "{medication_text}. {prior_text} Follow-up context is included only as part "
-                    "of this synthetic academic dataset, not as medical advice."
+                    "Medication information in the plan is documented as "
+                    "{medication_text}. {medication_focus_text} {prior_text} "
+                    "{timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -498,9 +494,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="normal",
                 text=(
-                    "The structured plan records the whitelisted medication list exactly as stored: "
-                    "{medication_text}. {prior_text} This synthetic dataset context should not "
-                    "be interpreted as medical advice."
+                    "The recorded plan lists medication entries as {medication_text}. "
+                    "{medication_focus_text} {prior_text}"
                 ),
             ),
         ),
@@ -510,9 +505,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="moderate",
                 text=(
-                    "The documented plan records the whitelisted medication list exactly as stored: "
-                    "{medication_text}. {prior_text} Follow-up context should be interpreted only "
-                    "as part of this synthetic academic dataset, not as medical advice."
+                    "The plan section records the active medication entries as documented: "
+                    "{medication_text}. {medication_focus_text} {prior_text}"
                 ),
             ),
             SoapTemplate(
@@ -520,9 +514,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="moderate",
                 text=(
-                    "The plan records stored whitelisted medications without modification: "
-                    "{medication_text}. {prior_text} Follow-up context should be interpreted only "
-                    "as part of this synthetic academic dataset, not as medical advice."
+                    "The visit plan lists the medication entries documented in the "
+                    "record: {medication_text}. {medication_focus_text} "
+                    "{prior_text} {timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -530,9 +524,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="moderate",
                 text=(
-                    "Medication data in the plan is listed exactly as stored in the structured record: "
-                    "{medication_text}. {prior_text} This content belongs only to the synthetic "
-                    "academic dataset and is not medical advice."
+                    "Medication details in the plan are recorded as {medication_text}. "
+                    "{medication_focus_text} {prior_text}"
                 ),
             ),
             SoapTemplate(
@@ -540,9 +533,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="moderate",
                 text=(
-                    "The documented plan preserves the whitelisted medication list as recorded: "
-                    "{medication_text}. {prior_text} Follow-up context remains part of the "
-                    "synthetic academic dataset and should not be interpreted as medical advice."
+                    "The documented plan includes the following medication entries: "
+                    "{medication_text}. {medication_focus_text} "
+                    "{prior_text} {retrieval_focus_text}"
                 ),
             ),
         ),
@@ -552,9 +545,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="chronic",
                 text=(
-                    "The documented plan records the whitelisted medication list exactly as stored: "
-                    "{medication_text}. {prior_text} Follow-up context should be interpreted only "
-                    "as part of this synthetic academic dataset, not as medical advice."
+                    "The plan section records the active medication entries as documented: "
+                    "{medication_text}. {medication_focus_text} {prior_text}"
                 ),
             ),
             SoapTemplate(
@@ -562,9 +554,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="chronic",
                 text=(
-                    "The plan section preserves the stored whitelisted medication list exactly: "
-                    "{medication_text}. {prior_text} Follow-up context should be interpreted only "
-                    "as part of this synthetic academic dataset, not as medical advice."
+                    "The care plan entry lists medication details as {medication_text}. "
+                    "{medication_focus_text} {prior_text} {timeline_context_text}"
                 ),
             ),
             SoapTemplate(
@@ -572,9 +563,8 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="chronic",
                 text=(
-                    "For this record entry, the documented plan lists medications exactly as stored: "
-                    "{medication_text}. {prior_text} This wording is part of a synthetic academic "
-                    "dataset and is not medical advice."
+                    "For this record entry, the plan documents medications as "
+                    "{medication_text}. {medication_focus_text} {prior_text}"
                 ),
             ),
             SoapTemplate(
@@ -582,9 +572,9 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="chronic",
                 text=(
-                    "The structured plan data records the whitelisted medication list without change: "
-                    "{medication_text}. {prior_text} Follow-up context is included only for the "
-                    "synthetic academic dataset and should not be used as medical advice."
+                    "The plan data records medication entries without changing their "
+                    "documented form: {medication_text}. {medication_focus_text} "
+                    "{prior_text} {retrieval_focus_text}"
                 ),
             ),
             SoapTemplate(
@@ -592,15 +582,14 @@ SOAP_TEMPLATES: Final[Mapping[SoapSection, Mapping[PatientTier, tuple[SoapTempla
                 section="plan",
                 tier="chronic",
                 text=(
-                    "The documented plan keeps the medication list exactly as stored in the JSON record: "
-                    "{medication_text}. {prior_text} Any follow-up context is limited to this "
-                    "synthetic academic dataset and is not medical advice."
+                    "The documented plan keeps the medication list as recorded: "
+                    "{medication_text}. {medication_focus_text} "
+                    "{prior_text} {timeline_context_text}"
                 ),
             ),
         ),
     },
 }
-
 
 
 TOTAL_TEMPLATE_COUNT: Final[int] = sum(

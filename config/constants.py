@@ -18,7 +18,7 @@ from typing import Final
 # ---------------------------------------------------------------------
 
 SCHEMA_VERSION: Final[str] = "1.0"
-PROJECT_NAME: Final[str] = "AI-Powered Medical Record Intelligence System"
+PROJECT_NAME: Final[str] = "AI-Based Clinical Record Summarization System"
 
 
 # ---------------------------------------------------------------------

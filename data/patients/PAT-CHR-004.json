@@ -83,10 +83,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 45-year-old female patient attending a initial visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 150/94 mmHg, heart rate 84 bpm, weight 71.0 kg, and BMI 25.6. Laboratory data for this visit: HbA1c 8.7 % (HIGH); FBG 181 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-004-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 45-year-old female patient seen for a initial visit. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This is documented as the first encounter type in the visit record.",
+        "objective": "Objective findings record blood pressure 150/94 mmHg, heart rate 84 bpm, weight 71.0 kg, and BMI 25.6. Laboratory results for this visit: HbA1c 8.7 % (HIGH); FBG 181 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-001.",
+        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: initial; timeline link: first documented visit.",
+        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. This is the first recorded visit in the available record."
       },
       "linked_documents": [
         "DOC-CHR-004-001"
@@ -140,7 +140,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-07-14",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -149,7 +149,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-07-14",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -158,15 +158,15 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2021-07-14",
+          "start_date": "2021-04-15",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 45-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 148/93 mmHg, heart rate 83 bpm, weight 70.6 kg, and BMI 25.5. Laboratory data for this visit: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-004-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. Prior visit reference is VST-CHR-004-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow-up record section describes a 45-year-old female patient at a follow_up visit. The documented condition list includes T2DM, HTN, Asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-001. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "objective": "The objective record for this visit includes blood pressure 148/93 mmHg, heart rate 83 bpm, weight 70.6 kg, and BMI 25.5. Laboratory values are recorded as: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-002.",
+        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The plan data records medication entries without changing their documented form: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-001. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-CHR-004-002"
@@ -220,7 +220,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-10-12",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -229,7 +229,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-10-12",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -238,7 +238,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2021-10-12",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -252,10 +252,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 45-year-old female patient attending a emergency visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 146/92 mmHg, heart rate 96 bpm, weight 70.2 kg, and BMI 25.4. Laboratory data for this visit: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-004-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The longitudinal chart includes a emergency visit for a 45-year-old female patient. Documented conditions are T2DM, HTN, Asthma. This is documented as an emergency encounter in the visit record. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "objective": "Recorded vitals include blood pressure 146/92 mmHg, heart rate 96 bpm, weight 70.2 kg, and BMI 25.4. Laboratory results for the encounter: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-003.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-002. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-002."
       },
       "linked_documents": [
         "DOC-CHR-004-003"
@@ -309,7 +309,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-01-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -327,7 +327,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-01-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -336,7 +336,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2022-01-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -345,15 +345,15 @@
           "dose": "200 mcg",
           "frequency": "twice_daily",
           "route": "inhaled",
-          "start_date": "2022-01-10",
+          "start_date": "2021-10-12",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 45-year-old female patient attending a hospitalization visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 152/95 mmHg, heart rate 81 bpm, weight 69.8 kg, and BMI 25.3. Laboratory data for this visit: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-004-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 45-year-old female patient seen for a hospitalization visit. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This is documented as a hospitalization encounter in the visit record.",
+        "objective": "Recorded vitals include blood pressure 152/95 mmHg, heart rate 81 bpm, weight 69.8 kg, and BMI 25.3. Laboratory results for the encounter: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-004.",
+        "assessment": "Recorded diagnoses for this encounter are summarized as T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "plan": "For this record entry, the plan documents medications as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-003."
       },
       "linked_documents": [
         "DOC-CHR-004-004"
@@ -407,7 +407,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-04-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -416,7 +416,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-04-10",
+          "start_date": "2022-01-10",
           "stop_date": null
         },
         {
@@ -425,7 +425,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-04-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -443,7 +443,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2022-04-10",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -452,15 +452,15 @@
           "dose": "200 mcg",
           "frequency": "twice_daily",
           "route": "inhaled",
-          "start_date": "2022-04-10",
+          "start_date": "2021-10-12",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 46-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 142/90 mmHg, heart rate 80 bpm, weight 69.4 kg, and BMI 25.2. Laboratory data for this visit: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-004-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow_up encounter is recorded for a 46-year-old female patient. The charted condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004.",
+        "objective": "The objective record for this visit includes blood pressure 142/90 mmHg, heart rate 80 bpm, weight 69.4 kg, and BMI 25.2. Laboratory values are recorded as: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-005.",
+        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004.",
+        "plan": "For this record entry, the plan documents medications as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-004."
       },
       "linked_documents": [
         "DOC-CHR-004-005"
@@ -514,7 +514,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-07-09",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -523,7 +523,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-07-09",
+          "start_date": "2022-01-10",
           "stop_date": null
         },
         {
@@ -532,7 +532,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-07-09",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -541,7 +541,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-07-09",
+          "start_date": "2022-04-10",
           "stop_date": null
         },
         {
@@ -550,7 +550,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2022-07-09",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -559,15 +559,15 @@
           "dose": "200 mcg",
           "frequency": "twice_daily",
           "route": "inhaled",
-          "start_date": "2022-07-09",
+          "start_date": "2021-10-12",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 46-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 140/89 mmHg, heart rate 79 bpm, weight 69.0 kg, and BMI 25.0. Laboratory data for this visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-CHR-004-006.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this follow_up entry, the record identifies a 46-year-old female patient. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Objective findings record blood pressure 140/89 mmHg, heart rate 79 bpm, weight 69.0 kg, and BMI 25.0. Laboratory results for this visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-006.",
+        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
+        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-005."
       },
       "linked_documents": [
         "DOC-CHR-004-006"
@@ -621,7 +621,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2022-10-07",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -630,7 +630,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-10-07",
+          "start_date": "2022-01-10",
           "stop_date": null
         },
         {
@@ -639,7 +639,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-10-07",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -648,7 +648,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-10-07",
+          "start_date": "2022-04-10",
           "stop_date": null
         },
         {
@@ -657,7 +657,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2022-10-07",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -666,15 +666,15 @@
           "dose": "200 mcg",
           "frequency": "twice_daily",
           "route": "inhaled",
-          "start_date": "2022-10-07",
+          "start_date": "2021-10-12",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 46-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 138/88 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.9. Laboratory data for this visit: HbA1c 7.2 % (HIGH); FBG 127 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-004-007.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-006. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow-up record section describes a 46-year-old female patient at a follow_up visit. The documented condition list includes T2DM, HTN, Asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-006. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "objective": "Objective findings record blood pressure 138/88 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.9. Laboratory results for this visit: HbA1c 7.2 % (HIGH); FBG 127 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-007.",
+        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-006.",
+        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-006."
       },
       "linked_documents": [
         "DOC-CHR-004-007"
@@ -728,7 +728,7 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-01-05",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -737,7 +737,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-01-05",
+          "start_date": "2022-01-10",
           "stop_date": null
         },
         {
@@ -746,7 +746,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-01-05",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -755,7 +755,7 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-01-05",
+          "start_date": "2022-04-10",
           "stop_date": null
         },
         {
@@ -764,7 +764,7 @@
           "dose": "100 mcg",
           "frequency": "as_needed",
           "route": "inhaled",
-          "start_date": "2023-01-05",
+          "start_date": "2021-04-15",
           "stop_date": null
         },
         {
@@ -773,15 +773,15 @@
           "dose": "200 mcg",
           "frequency": "twice_daily",
           "route": "inhaled",
-          "start_date": "2023-01-05",
+          "start_date": "2021-10-12",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 46-year-old female patient attending a follow_up visit. The structured condition list records T2DM, HTN, Asthma. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/87 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.8. Laboratory data for this visit: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-CHR-004-008.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: T2DM, HTN, Asthma. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. Prior visit reference is VST-CHR-004-007. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "For this follow_up entry, the record identifies a 46-year-old female patient. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Recorded vitals include blood pressure 136/87 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.8. Laboratory results for the encounter: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-008.",
+        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
+        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-007. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-007."
       },
       "linked_documents": [
         "DOC-CHR-004-008"

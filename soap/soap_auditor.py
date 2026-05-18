@@ -43,7 +43,8 @@ from soap.soap_renderers import build_fact_context
 from soap.soap_safety import (
     ALLERGEN_CONTEXT_TERMS,
     DEBUG_TEMPLATE_MARKERS,
-    FORBIDDEN_CLINICAL_PHRASES,
+    FORBIDDEN_CLINICAL_PHRASE_TERMS,
+    FORBIDDEN_CLINICAL_SINGLE_WORDS,
 )
 
 
@@ -224,7 +225,7 @@ def audit_visit_soap(
         )
     )
     issues.extend(
-        _check_no_unknown_current_medication_mentions(
+        _check_current_medications_are_rendered(
             soap_text=soap_text,
             visit=visit,
             patient_id=patient_id,
@@ -521,7 +522,7 @@ def _check_bp_in_objective(
     ]
 
 
-def _check_no_unknown_current_medication_mentions(
+def _check_current_medications_are_rendered(
     *,
     soap_text: str,
     visit: Mapping[str, Any],
@@ -529,12 +530,13 @@ def _check_no_unknown_current_medication_mentions(
     visit_id: str,
 ) -> list[SoapAuditIssue]:
     """
-    Check that SOAP does not mention a visit medication name without its exact
-    rendered medication text.
+    Check that every medication listed in the structured visit record appears
+    in the rendered SOAP note.
 
-    This check intentionally avoids maintaining a separate medication whitelist
-    inside the auditor. Exact medication formatting is already covered through
-    fact_context["medication_text"].
+    This check does not decide whether a medication is clinically appropriate.
+    It only confirms that documented structured medication facts were preserved
+    in the SOAP text. Exact medication formatting is additionally covered by
+    REQUIRED_FACTS_BY_SECTION through fact_context["medication_text"].
     """
     issues: list[SoapAuditIssue] = []
     current_medications = visit.get("medications", [])
@@ -617,14 +619,35 @@ def _check_unsafe_phrases(
     patient_id: str,
     visit_id: str,
 ) -> list[SoapAuditIssue]:
-    """Check unsafe interpretive or recommendation phrases."""
+    """
+    Check unsafe interpretive or recommendation wording.
+
+    Single-word terms are matched with word boundaries to avoid false positives
+    such as matching "likely" inside "unlikely". Multi-word phrases are
+    matched after whitespace normalization with phrase-edge boundaries.
+    """
     issues: list[SoapAuditIssue] = []
     normalized_text = _normalize_text(soap_text)
 
-    for phrase in FORBIDDEN_CLINICAL_PHRASES:
+    for word in FORBIDDEN_CLINICAL_SINGLE_WORDS:
+        normalized_word = _normalize_text(word)
+
+        if _contains_word_boundary_match(normalized_text, normalized_word):
+            issues.append(
+                _issue(
+                    severity=SoapAuditSeverity.FAIL,
+                    rule_id="SOAP-SAFE-001",
+                    patient_id=patient_id,
+                    visit_id=visit_id,
+                    section=None,
+                    message=f"Unsafe single-word term found in SOAP text: {word!r}.",
+                )
+            )
+
+    for phrase in FORBIDDEN_CLINICAL_PHRASE_TERMS:
         normalized_phrase = _normalize_text(phrase)
 
-        if normalized_phrase in normalized_text:
+        if _contains_phrase_boundary_match(normalized_text, normalized_phrase):
             issues.append(
                 _issue(
                     severity=SoapAuditSeverity.FAIL,
@@ -699,6 +722,24 @@ def _join_soap_text(soap_note: Mapping[str, Any]) -> str:
 def _normalize_text(text: str) -> str:
     """Normalize text for case-insensitive phrase matching."""
     return " ".join(text.lower().split())
+
+
+def _contains_word_boundary_match(text: str, word: str) -> bool:
+    """Return True when a normalized single word appears as a whole word."""
+    if not word:
+        return False
+
+    pattern = re.compile(rf"(?<!\w){re.escape(word)}(?!\w)")
+    return bool(pattern.search(text))
+
+
+def _contains_phrase_boundary_match(text: str, phrase: str) -> bool:
+    """Return True when a normalized phrase appears with safe edge boundaries."""
+    if not phrase:
+        return False
+
+    pattern = re.compile(rf"(?<!\w){re.escape(phrase)}(?!\w)")
+    return bool(pattern.search(text))
 
 
 def _windows_around_phrase(

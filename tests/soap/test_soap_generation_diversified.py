@@ -474,7 +474,7 @@ def test_normal_patient_empty_state_facts_are_preserved(
     assert "no lab results recorded" in soap_text
     assert "no active whitelisted medications recorded" in soap_text
     assert "Linked document references: none." in soap_text
-    assert "This is the first recorded visit in the synthetic record." in soap_text
+    assert "This is the first recorded visit in the available record." in soap_text
     assert "118/76 mmHg" in soap_text
     assert "72 bpm" in soap_text
     assert "64.5 kg" in soap_text
@@ -719,6 +719,50 @@ def test_diversified_generation_keeps_fact_context_as_source_of_truth(
     assert facts["medication_text"] in soap_text
     assert facts["linked_documents_text"] in soap_text
     assert facts["prior_text"] in soap_text
+
+    # Semantic v1.1 fields should also be generated from build_fact_context()
+    # and made available to templates for stronger RAG retrieval quality.
+    assert facts["condition_focus_text"] in soap_text
+    assert facts["diagnosis_focus_text"] in soap_text
+    assert facts["monitoring_focus_text"] in soap_text
+    assert facts["medication_focus_text"] in soap_text
+
+
+def test_semantic_fact_context_fields_are_present_and_retrieval_safe(
+    moderate_patient: dict[str, Any],
+) -> None:
+    """
+    Semantic SOAP v1.1 fields must be present in fact context and rendered SOAP.
+
+    These fields improve RAG retrieval quality while remaining deterministic and
+    grounded in structured patient and visit data.
+    """
+    visit = moderate_patient["visits"][0]
+    facts = build_fact_context(moderate_patient, visit)
+    soap_note = generate_soap_note(moderate_patient, visit)
+    soap_text = _combined_soap_text(soap_note)
+
+    semantic_keys = (
+        "condition_focus_text",
+        "diagnosis_focus_text",
+        "monitoring_focus_text",
+        "medication_focus_text",
+        "visit_context_text",
+        "timeline_context_text",
+        "retrieval_focus_text",
+    )
+
+    for key in semantic_keys:
+        assert key in facts
+        assert isinstance(facts[key], str)
+        assert facts[key]
+        assert "{" not in facts[key]
+        assert "}" not in facts[key]
+
+    assert facts["condition_focus_text"] in soap_text
+    assert facts["diagnosis_focus_text"] in soap_text
+    assert facts["monitoring_focus_text"] in soap_text
+    assert facts["medication_focus_text"] in soap_text
 
 
 def test_tier_values_are_not_modified_by_generation(

@@ -34,15 +34,7 @@
         "weight_kg": 77.1,
         "bmi": 24.9
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -55,10 +47,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 38-year-old male patient attending a initial visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 146/92 mmHg, heart rate 82 bpm, weight 77.1 kg, and BMI 24.9. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-001.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. This is the first recorded visit in the synthetic record. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "A 38-year-old male patient is recorded for a initial visit. The documented condition list includes HTN. The patient-level condition field documents hypertension. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
+        "objective": "Objective findings record blood pressure 146/92 mmHg, heart rate 82 bpm, weight 77.1 kg, and BMI 24.9. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-001.",
+        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
+        "plan": "Medication details in the plan are recorded as Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. This is the first recorded visit in the available record."
       },
       "linked_documents": [
         "DOC-MOD-005-001"
@@ -80,15 +72,7 @@
         "weight_kg": 76.7,
         "bmi": 24.8
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -96,15 +80,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-07-09",
+          "start_date": "2023-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 144/91 mmHg, heart rate 81 bpm, weight 76.7 kg, and BMI 24.8. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-002.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-001. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 38-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Objective data from the encounter records blood pressure 144/91 mmHg, heart rate 81 bpm, weight 76.7 kg, and BMI 24.8. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-002.",
+        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
+        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-001. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-005-002"
@@ -126,15 +110,7 @@
         "weight_kg": 76.3,
         "bmi": 24.7
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -142,15 +118,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-09-07",
+          "start_date": "2023-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 142/90 mmHg, heart rate 80 bpm, weight 76.3 kg, and BMI 24.7. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-003.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-002. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "During this follow_up encounter, the record identifies a 38-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
+        "objective": "Structured objective data lists blood pressure 142/90 mmHg, heart rate 80 bpm, weight 76.3 kg, and BMI 24.7. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-003.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
+        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-002. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-005-003"
@@ -172,15 +148,7 @@
         "weight_kg": 75.9,
         "bmi": 24.5
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -188,15 +156,15 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-11-06",
+          "start_date": "2023-05-10",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 140/89 mmHg, heart rate 79 bpm, weight 75.9 kg, and BMI 24.5. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-004.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral. Prior visit reference is VST-MOD-005-003. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 38-year-old male patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
+        "objective": "Structured objective data lists blood pressure 140/89 mmHg, heart rate 79 bpm, weight 75.9 kg, and BMI 24.5. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-004.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
+        "plan": "Medication details in the plan are recorded as Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-003."
       },
       "linked_documents": [
         "DOC-MOD-005-004"
@@ -218,15 +186,7 @@
         "weight_kg": 75.5,
         "bmi": 24.4
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -234,7 +194,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-02-04",
+          "start_date": "2023-05-10",
           "stop_date": null
         },
         {
@@ -248,10 +208,10 @@
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 38-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 138/88 mmHg, heart rate 78 bpm, weight 75.5 kg, and BMI 24.4. Laboratory data for this visit: Creatinine 0.9 mg/dL (NORMAL). Linked document references: DOC-MOD-005-005.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-MOD-005-004. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "This follow_up note describes a 38-year-old male patient. Conditions recorded in the chart are HTN. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents hypertension.",
+        "objective": "The visit measurements include blood pressure 138/88 mmHg, heart rate 78 bpm, weight 75.5 kg, and BMI 24.4. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-005.",
+        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
+        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-004. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: amlodipine and lisinopril; visit type: follow_up; timeline link: prior visit documented."
       },
       "linked_documents": [
         "DOC-MOD-005-005"
@@ -273,15 +233,7 @@
         "weight_kg": 75.1,
         "bmi": 24.3
       },
-      "labs": [
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
           "medication_name": "Lisinopril",
@@ -289,7 +241,7 @@
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-05-04",
+          "start_date": "2023-05-10",
           "stop_date": null
         },
         {
@@ -298,15 +250,15 @@
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2024-05-04",
+          "start_date": "2024-02-04",
           "stop_date": null
         }
       ],
       "soap_note": {
-        "subjective": "The synthetic record documents a 39-year-old male patient attending a follow_up visit. The structured condition list records HTN. The note is generated only from stored synthetic facts and does not add diagnosis, prediction, or clinical judgment beyond the record.",
-        "objective": "Objective structured data records blood pressure 136/87 mmHg, heart rate 78 bpm, weight 75.1 kg, and BMI 24.3. Laboratory data for this visit: Creatinine 1.0 mg/dL (NORMAL). Linked document references: DOC-MOD-005-006.",
-        "assessment": "The assessment section summarizes only documented diagnoses for this visit: HTN. The visit remains grounded in the structured JSON record and does not infer unstated conditions.",
-        "plan": "The documented plan records the whitelisted medication list exactly as stored: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. Prior visit reference is VST-MOD-005-005. Follow-up context should be interpreted only as part of this synthetic academic dataset, not as medical advice."
+        "subjective": "The chart documents a 39-year-old male patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
+        "objective": "The visit measurements include blood pressure 136/87 mmHg, heart rate 78 bpm, weight 75.1 kg, and BMI 24.3. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-006.",
+        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
+        "plan": "The plan section records the active medication entries as documented: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-005."
       },
       "linked_documents": [
         "DOC-MOD-005-006"
