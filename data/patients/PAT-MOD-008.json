@@ -2,335 +2,141 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-008",
   "demographics": {
-    "name": "Sara Nabil",
-    "date_of_birth": "1987-01-17",
+    "name": "Reem Khaled",
+    "date_of_birth": "1980-09-25",
     "sex": "female"
   },
   "conditions": [
-    "IDA"
+    "UTI"
   ],
   "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-MOD-008-001",
-      "visit_date": "2023-08-10",
+      "visit_date": "2023-02-14",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 122,
-        "bp_diastolic": 80,
-        "heart_rate": 82,
-        "weight_kg": 59.0,
-        "bmi": 21.9
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 9.9,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 12,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This initial note describes a 36-year-old female patient. Conditions recorded in the chart are IDA. This is documented as the first encounter type in the visit record. The patient-level condition field documents iron-deficiency anemia.",
-        "objective": "Objective findings record blood pressure 122/80 mmHg, heart rate 82 bpm, weight 59.0 kg, and BMI 21.9. Laboratory results for this visit: Hemoglobin 9.9 g/dL (LOW); Ferritin 12 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-001.",
-        "assessment": "Diagnoses documented for this visit are summarized as IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: initial; timeline link: first documented visit.",
-        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. This is the first recorded visit in the available record. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: initial; timeline link: first documented visit."
-      },
-      "linked_documents": [
-        "DOC-MOD-008-001"
-      ],
-      "prior_visit_id": null
-    },
-    {
-      "visit_id": "VST-MOD-008-002",
-      "visit_date": "2023-10-09",
-      "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 121,
-        "bp_diastolic": 79,
-        "heart_rate": 81,
-        "weight_kg": 58.6,
-        "bmi": 21.8
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 10.3,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 17,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 36-year-old female patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 121/79 mmHg, heart rate 81 bpm, weight 58.6 kg, and BMI 21.8. Laboratory results: Hemoglobin 10.3 g/dL (LOW); Ferritin 17 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-002.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "The plan section records the active medication entries as documented: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-001."
-      },
-      "linked_documents": [
-        "DOC-MOD-008-002"
-      ],
-      "prior_visit_id": "VST-MOD-008-001"
-    },
-    {
-      "visit_id": "VST-MOD-008-003",
-      "visit_date": "2023-12-08",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "IDA"
+        "UTI"
       ],
       "vitals": {
         "bp_systolic": 120,
         "bp_diastolic": 78,
-        "heart_rate": 80,
-        "weight_kg": 58.2,
-        "bmi": 21.7
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 28.2
       },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 10.8,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 22,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
+          "medication_name": "Nitrofurantoin",
+          "medication_class": "Antibiotic",
+          "dose": "100 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": null
+          "start_date": "2023-02-14",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "This follow_up note describes a 36-year-old female patient. Conditions recorded in the chart are IDA. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents iron-deficiency anemia.",
-        "objective": "Objective findings record blood pressure 120/78 mmHg, heart rate 80 bpm, weight 58.2 kg, and BMI 21.7. Laboratory results for this visit: Hemoglobin 10.8 g/dL (LOW); Ferritin 22 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-003.",
-        "assessment": "Diagnoses documented for this visit are summarized as IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "Medication details in the plan are recorded as Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-002."
+        "subjective": "This encounter records the patient's clinical status. This initial note describes a 42-year-old female patient. Documented conditions are UTI. The patient-level condition field documents urinary tract infection. This is documented as an initial encounter in the visit record. Regarding the clinical course: Acute treatment course initiated. Short-course therapy commenced.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 28.2. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Acute treatment with Nitrofurantoin was started for urinary tract infection at initial presentation. The diagnosis summary for this encounter is UTI. The visit diagnosis field documents urinary tract infection for this encounter. The patient-level condition field documents urinary tract infection.",
+        "plan": "The plan keeps medication information in recorded form: Nitrofurantoin 100 mg twice_daily via oral (status started; trajectory simple_start_continue). Documented medication trajectory entries include Nitrofurantoin; status started; trajectory simple start continue. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-008-003"
-      ],
-      "prior_visit_id": "VST-MOD-008-002"
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "acute_treatment_started",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "medication_started",
+        "event_label": "Acute treatment started",
+        "event_summary": "Acute treatment with Nitrofurantoin was started for urinary tract infection at initial presentation."
+      },
+      "retrieval_context": {
+        "semantic_focus": "acute_treatment_completion",
+        "retrieval_intent_tags": [
+          "uti_treatment",
+          "nitrofurantoin_completion",
+          "medication_query"
+        ]
+      }
     },
     {
-      "visit_id": "VST-MOD-008-004",
-      "visit_date": "2024-02-06",
+      "visit_id": "VST-MOD-008-002",
+      "visit_date": "2023-06-14",
       "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
+      "attending_physician": "Dr. Laila Mostafa",
       "diagnoses": [
-        "IDA"
+        "UTI"
       ],
       "vitals": {
-        "bp_systolic": 119,
-        "bp_diastolic": 77,
-        "heart_rate": 79,
-        "weight_kg": 57.8,
-        "bmi": 21.5
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 28.2
       },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 11.2,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 27,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
+          "medication_name": "Nitrofurantoin",
+          "medication_class": "Antibiotic",
+          "dose": "100 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": null
+          "start_date": "2023-02-14",
+          "stop_date": "2023-06-14",
+          "medication_status": "completed",
+          "trajectory_event": "course_completed",
+          "reason": "Nitrofurantoin short course was documented as completed at follow-up."
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 37-year-old female patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Structured objective data lists blood pressure 119/77 mmHg, heart rate 79 bpm, weight 57.8 kg, and BMI 21.5. Lab results documented for the visit: Hemoglobin 11.2 g/dL (LOW); Ferritin 27 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-004.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
-        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-003. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
+        "subjective": "This encounter records the patient's clinical status. This follow_up note describes a 42-year-old female patient. Documented conditions are UTI. The patient-level condition field documents urinary tract infection. This is documented as a follow-up encounter in the visit record. Regarding the clinical course: Treatment course completed. Short-course therapy concluded at this visit.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 28.2. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Nitrofurantoin short course for urinary tract infection was completed and resolution of symptoms was confirmed at follow-up. The diagnosis summary for this encounter is UTI. The visit diagnosis field documents urinary tract infection for this encounter. The patient-level condition field documents urinary tract infection.",
+        "plan": "The plan keeps medication information in recorded form: Nitrofurantoin 100 mg twice_daily via oral (status completed; trajectory course_completed; reason Nitrofurantoin short course was documented as completed at follow-up.). Documented medication trajectory entries include Nitrofurantoin; status completed; trajectory course completed; reason: Nitrofurantoin short course was documented as completed at follow-up.. Prior visit reference is VST-MOD-008-001."
       },
-      "linked_documents": [
-        "DOC-MOD-008-004"
-      ],
-      "prior_visit_id": "VST-MOD-008-003"
-    },
-    {
-      "visit_id": "VST-MOD-008-005",
-      "visit_date": "2024-05-06",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 76,
-        "heart_rate": 78,
-        "weight_kg": 57.4,
-        "bmi": 21.4
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-008-001",
+      "visit_role": "course_completed",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 120,
+      "clinical_event": {
+        "event_type": "short_course_completed",
+        "event_label": "Short course completed",
+        "event_summary": "Nitrofurantoin short course for urinary tract infection was completed and resolution of symptoms was confirmed at follow-up."
       },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 11.7,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 32,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 37-year-old female patient. The condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective data from the encounter records blood pressure 118/76 mmHg, heart rate 78 bpm, weight 57.4 kg, and BMI 21.4. Laboratory results: Hemoglobin 11.7 g/dL (LOW); Ferritin 32 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-005.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
-        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-004. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-008-005"
-      ],
-      "prior_visit_id": "VST-MOD-008-004"
-    },
-    {
-      "visit_id": "VST-MOD-008-006",
-      "visit_date": "2024-08-04",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 117,
-        "bp_diastolic": 76,
-        "heart_rate": 78,
-        "weight_kg": 57.0,
-        "bmi": 21.3
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 12.2,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "NORMAL"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 37,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-08-10",
-          "stop_date": "2024-08-04"
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 37-year-old female patient. The condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The visit measurements include blood pressure 117/76 mmHg, heart rate 78 bpm, weight 57.0 kg, and BMI 21.3. Laboratory entries are recorded as: Hemoglobin 12.2 g/dL (NORMAL); Ferritin 37 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-008-006.",
-        "assessment": "The visit diagnosis list records IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "Medication details in the plan are recorded as Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-008-005."
-      },
-      "linked_documents": [
-        "DOC-MOD-008-006"
-      ],
-      "prior_visit_id": "VST-MOD-008-005"
+      "retrieval_context": {
+        "semantic_focus": "acute_treatment_completion",
+        "retrieval_intent_tags": [
+          "uti_treatment",
+          "nitrofurantoin_completion",
+          "medication_query"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "uti_nitrofurantoin_course_completed",
+    "timeline_pattern": "delayed_followup",
+    "semantic_focus": "acute_treatment_completion",
+    "retrieval_signature": "UTI|Nitrofurantoin|acute_treatment_completion|delayed_followup|short-course",
+    "retrieval_intent_tags": [
+      "uti_treatment",
+      "nitrofurantoin_completion",
+      "medication_query"
+    ],
+    "soap_style": "concise",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query"
+    ]
   }
 }

@@ -55,7 +55,6 @@ The following rules are locked for this project:
 - **Deterministic SOAP notes** generated from structured JSON facts.
 - **Retrieval enrichment layer** to improve semantic retrieval quality.
 - **Retrieval enrichment auditor** to prevent unsupported enrichment text.
-- **Google Vision OCR with offline cache** for scanned synthetic document demo.
 - **FastAPI backend** for query, timeline, summary, and health endpoints.
 - **Streamlit frontend** for interactive academic demo.
 - **Docker Compose local demo** for reproducible execution.
@@ -72,7 +71,6 @@ The following rules are locked for this project:
 | Vector Store | ChromaDB |
 | Embeddings | Sentence Transformers |
 | Answer LLM | Groq API |
-| OCR | Google Vision OCR with local cache |
 | Data Storage | Local JSON files |
 | Validation | Plain Python validation rules |
 | Containerization | Docker, Docker Compose |
@@ -130,7 +128,6 @@ AI-Based-Clinical-Record-Summarization-System/
 ├── generators/     # Deterministic synthetic patient generation
 ├── ingestion/      # Retrieval enrichment, chunking, metadata, ingestion
 ├── logs/           # Validation and runtime logs
-├── ocr/            # OCR extraction, cache, offline loading
 ├── rag/            # Retrieval, prompts, grounding, citations, answer generation
 ├── scripts/        # Pipeline workflow scripts
 ├── soap/           # Deterministic SOAP templates, rendering, audit
@@ -353,8 +350,6 @@ Set required values such as:
 
 ```text
 GROQ_API_KEY=
-GOOGLE_APPLICATION_CREDENTIALS=
-OFFLINE_MODE=true
 ```
 
 ---
@@ -482,8 +477,6 @@ Docker must remain local-first and simple. This project does not use Kubernetes,
 | `POST` | `/query` | Ask a grounded RAG question |
 | `GET` | `/timeline/{patient_id}` | Retrieve chronological patient visit history |
 | `GET` | `/summary/{patient_id}` | Generate grounded patient summary |
-| `GET` | `/ocr/{doc_id}` | Retrieve cached OCR text |
-
 Example query request:
 
 ```json
@@ -512,36 +505,7 @@ Expected response shape:
 
 ---
 
-## 19. OCR Workflow
-
-OCR is used for the scanned-document demo.
-
-```text
-Synthetic scanned document
-        ↓
-Google Vision OCR during preparation
-        ↓
-Raw extracted text
-        ↓
-Light OCR cleaning
-        ↓
-Local OCR cache
-        ↓
-Offline demo retrieval
-```
-
-OCR rules:
-
-- Use Google Vision OCR only during preparation.
-- Cache all OCR outputs before demo.
-- Demo should run with `OFFLINE_MODE=true`.
-- The live demo must not depend on a live Google Vision API call.
-- OCR cleaning should remain lightweight and deterministic.
-- No LLM-based OCR correction.
-
----
-
-## 20. Demo Workflow
+## 19. Demo Workflow
 
 Recommended demo sequence:
 
@@ -555,10 +519,9 @@ Recommended demo sequence:
 8. Show chronological visit history.
 9. Ask an allergy-history question.
 10. Show documented allergy retrieval.
-11. Open OCR demo tab.
-12. Show cached OCR text.
-13. Ask a question based on OCR content.
-14. Show cited answer.
+11. Open patient summary view.
+12. Show grounded patient summary.
+13. Demonstrate citation transparency.
 
 Demo rules:
 
@@ -570,7 +533,7 @@ Demo rules:
 
 ---
 
-## 21. Important Documentation
+## 20. Important Documentation
 
 | Document | Purpose |
 |---|---|
@@ -591,8 +554,7 @@ Demo rules:
 | `docs/llm_project_context.md` | Compact context file for LLM tools used by the team |
 
 ---
-
-## 22. Team Ownership Summary
+## 21. Team Ownership Summary
 
 | Area | Primary Owner |
 |---|---|
@@ -602,17 +564,16 @@ Demo rules:
 | `validators/` | Ahmed Hesham |
 | `soap/` | Ahmed Hesham |
 | `docs/` | Ahmed Hesham with team input |
-| `ingestion/` | AI/RAG Engineer |
-| `rag/` | AI/RAG Engineer |
-| `backend/` | Backend Developer |
-| `frontend/` | Frontend Developer |
-| `ocr/` | Frontend/OCR Developer |
-| `deployment/` | DevOps/Testing Engineer |
-| `tests/` | DevOps/Testing Engineer with all members |
+| `ingestion/` | Gamal Mohamed Gad |
+| `rag/` | Gamal Mohamed Gad |
+| `backend/` | Youssef Yassin Ibrahim |
+| `frontend/` | Youssef Yassin Ibrahim |
+| `deployment/` | Mahmoud Mohamed El Faham |
+| `tests/` | Mahmoud Mohamed El Faham with all members |
 
 ---
 
-## 23. Development Order
+## 22. Development Order
 
 ```text
 1. Lock constants and schema
@@ -630,7 +591,7 @@ Demo rules:
 13. Build FastAPI backend
 14. Test API endpoints
 15. Build Streamlit frontend
-16. Integrate OCR cache workflow
+16. Integrate frontend with backend
 17. Build Docker workflow
 18. Run smoke tests
 19. Prepare demo script
@@ -645,7 +606,7 @@ Do not build or polish the frontend before retrieval works.
 
 ---
 
-## 24. Testing Commands
+## 23. Testing Commands
 
 ```bash
 python -m py_compile config/*.py
@@ -676,7 +637,7 @@ curl http://localhost:8000/health
 
 ---
 
-## 25. Project Status
+## 24. Project Status
 
 Current implementation direction:
 
@@ -687,12 +648,11 @@ Dataset: Synthetic patient JSON records
 Validation: V1–V11 + dataset-level checks
 SOAP: Deterministic template-based generation
 RAG: Patient-scoped, citation-based, grounded answers
-OCR: Google Vision with offline cache
 Demo: Streamlit + FastAPI + ChromaDB
 ```
 
 ---
 
-## 26. License
+## 25. License
 
 This project is intended for academic learning, DEPI evaluation, and portfolio demonstration. It must not be used for real clinical care, diagnosis, treatment, or medical decision-making.

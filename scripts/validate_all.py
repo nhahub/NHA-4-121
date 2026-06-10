@@ -1,279 +1,339 @@
 """
 scripts/validate_all.py
 
-Validate all generated patient JSON files.
+CLI orchestration command for validating the generated v1.7 Lite patient
+JSON dataset.
 
-Run from project root:
+This script is intentionally thin:
+- it loads no business rules of its own,
+- it delegates V1-V12 validation to validators.validate / validators.rules,
+- it delegates JSON/Markdown report formatting to validators.validation_report,
+- it exits with a non-zero status when blocking validation fails.
 
-    python scripts/validate_all.py
-    python scripts/validate_all.py --quarantine
-    python scripts/validate_all.py --mode pilot
-    python scripts/validate_all.py --mode full
+It must not mutate patient files, generate patient records, generate SOAP notes,
+create chunks, call ChromaDB, or call any LLM/API.
 
-This script keeps V1-V11 validation inside validators/ and adds only
-small dataset-level checks that belong to the command-line workflow:
+Mode support
+------------
+--mode v17_lite  Validate against data/patients/  (default)
+--mode full      Validate against data/patients/  (same directory as v17_lite)
+--mode pilot     Validate against data/patients/  (pilot subset written there)
 
-- expected patient count for the selected mode
-- expected tier distribution for the selected mode
-- duplicate patient_id detection across files
-- CKD patient count limit
+Use --patients-dir to override the directory explicitly.
 """
 
 from __future__ import annotations
 
 import argparse
 import sys
-from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Sequence
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT))
+
+# Support both execution styles:
+#   python scripts/validate_all.py
+#   python -m scripts.validate_all
+_PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
 
 from config.constants import (  # noqa: E402
     DATASET_MODE_FULL,
     DATASET_MODE_PILOT,
+    DATASET_MODE_V17_LITE,
+    DATASET_VERSION,
     DEFAULT_DATASET_MODE,
-    EXPECTED_FULL_PATIENT_COUNT,
-    EXPECTED_PILOT_PATIENT_COUNT,
-    FINAL_PATIENT_DISTRIBUTION,
-    PILOT_PATIENT_DISTRIBUTION,
+    EXPECTED_V17_LITE_PATIENT_COUNT,
+    PROJECT_NAME,
 )
-from config.paths import PATIENTS_DIR, ensure_project_directories  # noqa: E402
-from validators.validate import load_patient_files, validate_patient_files  # noqa: E402
-from validators.validation_report import print_validation_report  # noqa: E402
+from validators.validate import (  # noqa: E402
+    DEFAULT_PATIENTS_DIR,
+    DEFAULT_REPORT_DIR,
+    ValidationRunResult,
+    validate_patient_files,
+)
+from validators.validation_report import (  # noqa: E402
+    build_validation_report,
+    format_console_report,
+    write_report_files,
+)
 
 
-_MAX_CKD_PATIENTS = 2
+DEFAULT_REPORT_BASENAME_PREFIX = "validation_report"
+
+# Supported modes for the CLI.
+_SUPPORTED_MODES: tuple[str, ...] = (
+    DATASET_MODE_V17_LITE,
+    DATASET_MODE_FULL,
+    DATASET_MODE_PILOT,
+)
+
+# Maps each mode to its default patients directory.
+# All current modes share data/patients/ because generate_all.py writes
+# every mode to the same location by default.  Override with --patients-dir
+# if a separate directory is used for a specific mode.
+_MODE_PATIENTS_DIR: dict[str, Path] = {
+    DATASET_MODE_V17_LITE: DEFAULT_PATIENTS_DIR,
+    DATASET_MODE_FULL:     DEFAULT_PATIENTS_DIR,
+    DATASET_MODE_PILOT:    DEFAULT_PATIENTS_DIR,
+}
 
 
-def _expected_patient_count_for_mode(mode: str) -> int:
-    """
-    Return the expected patient count for the selected dataset mode.
-    """
-    if mode == DATASET_MODE_PILOT:
-        return EXPECTED_PILOT_PATIENT_COUNT
-
-    if mode == DATASET_MODE_FULL:
-        return EXPECTED_FULL_PATIENT_COUNT
-
-    raise ValueError(f"Unsupported dataset mode: {mode}")
+# ---------------------------------------------------------------------------
+# Public workflow
+# ---------------------------------------------------------------------------
 
 
-def _expected_distribution_for_mode(mode: str) -> dict[str, int]:
-    """
-    Return the expected tier distribution for the selected dataset mode.
-    """
-    if mode == DATASET_MODE_PILOT:
-        return dict(PILOT_PATIENT_DISTRIBUTION)
-
-    if mode == DATASET_MODE_FULL:
-        return dict(FINAL_PATIENT_DISTRIBUTION)
-
-    raise ValueError(f"Unsupported dataset mode: {mode}")
-
-
-def _load_patients_for_dataset_checks(directory: Path) -> list[dict[str, Any]]:
-    """
-    Load patient records using the same tolerant loader as validators.validate.
-
-    Malformed JSON files are represented as minimal records with _load_error,
-    which allows dataset checks to report count/distribution problems without
-    crashing the script.
-    """
-    return [patient for _, patient in load_patient_files(directory)]
-
-
-def _dataset_count_issues(
+def run_validate_all(
     *,
-    patients_checked: int,
-    mode: str,
-) -> list[str]:
+    mode: str = DEFAULT_DATASET_MODE,
+    patients_dir: Path = DEFAULT_PATIENTS_DIR,
+    report_dir: Path = DEFAULT_REPORT_DIR,
+    strict_diversity: bool = True,
+    write_json: bool = True,
+    write_markdown: bool = True,
+    report_basename: str | None = None,
+    max_issues: int = 40,
+    fail_on_warn: bool = False,
+    print_summary: bool = True,
+) -> int:
+    """Run the full dataset validation command.
+
+    Supports the new PatientBlueprint-based pipeline.  No dict-style blueprint
+    access or old mapping assumptions are made here — validation operates
+    entirely on the generated patient JSON files.
+
+    V7, V11, and V12 execute as part of run_all_rules() inside
+    validators.validate.validate_patient_files.
+
+    Args:
+        mode:            Dataset mode string — used for logging only; the actual
+                         directory is determined by patients_dir.
+        patients_dir:    Directory containing approved/generated PAT-*.json
+                         files, or a single patient JSON file.
+        report_dir:      Directory for validation report outputs.
+        strict_diversity: True before final ingestion. False is allowed only
+                         during active development to downgrade selected V12
+                         diversity issues.
+        write_json:      Write a JSON report.
+        write_markdown:  Write a Markdown report.
+        report_basename: Optional report filename basename without extension.
+        max_issues:      Maximum issue details shown in console/Markdown.
+        fail_on_warn:    Return a failing exit code when WARN issues exist.
+        print_summary:   Print compact console report.
+
+    Returns:
+        Process exit code. 0 means approved for the next pipeline step.
     """
-    Validate expected patient count for the selected mode.
-    """
-    expected_count = _expected_patient_count_for_mode(mode)
+    if print_summary:
+        print(f"  [validate_all] mode={mode!r}  patients_dir={patients_dir}")
 
-    if patients_checked == expected_count:
-        return []
-
-    return [
-        "Patient count mismatch. "
-        f"Expected {expected_count} patients for mode='{mode}', "
-        f"but validated {patients_checked}."
-    ]
-
-
-def _dataset_distribution_issues(
-    *,
-    patients: list[dict[str, Any]],
-    mode: str,
-) -> list[str]:
-    """
-    Validate tier distribution across all loaded patient records.
-    """
-    expected_distribution = _expected_distribution_for_mode(mode)
-    actual_counter: Counter[str] = Counter()
-
-    for patient in patients:
-        metadata = patient.get("metadata", {})
-        tier = metadata.get("tier") if isinstance(metadata, dict) else None
-        actual_counter[str(tier)] += 1
-
-    actual_distribution = {
-        tier: actual_counter.get(tier, 0)
-        for tier in expected_distribution
-    }
-
-    unexpected_tiers = {
-        tier: count
-        for tier, count in actual_counter.items()
-        if tier not in expected_distribution
-    }
-
-    issues: list[str] = []
-
-    if actual_distribution != expected_distribution:
-        issues.append(
-            "Tier distribution mismatch. "
-            f"Expected {expected_distribution}, got {actual_distribution}."
-        )
-
-    if unexpected_tiers:
-        issues.append(
-            "Unexpected tier values found in dataset: "
-            f"{unexpected_tiers}."
-        )
-
-    return issues
-
-
-def _dataset_patient_id_issues(patients: list[dict[str, Any]]) -> list[str]:
-    """
-    Validate patient_id uniqueness across the dataset.
-    """
-    patient_ids = [str(patient.get("patient_id", "<missing-patient-id>")) for patient in patients]
-    counts = Counter(patient_ids)
-    duplicates = sorted(
-        patient_id
-        for patient_id, count in counts.items()
-        if count > 1
+    validation_result = validate_patient_files(
+        patients_path=patients_dir,
+        report_dir=report_dir,
+        strict_diversity=strict_diversity,
+        write_report=False,
     )
 
-    if not duplicates:
-        return []
+    report_payload = build_validation_report(
+        summary=validation_result.summary,
+        patients_path=validation_result.patients_dir,
+        files_checked=validation_result.files_checked,
+        patient_ids=validation_result.patient_ids,
+        strict_diversity=strict_diversity,
+        extra_context={
+            "script":                "scripts/validate_all.py",
+            "project_root":          str(_PROJECT_ROOT),
+            "mode":                  mode,
+            "expected_patient_count": EXPECTED_V17_LITE_PATIENT_COUNT,
+            "fail_on_warn":          fail_on_warn,
+        },
+    )
 
-    return [f"Duplicate patient_id values found across dataset: {duplicates}."]
+    report_paths = None
+    if write_json or write_markdown:
+        report_paths = write_report_files(
+            report_payload,
+            report_dir=report_dir,
+            basename=report_basename or _timestamped_report_basename(),
+            write_json=write_json,
+            write_markdown=write_markdown,
+            max_issues=max_issues,
+        )
 
+        if report_paths.json_path is not None:
+            report_payload["report_json_path"] = str(report_paths.json_path)
+        if report_paths.markdown_path is not None:
+            report_payload["report_markdown_path"] = str(report_paths.markdown_path)
 
-def _dataset_ckd_issues(patients: list[dict[str, Any]]) -> list[str]:
-    """
-    Validate the dataset-level CKD patient count limit.
+    if print_summary:
+        print(format_console_report(report_payload, max_issues=max_issues))
+        if report_paths is not None and report_paths.created_paths:
+            print("Reports written:")
+            for path in report_paths.created_paths:
+                print(f"  - {path}")
 
-    Per-patient CKD co-occurrence remains enforced by V7. This check only
-    prevents accidentally expanding CKD beyond the locked dataset scope.
-    """
-    ckd_patient_ids: list[str] = []
-
-    for patient in patients:
-        conditions = patient.get("conditions", [])
-
-        if not isinstance(conditions, list):
-            continue
-
-        if "CKD" in conditions:
-            ckd_patient_ids.append(str(patient.get("patient_id", "<missing-patient-id>")))
-
-    if len(ckd_patient_ids) <= _MAX_CKD_PATIENTS:
-        return []
-
-    return [
-        "CKD patient count exceeds locked scope. "
-        f"Maximum allowed is {_MAX_CKD_PATIENTS}, "
-        f"found {len(ckd_patient_ids)}: {ckd_patient_ids}."
-    ]
-
-
-def run_dataset_level_checks(
-    *,
-    directory: Path,
-    mode: str,
-    patients_checked: int,
-) -> list[str]:
-    """
-    Run dataset-level checks that are outside per-patient V1-V11 validation.
-    """
-    patients = _load_patients_for_dataset_checks(directory)
-
-    issues: list[str] = []
-    issues.extend(_dataset_count_issues(patients_checked=patients_checked, mode=mode))
-    issues.extend(_dataset_distribution_issues(patients=patients, mode=mode))
-    issues.extend(_dataset_patient_id_issues(patients))
-    issues.extend(_dataset_ckd_issues(patients))
-
-    return issues
+    return _exit_code(validation_result, fail_on_warn=fail_on_warn)
 
 
-def print_dataset_level_report(issues: list[str]) -> None:
-    """
-    Print dataset-level check results.
-    """
-    print("\n=== DATASET-LEVEL CHECKS ===")
-
-    if not issues:
-        print("Status: PASS")
-        return
-
-    print("Status: FAIL")
-
-    for issue in issues:
-        print(f"ERROR: {issue}")
+# Backward-compatible aliases for tests or future shell wrappers.
+main_validate_all = run_validate_all
+validate_all = run_validate_all
 
 
-def main() -> int:
-    """
-    Validate generated patient JSON files and enforce dataset-level checks.
-    """
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = _parse_args(argv)
+
+    # Resolve the patients directory:
+    # 1. If --patients-dir was given explicitly, use it.
+    # 2. Otherwise resolve from --mode via _MODE_PATIENTS_DIR.
+    if args.patients_dir != DEFAULT_PATIENTS_DIR:
+        # Explicit override — honour it regardless of mode.
+        patients_dir = args.patients_dir
+    else:
+        # Use the mode-specific default (currently all map to DEFAULT_PATIENTS_DIR).
+        patients_dir = _MODE_PATIENTS_DIR.get(args.mode, DEFAULT_PATIENTS_DIR)
+
+    write_json, write_markdown = _resolve_report_outputs(args)
+
+    return run_validate_all(
+        mode=args.mode,
+        patients_dir=patients_dir,
+        report_dir=args.report_dir,
+        strict_diversity=not args.development,
+        write_json=write_json,
+        write_markdown=write_markdown,
+        report_basename=args.report_basename,
+        max_issues=args.max_issues,
+        fail_on_warn=args.fail_on_warn,
+        print_summary=not args.quiet,
+    )
+
+
+def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Validate all patient records."
+        description=(
+            "Run V1-V12 validation for the v1.7 Lite synthetic patient dataset. "
+            "Compatible with the PatientBlueprint dataclass pipeline. "
+            "This command is an approval gate before SOAP generation, ingestion, "
+            "and RAG handoff."
+        ),
     )
-
-    parser.add_argument(
-        "--quarantine",
-        action="store_true",
-        help="Copy invalid files and issue reports to data/quarantine/.",
-    )
-
     parser.add_argument(
         "--mode",
-        choices=(DATASET_MODE_PILOT, DATASET_MODE_FULL),
+        choices=list(_SUPPORTED_MODES),
         default=DEFAULT_DATASET_MODE,
-        help="Expected dataset mode. Defaults to configured default mode.",
+        help=(
+            f"Dataset mode to validate.  Determines which patients directory is "
+            f"used when --patients-dir is not specified.  "
+            f"Default: {DEFAULT_DATASET_MODE!r}.  "
+            f"Choices: {', '.join(_SUPPORTED_MODES)}."
+        ),
     )
-
-    args = parser.parse_args()
-
-    ensure_project_directories()
-
-    report = validate_patient_files(
-        directory=PATIENTS_DIR,
-        quarantine_invalid=args.quarantine,
-        write_report=True,
+    parser.add_argument(
+        "--patients-dir",
+        type=Path,
+        default=DEFAULT_PATIENTS_DIR,
+        help=(
+            "Directory containing PAT-*.json files, or one patient JSON file. "
+            "When omitted, the directory is resolved from --mode."
+        ),
     )
-
-    print_validation_report(report)
-
-    dataset_issues = run_dataset_level_checks(
-        directory=PATIENTS_DIR,
-        mode=args.mode,
-        patients_checked=report.patients_checked,
+    parser.add_argument(
+        "--report-dir",
+        type=Path,
+        default=DEFAULT_REPORT_DIR,
+        help="Directory where validation reports are written.",
     )
-    print_dataset_level_report(dataset_issues)
+    parser.add_argument(
+        "--report-basename",
+        type=str,
+        default=None,
+        help=(
+            "Optional report basename without extension. "
+            "Timestamped name is used by default."
+        ),
+    )
+    parser.add_argument(
+        "--report-format",
+        choices=("both", "json", "markdown", "none"),
+        default="both",
+        help="Report output format. Default: both JSON and Markdown.",
+    )
+    parser.add_argument(
+        "--development",
+        action="store_true",
+        help=(
+            "Development mode: pass strict_diversity=False so selected V12 diversity "
+            "issues may be downgraded during active iteration. "
+            "Do not use for final handoff."
+        ),
+    )
+    parser.add_argument(
+        "--fail-on-warn",
+        action="store_true",
+        help=(
+            "Return non-zero if WARN issues exist, "
+            "useful for stricter pre-handoff checks."
+        ),
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Suppress console summary. Exit code still reflects validation status.",
+    )
+    parser.add_argument(
+        "--max-issues",
+        type=int,
+        default=40,
+        help=(
+            "Maximum number of issues to show in console and Markdown detail sections."
+        ),
+    )
+    return parser.parse_args(argv)
 
-    if dataset_issues:
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+
+def _resolve_report_outputs(args: argparse.Namespace) -> tuple[bool, bool]:
+    if args.report_format == "none":
+        return False, False
+    if args.report_format == "json":
+        return True, False
+    if args.report_format == "markdown":
+        return False, True
+    return True, True
+
+
+def _timestamped_report_basename() -> str:
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return f"{DEFAULT_REPORT_BASENAME_PREFIX}_{timestamp}"
+
+
+def _exit_code(result: ValidationRunResult, *, fail_on_warn: bool = False) -> int:
+    if not result.passed:
         return 1
+    if fail_on_warn and result.summary.warn_count > 0:
+        return 1
+    return 0
 
-    return 0 if report.passed else 1
+
+__all__ = [
+    "DEFAULT_REPORT_BASENAME_PREFIX",
+    "run_validate_all",
+    "main_validate_all",
+    "validate_all",
+    "main",
+]
 
 
 if __name__ == "__main__":

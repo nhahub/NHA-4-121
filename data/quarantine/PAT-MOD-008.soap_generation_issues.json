@@ -1,0 +1,25 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-008",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-008",
+      "visit_id": "VST-MOD-008-001",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type medication started; event label Nitrofurantoin started for UTI; event summary: UTI symptoms were documented and Nitrofurantoin was started..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-008",
+      "visit_id": "VST-MOD-008-002",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type short course completed; event label UTI treatment course completed; event summary: Follow-up documented symptom resolution after completed Nitrofurantoin course..'."
+    }
+  ]
+}

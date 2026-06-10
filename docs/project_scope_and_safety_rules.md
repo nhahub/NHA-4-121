@@ -23,7 +23,6 @@ Every team member must follow this document when working on:
 - chunking and metadata,
 - RAG retrieval,
 - answer generation,
-- OCR processing,
 - backend APIs,
 - frontend display,
 - demo scripts,
@@ -82,7 +81,6 @@ The project demonstrates:
 - citation formatting,
 - FastAPI backend integration,
 - Streamlit frontend demo,
-- OCR cache workflow,
 - and safe AI engineering practices.
 
 ---
@@ -100,7 +98,6 @@ The system may:
 - display documented medications,
 - display documented labs,
 - display documented vitals inside narrative text,
-- process cached OCR text from synthetic scanned documents,
 - generate deterministic SOAP notes from structured JSON,
 - enrich retrieval text deterministically for better semantic matching,
 - reject unsafe or unsupported outputs,
@@ -206,7 +203,6 @@ The dataset must not contain:
 - real hospital identifiers,
 - real lab reports,
 - real prescriptions,
-- real OCR documents,
 - any protected health information.
 
 Synthetic data may contain realistic-looking values for academic demonstration, but those values must not belong to real people.
@@ -638,31 +634,7 @@ The frontend must show citations clearly enough for evaluators to understand whe
 
 ---
 
-# 20. OCR Safety Rule
-
-OCR is used only for synthetic scanned documents.
-
-The OCR workflow must be cache-first.
-
-Google Vision OCR may be used during preparation, but the demo should use cached OCR output.
-
-During demo:
-
-```text
-OFFLINE_MODE=true
-```
-
-The system must not depend on a live OCR API call during the presentation.
-
-OCR text cleaning must be lightweight and rule-based.
-
-Do not use LLM-based OCR correction.
-
-OCR output must be treated as retrieved evidence only after it is cached, cleaned lightly, chunked, and ingested through the normal retrieval pipeline.
-
----
-
-# 21. Backend Safety Rule
+# 20. Backend Safety Rule
 
 The backend should orchestrate the system.
 
@@ -672,8 +644,7 @@ It should not contain:
 - data generation logic,
 - chunking logic,
 - ChromaDB ingestion logic,
-- frontend display logic,
-- OCR extraction internals.
+- frontend display logic
 
 The backend should call the appropriate service modules and return structured responses.
 
@@ -690,7 +661,7 @@ All answer endpoints must preserve grounding and citations.
 
 ---
 
-# 22. Frontend Safety Rule
+# 21. Frontend Safety Rule
 
 The frontend is a display layer.
 
@@ -710,7 +681,6 @@ The frontend should:
 - display citations,
 - display patient timeline,
 - display documented allergy history,
-- display cached OCR demo content,
 - avoid clinical claims in UI labels.
 
 Preferred UI phrasing:
@@ -735,7 +705,7 @@ Allergy Detection
 
 ---
 
-# 23. Engineering Scope Boundaries
+# 22. Engineering Scope Boundaries
 
 The project must remain simple, local-first, and academic.
 
@@ -747,7 +717,6 @@ Streamlit
 ChromaDB local persistent storage
 Local JSON patient records
 Groq API for grounded RAG answer generation
-Google Vision OCR with local cache
 Docker Compose for local reproducibility
 ```
 
@@ -775,7 +744,7 @@ Do not add enterprise complexity unless the team explicitly changes the project 
 
 ---
 
-# 24. Team Ownership Safety Rules
+# 23. Team Ownership Safety Rules
 
 ## Ahmed Hesham Kamel
 
@@ -810,27 +779,21 @@ Owns:
 
 Gamal must not ingest invalid patient records.
 
-## Mahmoud Tarek Mahmoud
-
-Owns:
-
-- FastAPI backend,
-- API routes,
-- schemas,
-- backend orchestration,
-- API testing.
-
-Backend must call RAG modules instead of duplicating RAG logic.
-
 ## Youssef Yassin Ibrahim
 
 Owns:
 
-- Streamlit frontend,
-- OCR flow,
-- OCR cache display,
-- frontend API client,
-- demo UI behavior.
+* FastAPI backend,
+* backend orchestration,
+* API routes,
+* API schemas,
+* API testing,
+* Streamlit frontend,
+* frontend API client,
+* demo UI behavior,
+* frontend-backend integration.
+
+Backend must call RAG modules instead of duplicating RAG logic.
 
 Frontend must not bypass backend APIs.
 
@@ -838,19 +801,19 @@ Frontend must not bypass backend APIs.
 
 Owns:
 
-- deployment,
-- Docker,
-- scripts coordination,
-- tests,
-- logs,
-- demo smoke checks,
-- reproducible local execution.
+* deployment,
+* Docker,
+* scripts coordination,
+* tests,
+* logs,
+* demo smoke checks,
+* reproducible local execution.
 
 Deployment must remain simple and local-first.
 
 ---
 
-# 25. LLM Tool Usage Rules for the Team
+# 24. LLM Tool Usage Rules for the Team
 
 When any team member uses an external LLM tool, they should provide this file as context.
 
@@ -881,7 +844,7 @@ Work only on the files I provide.
 
 ---
 
-# 26. Demo Safety Script
+# 25. Demo Safety Script
 
 During the demo, the team should describe the system using safe language.
 
@@ -907,7 +870,7 @@ The system replaces doctors.
 
 ---
 
-# 27. Final Safety Checklist
+# 26. Final Safety Checklist
 
 Before demo or final handoff, verify:
 
@@ -926,15 +889,13 @@ Before demo or final handoff, verify:
 [ ] Invalid records are not ingested.
 [ ] RAG answers include citations.
 [ ] No retrieved evidence results in no generated medical answer.
-[ ] OCR demo uses cached OCR text.
-[ ] OFFLINE_MODE is tested before presentation.
 [ ] Frontend avoids unsafe clinical terminology.
 [ ] Demo uses showcase patients only.
 ```
 
 ---
 
-# 28. Final Scope Statement
+# 27. Final Scope Statement
 
 The **AI-Based Clinical Record Summarization System** is a safe academic engineering demo that retrieves, summarizes, and cites synthetic clinical records using RAG.
 

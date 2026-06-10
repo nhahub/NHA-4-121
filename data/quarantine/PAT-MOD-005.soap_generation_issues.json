@@ -1,0 +1,25 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-005",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-005",
+      "visit_id": "VST-MOD-005-001",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type medication started; event label Omeprazole started for GERD; event summary: Initial GERD symptoms were documented and Omeprazole was started..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-005",
+      "visit_id": "VST-MOD-005-002",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type symptom improvement event; event label GERD symptoms improved; event summary: Follow-up documented improved reflux symptoms while Omeprazole continued..'."
+    }
+  ]
+}

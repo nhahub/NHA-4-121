@@ -2,271 +2,140 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-005",
   "demographics": {
-    "name": "Tamer Yasser",
-    "date_of_birth": "1985-04-02",
+    "name": "Hassan Tarek",
+    "date_of_birth": "1983-06-16",
     "sex": "male"
   },
   "conditions": [
-    "HTN"
+    "GERD"
   ],
-  "allergy_registry": [
-    {
-      "allergen": "Latex",
-      "reaction": "contact dermatitis",
-      "severity": "mild",
-      "recorded_date": "2023-05-10",
-      "source_visit_id": "VST-MOD-005-001"
-    }
-  ],
+  "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-MOD-005-001",
-      "visit_date": "2023-05-10",
+      "visit_date": "2023-02-05",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Mona Kareem",
       "diagnoses": [
-        "HTN"
+        "GERD"
       ],
       "vitals": {
-        "bp_systolic": 146,
-        "bp_diastolic": 92,
-        "heart_rate": 82,
-        "weight_kg": 77.1,
-        "bmi": 24.9
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 25.0
       },
       "labs": [],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
+          "start_date": "2023-02-05",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 38-year-old male patient is recorded for a initial visit. The documented condition list includes HTN. The patient-level condition field documents hypertension. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
-        "objective": "Objective findings record blood pressure 146/92 mmHg, heart rate 82 bpm, weight 77.1 kg, and BMI 24.9. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-001.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "Medication details in the plan are recorded as Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. This is the first recorded visit in the available record."
+        "subjective": "This encounter records the patient's clinical status. This initial note describes a 39-year-old male patient. Documented conditions are GERD. The patient-level condition field documents gastroesophageal reflux disease. This is documented as an initial encounter in the visit record. Regarding the clinical course: Initial diagnosis was documented. Baseline management plan established.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 25.0. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Initial GERD diagnosis was documented and baseline management plan established with Omeprazole. The diagnosis summary for this encounter is GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. The patient-level condition field documents gastroesophageal reflux disease.",
+        "plan": "The plan keeps medication information in recorded form: Omeprazole 20 mg once_daily via oral (status started; trajectory simple_start_continue). Documented medication trajectory entries include Omeprazole; status started; trajectory simple start continue. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-005-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial GERD diagnosis was documented and baseline management plan established with Omeprazole."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "gerd_symptom_control",
+          "medication_query",
+          "symptom_control_query"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-005-002",
-      "visit_date": "2023-07-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 144,
-        "bp_diastolic": 91,
-        "heart_rate": 81,
-        "weight_kg": 76.7,
-        "bmi": 24.8
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 38-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective data from the encounter records blood pressure 144/91 mmHg, heart rate 81 bpm, weight 76.7 kg, and BMI 24.8. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-002.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-001. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-005-002"
-      ],
-      "prior_visit_id": "VST-MOD-005-001"
-    },
-    {
-      "visit_id": "VST-MOD-005-003",
-      "visit_date": "2023-09-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 142,
-        "bp_diastolic": 90,
-        "heart_rate": 80,
-        "weight_kg": 76.3,
-        "bmi": 24.7
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 38-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Structured objective data lists blood pressure 142/90 mmHg, heart rate 80 bpm, weight 76.3 kg, and BMI 24.7. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-003.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-002. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-005-003"
-      ],
-      "prior_visit_id": "VST-MOD-005-002"
-    },
-    {
-      "visit_id": "VST-MOD-005-004",
-      "visit_date": "2023-11-06",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 140,
-        "bp_diastolic": 89,
-        "heart_rate": 79,
-        "weight_kg": 75.9,
-        "bmi": 24.5
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 38-year-old male patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Structured objective data lists blood pressure 140/89 mmHg, heart rate 79 bpm, weight 75.9 kg, and BMI 24.5. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-004.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "Medication details in the plan are recorded as Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-003."
-      },
-      "linked_documents": [
-        "DOC-MOD-005-004"
-      ],
-      "prior_visit_id": "VST-MOD-005-003"
-    },
-    {
-      "visit_id": "VST-MOD-005-005",
-      "visit_date": "2024-02-04",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 138,
-        "bp_diastolic": 88,
-        "heart_rate": 78,
-        "weight_kg": 75.5,
-        "bmi": 24.4
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-02-04",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow_up note describes a 38-year-old male patient. Conditions recorded in the chart are HTN. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents hypertension.",
-        "objective": "The visit measurements include blood pressure 138/88 mmHg, heart rate 78 bpm, weight 75.5 kg, and BMI 24.4. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-005.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-004. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: amlodipine and lisinopril; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-005-005"
-      ],
-      "prior_visit_id": "VST-MOD-005-004"
-    },
-    {
-      "visit_id": "VST-MOD-005-006",
-      "visit_date": "2024-05-04",
+      "visit_date": "2023-06-05",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Yasser Amin",
       "diagnoses": [
-        "HTN"
+        "GERD"
       ],
       "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 87,
-        "heart_rate": 78,
-        "weight_kg": 75.1,
-        "bmi": 24.3
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 25.0
       },
       "labs": [],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-05-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-02-04",
-          "stop_date": null
+          "start_date": "2023-02-05",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 39-year-old male patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
-        "objective": "The visit measurements include blood pressure 136/87 mmHg, heart rate 78 bpm, weight 75.1 kg, and BMI 24.3. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-005-006.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The plan section records the active medication entries as documented: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-005-005."
+        "subjective": "This encounter records the patient's clinical status. This follow_up note describes a 39-year-old male patient. Documented conditions are GERD. The patient-level condition field documents gastroesophageal reflux disease. This is documented as a follow-up encounter in the visit record. Regarding the clinical course: Symptom control reviewed. Clinical response to therapy assessed.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 25.0. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Symptom control for GERD with Omeprazole was reviewed and documented as improved at follow-up. The diagnosis summary for this encounter is GERD. The visit diagnosis field documents gastroesophageal reflux disease for this encounter. The patient-level condition field documents gastroesophageal reflux disease.",
+        "plan": "The plan keeps medication information in recorded form: Omeprazole 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Omeprazole; status continued; trajectory simple start continue. Prior visit reference is VST-MOD-005-001."
       },
-      "linked_documents": [
-        "DOC-MOD-005-006"
-      ],
-      "prior_visit_id": "VST-MOD-005-005"
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-005-001",
+      "visit_role": "symptom_control_review",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 120,
+      "clinical_event": {
+        "event_type": "symptom_improvement",
+        "event_label": "Symptom control reviewed",
+        "event_summary": "Symptom control for GERD with Omeprazole was reviewed and documented as improved at follow-up."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "gerd_symptom_control",
+          "medication_query",
+          "symptom_control_query"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "gerd_omeprazole_symptom_improvement",
+    "timeline_pattern": "delayed_followup",
+    "semantic_focus": "symptom_control",
+    "retrieval_signature": "GERD|Omeprazole|symptom_control|delayed_followup|GI-symptoms",
+    "retrieval_intent_tags": [
+      "gerd_symptom_control",
+      "medication_query",
+      "symptom_control_query"
+    ],
+    "soap_style": "concise",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query"
+    ]
   }
 }

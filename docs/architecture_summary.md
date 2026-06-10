@@ -34,9 +34,9 @@ The system is designed to demonstrate the following capabilities:
 7. Retrieve evidence using patient-scoped semantic search.
 8. Generate grounded answers using retrieved chunks only.
 9. Display citations for transparency.
-10. Support an offline OCR demo using cached extracted text.
-11. Provide a simple FastAPI backend and Streamlit frontend.
-12. Remain reproducible for local academic demo execution.
+10. Provide a simple FastAPI backend and Streamlit frontend.
+11. Remain reproducible for local academic demo execution.
+
 
 ---
 
@@ -136,7 +136,6 @@ This means:
 | Backend | FastAPI | API endpoints and orchestration |
 | Frontend | Streamlit | Interactive academic demo UI |
 | Answer LLM | Groq API | Grounded answer generation from retrieved chunks |
-| OCR | Google Vision OCR + cache | Scanned synthetic document extraction |
 | Deployment | Docker / Docker Compose | Reproducible local demo execution |
 
 ---
@@ -154,7 +153,6 @@ AI-Based-Clinical-Record-Summarization-System/
 ├── generators/     # Deterministic synthetic patient generation
 ├── ingestion/      # Retrieval enrichment, chunking, metadata, ingestion
 ├── logs/           # Validation and runtime logs
-├── ocr/            # OCR extraction, cache, offline loading
 ├── rag/            # Retrieval, prompts, grounding, citations, answer generation
 ├── scripts/        # Pipeline workflow scripts
 ├── soap/           # Deterministic SOAP templates, rendering, audit
@@ -639,7 +637,6 @@ GET  /patients
 POST /query
 GET  /timeline/{patient_id}
 GET  /summary/{patient_id}
-GET  /ocr/{doc_id}
 ```
 
 ### 18.3 Backend Rules
@@ -677,7 +674,6 @@ Patient selector
 Query tab
 Timeline tab
 Allergy history tab
-OCR demo tab
 Citation display
 ```
 
@@ -690,7 +686,6 @@ The frontend should:
 - display citations clearly,
 - show patient timeline information,
 - show documented allergy records,
-- show cached OCR text during demo.
 
 The frontend should not:
 
@@ -702,42 +697,9 @@ The frontend should not:
 
 ---
 
-## 20. OCR Layer
+## 20. Script Workflow
 
-### 20.1 Purpose
-
-OCR supports a scanned-document demo using synthetic documents.
-
-### 20.2 OCR Flow
-
-```text
-Synthetic scanned document
-        ↓
-Google Vision OCR during preparation
-        ↓
-Raw extracted text
-        ↓
-Light deterministic cleaning
-        ↓
-Local OCR cache
-        ↓
-Offline demo loading
-```
-
-### 20.3 OCR Rules
-
-- Use Google Vision OCR only during preparation.
-- Cache all OCR outputs before demo.
-- Demo must run with `OFFLINE_MODE=true`.
-- The live demo must not depend on live OCR API calls.
-- OCR cleaning must remain lightweight and deterministic.
-- No LLM-based OCR correction.
-
----
-
-## 21. Script Workflow
-
-### 21.1 Full Dataset Pipeline
+### 20.1 Full Dataset Pipeline
 
 ```bash
 python scripts/generate_all.py --mode full --clean
@@ -750,7 +712,7 @@ python scripts/ingest_all.py
 python tests/test_retrieval.py
 ```
 
-### 21.2 Pilot Pipeline
+### 20.2 Pilot Pipeline
 
 ```bash
 python scripts/generate_all.py --mode pilot --clean
@@ -760,7 +722,7 @@ python scripts/generate_soap.py
 python scripts/validate_all.py --mode pilot
 ```
 
-### 21.3 Retrieval Enrichment Debug
+### 20.3 Retrieval Enrichment Debug
 
 ```bash
 python scripts/check_retrieval_enricher_output.py --patient-id PAT-MOD-001 --visit-index 0
@@ -768,7 +730,7 @@ python scripts/check_retrieval_enricher_output.py --patient-id PAT-MOD-001 --vis
 
 ---
 
-## 22. Development Order
+## 21. Development Order
 
 The project should be developed in dependency order:
 
@@ -788,7 +750,7 @@ The project should be developed in dependency order:
 13. Build FastAPI backend
 14. Test API endpoints
 15. Build Streamlit frontend
-16. Integrate OCR cache workflow
+16. Integrate frontend with backend
 17. Build Docker workflow
 18. Run smoke tests
 19. Prepare demo script
@@ -803,87 +765,92 @@ Do not build or polish the frontend before retrieval works.
 
 ---
 
-## 23. Team Ownership Map
+## 22. Team Ownership Map
 
 | Area | Primary Owner | Notes |
 |---|---|---|
-| `config/` | Ahmed Hesham | Constants, paths, settings, showcase config |
-| `data/` | Ahmed Hesham | Patient JSON, schema, quarantine; not ChromaDB runtime ownership |
-| `generators/` | Ahmed Hesham | Deterministic synthetic data generation |
-| `validators/` | Ahmed Hesham | V1–V11 validation rules and reports |
-| `soap/` | Ahmed Hesham | Deterministic SOAP generation and audit |
-| `docs/` | Ahmed Hesham + team input | Architecture, contracts, handoff docs |
-| `ingestion/` | AI/RAG Engineer | Chunking, metadata, enrichment integration, ChromaDB ingestion |
-| `rag/` | AI/RAG Engineer | Retrieval, grounding, prompts, citations, answer generation |
-| `backend/` | Backend Developer | API routing and orchestration |
-| `frontend/` | Frontend Developer | Streamlit demo UI |
-| `ocr/` | Frontend/OCR Developer | OCR extraction, cache, offline loader |
-| `deployment/` | DevOps/Testing Engineer | Docker and local demo reproducibility |
-| `tests/` | DevOps/Testing Engineer + all members | Validation, retrieval, API, smoke tests |
+| `config/` | Ahmed Hesham Kamel | Constants, paths, settings, showcase config |
+| `data/` | Ahmed Hesham Kamel | Patient JSON, schema, quarantine; not ChromaDB runtime ownership |
+| `generators/` | Ahmed Hesham Kamel | Deterministic synthetic data generation |
+| `validators/` | Ahmed Hesham Kamel | V1–V11 validation rules and reports |
+| `soap/` | Ahmed Hesham Kamel | Deterministic SOAP generation and audit |
+| `docs/` | Ahmed Hesham Kamel + team input | Architecture, contracts, handoff docs |
+| `ingestion/` | Gamal Mohamed Gad | Chunking, metadata, enrichment integration, ChromaDB ingestion |
+| `rag/` | Gamal Mohamed Gad | Retrieval, grounding, prompts, citations, answer generation |
+| `backend/` | Youssef Yassin Ibrahim | API routing and orchestration |
+| `frontend/` | Youssef Yassin Ibrahim | Streamlit demo UI |
+| `deployment/` | Mahmoud Mohamed El Faham | Docker and local demo reproducibility |
+| `tests/` | Mahmoud Mohamed El Faham + all members | Validation, retrieval, API, smoke tests |
 
 ---
 
-## 24. Cross-Team Dependency Map
+## 23. Cross-Team Dependency Map
 
 ```text
-Ahmed / Data Engineering
+Ahmed Hesham Kamel
         ↓
-AI/RAG Engineer
+Gamal Mohamed Gad
         ↓
-Backend Developer
+Youssef Yassin Ibrahim
         ↓
-Frontend / OCR Developer
-        ↓
-DevOps / Testing
+Mahmoud Mohamed El Faham
         ↓
 Final Demo
 ```
 
-### Ahmed → AI/RAG Engineer
+### Ahmed Hesham Kamel → Gamal Mohamed Gad
 
 Ahmed provides:
 
-- stable schema,
-- valid patient JSON records,
-- constants and locked enums,
-- deterministic SOAP notes,
-- validation reports,
-- retrieval enrichment contract,
-- showcase patient configuration.
+* stable schema,
+* valid patient JSON records,
+* constants and locked enums,
+* deterministic SOAP notes,
+* validation reports,
+* retrieval enrichment contract,
+* showcase patient configuration.
 
-The AI/RAG Engineer must not ingest invalid or quarantined records.
+Gamal must not ingest invalid or quarantined records.
 
-### AI/RAG Engineer → Backend Developer
+### Gamal Mohamed Gad → Youssef Yassin Ibrahim
 
-The AI/RAG Engineer provides:
+Gamal provides:
 
-- working ChromaDB collection,
-- retriever interface,
-- prompt builder,
-- answer generator,
-- citation formatter,
-- retrieval test results.
+* working ChromaDB collection,
+* retriever interface,
+* prompt builder,
+* answer generator,
+* citation formatter,
+* retrieval test results.
 
-### Backend Developer → Frontend Developer
+Youssef should integrate backend APIs with the RAG layer rather than duplicating retrieval logic.
 
-The backend provides:
+### Youssef Yassin Ibrahim → Mahmoud Mohamed El Faham
 
-- stable API endpoints,
-- request and response schemas,
-- answer and citation response shapes,
-- timeline and summary responses.
+Youssef provides:
 
-### Frontend/OCR → DevOps
+* stable API endpoints,
+* request and response schemas,
+* answer and citation response shapes,
+* timeline and summary responses,
+* runnable Streamlit frontend,
+* frontend-backend integration.
 
-The frontend and OCR workflow provide:
+### Mahmoud Mohamed El Faham → Final Demo
 
-- runnable Streamlit UI,
-- cached OCR outputs,
-- offline demo readiness.
+Mahmoud provides:
+
+* Docker workflow,
+* local reproducibility,
+* smoke testing,
+* environment setup validation,
+* demo readiness verification.
+
+```
 
 ---
 
-## 25. Safety Rules
+## 24. Safety Rules
 
 The system must always follow these safety rules:
 
@@ -902,9 +869,9 @@ The system must always follow these safety rules:
 
 ---
 
-## 26. Demo Architecture
+## 25. Demo Architecture
 
-### 26.1 Demo Flow
+### 25.1 Demo Flow
 
 ```text
 Start backend
@@ -916,25 +883,23 @@ Open timeline tab
 Show chronological visit history
 Ask allergy question
 Show documented allergy retrieval
-Open OCR demo tab
-Show cached OCR text
-Ask OCR-related question
-Show cited answer
+Open patient summary tab
+Show grounded patient summary
+Demonstrate citation transparency
 ```
 
-### 26.2 Demo Stability Rules
+### 25.2 Demo Stability Rules
 
-- Use showcase patients only.
-- Use rehearsed queries.
-- Pre-cache all OCR outputs.
-- Set `OFFLINE_MODE=true` before demo.
-- Warm up ChromaDB with test queries.
-- Keep fallback screenshots ready.
-- Do not introduce untested features during demo.
+* Use showcase patients only.
+* Use rehearsed queries.
+* Warm up ChromaDB with test queries.
+* Keep fallback screenshots ready.
+* Do not introduce untested features during demo.
+
 
 ---
 
-## 27. Architecture Change Policy
+## 26. Architecture Change Policy
 
 Architecture changes must be avoided unless they fix a clear bug or blocked integration.
 
@@ -959,7 +924,7 @@ Forbidden changes:
 
 ---
 
-## 28. Final Architecture Summary
+## 27. Final Architecture Summary
 
 The final system is a **local-first academic RAG architecture** built around deterministic synthetic data generation, strict validation, grounded retrieval, and cited answer generation.
 
@@ -973,14 +938,13 @@ Retrieval enrichment improves search but does not create facts.
 ChromaDB stores chunks and safe metadata.
 RAG answers must cite retrieved evidence.
 The frontend is a demo layer, not a logic layer.
-OCR is cached and offline during demo.
 ```
 
 This architecture is intentionally scoped for a DEPI graduation project: strong enough to demonstrate real AI engineering discipline, simple enough for a small team to build, test, explain, and defend.
 
 ---
 
-## 29. Related Documentation
+## 28. Related Documentation
 
 | Document | Purpose |
 |---|---|
@@ -1002,7 +966,7 @@ This architecture is intentionally scoped for a DEPI graduation project: strong 
 
 ---
 
-## 30. Quick Reference Commands
+## 29. Quick Reference Commands
 
 ```bash
 # Generate full dataset

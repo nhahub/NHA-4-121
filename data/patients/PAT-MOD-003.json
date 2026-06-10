@@ -2,424 +2,225 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-003",
   "demographics": {
-    "name": "Mahmoud Sherif",
-    "date_of_birth": "1983-10-16",
-    "sex": "male"
+    "name": "Laila Hassan",
+    "date_of_birth": "1985-04-10",
+    "sex": "female"
   },
   "conditions": [
-    "T2DM"
+    "Asthma"
   ],
-  "allergy_registry": [],
+  "allergy_registry": [
+    {
+      "allergen": "Aspirin",
+      "reaction": "bronchospasm",
+      "severity": "moderate",
+      "recorded_date": "2023-01-30",
+      "source_visit_id": "VST-MOD-003-001"
+    }
+  ],
   "visits": [
     {
       "visit_id": "VST-MOD-003-001",
-      "visit_date": "2023-03-10",
+      "visit_date": "2023-01-30",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Laila Mostafa",
       "diagnoses": [
-        "T2DM"
+        "Asthma"
       ],
       "vitals": {
-        "bp_systolic": 125,
+        "bp_systolic": 120,
         "bp_diastolic": 78,
         "heart_rate": 82,
-        "weight_kg": 81.3,
-        "bmi": 24.8
+        "weight_kg": 74.0,
+        "bmi": 26.5
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.8,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 154,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-01-30",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "During this initial encounter, the record identifies a 39-year-old male patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: initial; timeline link: first documented visit.",
-        "objective": "Objective data from the encounter records blood pressure 125/78 mmHg, heart rate 82 bpm, weight 81.3 kg, and BMI 24.8. Laboratory results: HbA1c 7.8 % (HIGH); FBG 154 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-001.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. This is the first recorded visit in the available record. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: initial; timeline link: first documented visit."
+        "subjective": "This encounter records the patient's clinical status. This initial note describes a 37-year-old female patient. Documented conditions are Asthma. The patient-level condition field documents asthma. This is documented as an initial encounter in the visit record. Regarding the clinical course: Initial diagnosis was documented. Baseline management plan established.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 82 bpm, weight 74.0 kg, and BMI 26.5. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Initial asthma diagnosis was documented and baseline management plan established with Salbutamol inhaler. The diagnosis summary for this encounter is Asthma. The visit diagnosis field documents asthma for this encounter. The patient-level condition field documents asthma.",
+        "plan": "The plan keeps medication information in recorded form: Salbutamol inhaler 100 mcg as_needed via inhaled (status started; trajectory simple_start_continue). Documented medication trajectory entries include Salbutamol inhaler; status started; trajectory simple start continue. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-003-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "seasonal_exacerbation",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial asthma diagnosis was documented and baseline management plan established with Salbutamol inhaler."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "asthma_control",
+          "seasonal_asthma",
+          "inhaler_adjustment"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-003-002",
-      "visit_date": "2023-05-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 124,
-        "bp_diastolic": 77,
-        "heart_rate": 81,
-        "weight_kg": 80.9,
-        "bmi": 24.7
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.5,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 145,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 39-year-old male patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective findings record blood pressure 124/77 mmHg, heart rate 81 bpm, weight 80.9 kg, and BMI 24.7. Laboratory results for this visit: HbA1c 7.5 % (HIGH); FBG 145 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-002.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
-        "plan": "The visit plan lists the medication entries documented in the record: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-001. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-003-001."
-      },
-      "linked_documents": [
-        "DOC-MOD-003-002"
-      ],
-      "prior_visit_id": "VST-MOD-003-001"
-    },
-    {
-      "visit_id": "VST-MOD-003-003",
-      "visit_date": "2023-07-08",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 123,
-        "bp_diastolic": 76,
-        "heart_rate": 80,
-        "weight_kg": 80.5,
-        "bmi": 24.6
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.3,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 136,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 39-year-old male patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective findings record blood pressure 123/76 mmHg, heart rate 80 bpm, weight 80.5 kg, and BMI 24.6. Laboratory results for this visit: HbA1c 7.3 % (HIGH); FBG 136 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-003.",
-        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-002. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-003-003"
-      ],
-      "prior_visit_id": "VST-MOD-003-002"
-    },
-    {
-      "visit_id": "VST-MOD-003-004",
-      "visit_date": "2023-09-06",
+      "visit_date": "2023-04-15",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Hany Fawzy",
       "diagnoses": [
-        "T2DM"
+        "Asthma"
       ],
       "vitals": {
-        "bp_systolic": 122,
-        "bp_diastolic": 75,
-        "heart_rate": 79,
-        "weight_kg": 80.1,
-        "bmi": 24.4
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 96,
+        "weight_kg": 74.0,
+        "bmi": 26.5
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.0,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 127,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-01-30",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-09-06",
-          "stop_date": null
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-04-15",
+          "stop_date": null,
+          "medication_status": "added",
+          "trajectory_event": "second_medication_added",
+          "reason": "Budesonide inhaler was added for asthma during the documented visit; Salbutamol inhaler continued."
         }
       ],
       "soap_note": {
-        "subjective": "A 39-year-old male patient is recorded for a follow_up visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-003-003.",
-        "objective": "Objective data from the encounter records blood pressure 122/75 mmHg, heart rate 79 bpm, weight 80.1 kg, and BMI 24.4. Laboratory results: HbA1c 7.0 % (HIGH); FBG 127 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-004.",
-        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-003."
+        "subjective": "This encounter records the patient's clinical status. This follow_up note describes a 38-year-old female patient. Documented conditions are Asthma. The patient-level condition field documents asthma. This is documented as a follow-up encounter in the visit record. Regarding the clinical course: Symptom flare documented. Exacerbation of existing condition noted.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 96 bpm, weight 74.0 kg, and BMI 26.5. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Symptom flare for asthma documented; Budesonide inhaler added alongside ongoing Salbutamol inhaler therapy. The diagnosis summary for this encounter is Asthma. The visit diagnosis field documents asthma for this encounter. The patient-level condition field documents asthma.",
+        "plan": "The plan keeps medication information in recorded form: Salbutamol inhaler 100 mcg as_needed via inhaled (status continued; trajectory simple_start_continue); Budesonide inhaler 200 mcg twice_daily via inhaled (status added; trajectory second_medication_added; reason Budesonide inhaler was added for asthma during the documented visit; Salbutamol inhaler continued.). Documented medication trajectory entries include Salbutamol inhaler; status continued; trajectory simple start continue and Budesonide inhaler; status added; trajectory second medication added; reason: Budesonide inhaler was added for asthma during the documented visit; Salbutamol inhaler continued.. Prior visit reference is VST-MOD-003-001."
       },
-      "linked_documents": [
-        "DOC-MOD-003-004"
-      ],
-      "prior_visit_id": "VST-MOD-003-003"
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-003-001",
+      "visit_role": "symptom_flare",
+      "timeline_pattern": "seasonal_exacerbation",
+      "timeline_gap_days": 75,
+      "clinical_event": {
+        "event_type": "symptom_flare",
+        "event_label": "Symptom flare documented",
+        "event_summary": "Symptom flare for asthma documented; Budesonide inhaler added alongside ongoing Salbutamol inhaler therapy."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "asthma_control",
+          "seasonal_asthma",
+          "inhaler_adjustment"
+        ]
+      }
     },
     {
-      "visit_id": "VST-MOD-003-005",
-      "visit_date": "2023-12-05",
+      "visit_id": "VST-MOD-003-003",
+      "visit_date": "2023-07-29",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Mona Kareem",
       "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 121,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 79.7,
-        "bmi": 24.3
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.8,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 118,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-09-06",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 40-year-old male patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Structured objective data lists blood pressure 121/74 mmHg, heart rate 78 bpm, weight 79.7 kg, and BMI 24.3. Lab results documented for the visit: HbA1c 6.8 % (HIGH); FBG 118 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-005.",
-        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-004. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-003-005"
-      ],
-      "prior_visit_id": "VST-MOD-003-004"
-    },
-    {
-      "visit_id": "VST-MOD-003-006",
-      "visit_date": "2024-03-04",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "T2DM"
+        "Asthma"
       ],
       "vitals": {
         "bp_systolic": 120,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 79.3,
-        "bmi": 24.2
+        "bp_diastolic": 78,
+        "heart_rate": 82,
+        "weight_kg": 74.0,
+        "bmi": 26.5
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.5,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 109,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
+          "medication_name": "Salbutamol inhaler",
+          "medication_class": "SABA",
+          "dose": "100 mcg",
+          "frequency": "as_needed",
+          "route": "inhaled",
+          "start_date": "2023-01-30",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-09-06",
-          "stop_date": null
+          "medication_name": "Budesonide inhaler",
+          "medication_class": "ICS",
+          "dose": "200 mcg",
+          "frequency": "twice_daily",
+          "route": "inhaled",
+          "start_date": "2023-04-15",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "This follow_up note describes a 40-year-old male patient. Conditions recorded in the chart are T2DM. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents type 2 diabetes.",
-        "objective": "The visit measurements include blood pressure 120/74 mmHg, heart rate 78 bpm, weight 79.3 kg, and BMI 24.2. Laboratory entries are recorded as: HbA1c 6.5 % (HIGH); FBG 109 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-006.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-005. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented."
+        "subjective": "This encounter records the patient's clinical status. This follow_up note describes a 38-year-old female patient. Documented conditions are Asthma. The patient-level condition field documents asthma. This is documented as a follow-up encounter in the visit record. Regarding the clinical course: Symptom control reviewed. Clinical response to therapy assessed.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 82 bpm, weight 74.0 kg, and BMI 26.5. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Symptom control for asthma with Salbutamol inhaler was reviewed and documented as improved at follow-up. The diagnosis summary for this encounter is Asthma. The visit diagnosis field documents asthma for this encounter. The patient-level condition field documents asthma.",
+        "plan": "The plan keeps medication information in recorded form: Salbutamol inhaler 100 mcg as_needed via inhaled (status continued; trajectory simple_start_continue); Budesonide inhaler 200 mcg twice_daily via inhaled (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Salbutamol inhaler; status continued; trajectory simple start continue and Budesonide inhaler; status continued; trajectory simple start continue. Prior visit reference is VST-MOD-003-002."
       },
-      "linked_documents": [
-        "DOC-MOD-003-006"
-      ],
-      "prior_visit_id": "VST-MOD-003-005"
-    },
-    {
-      "visit_id": "VST-MOD-003-007",
-      "visit_date": "2024-06-02",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 120,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 78.9,
-        "bmi": 24.1
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-003-002",
+      "visit_role": "symptom_control_review",
+      "timeline_pattern": "seasonal_exacerbation",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "symptom_improvement",
+        "event_label": "Symptom control reviewed",
+        "event_summary": "Symptom control for asthma with Salbutamol inhaler was reviewed and documented as improved at follow-up."
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.4,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 105,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-03-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-09-06",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 40-year-old male patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective findings record blood pressure 120/74 mmHg, heart rate 78 bpm, weight 78.9 kg, and BMI 24.1. Laboratory results for this visit: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-003-007.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-003-006. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-003-007"
-      ],
-      "prior_visit_id": "VST-MOD-003-006"
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "asthma_control",
+          "seasonal_asthma",
+          "inhaler_adjustment"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "asthma_seasonal_inhaler_adjustment",
+    "timeline_pattern": "seasonal_exacerbation",
+    "semantic_focus": "symptom_control",
+    "retrieval_signature": "Asthma|Salbutamol-Budesonide|symptom_control|seasonal_exacerbation|inhaler",
+    "retrieval_intent_tags": [
+      "asthma_control",
+      "seasonal_asthma",
+      "inhaler_adjustment"
+    ],
+    "soap_style": "concise",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query"
+    ]
   }
 }

@@ -1,0 +1,25 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-003",
+  "created_at_utc": "20260518T230216Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-SAFE-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-003",
+      "visit_id": "VST-MOD-003-002",
+      "section": null,
+      "message": "Unsafe single-word term found in SOAP text: 'worsening'."
+    },
+    {
+      "rule_id": "SOAP-SAFE-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-003",
+      "visit_id": "VST-MOD-003-003",
+      "section": null,
+      "message": "Unsafe single-word term found in SOAP text: 'worsening'."
+    }
+  ]
+}

@@ -2,370 +2,201 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-002",
   "demographics": {
-    "name": "Nour Ahmed",
-    "date_of_birth": "1988-07-11",
-    "sex": "female"
+    "name": "Youssef Mahmoud",
+    "date_of_birth": "1986-03-07",
+    "sex": "male"
   },
   "conditions": [
-    "T2DM"
+    "HTN"
   ],
-  "allergy_registry": [
-    {
-      "allergen": "Sulfa",
-      "reaction": "itching",
-      "severity": "moderate",
-      "recorded_date": "2023-02-10",
-      "source_visit_id": "VST-MOD-002-001"
-    }
-  ],
+  "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-MOD-002-001",
-      "visit_date": "2023-02-10",
+      "visit_date": "2023-01-27",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
-        "T2DM"
+        "HTN"
       ],
       "vitals": {
-        "bp_systolic": 124,
-        "bp_diastolic": 80,
-        "heart_rate": 82,
-        "weight_kg": 68.2,
-        "bmi": 24.1
+        "bp_systolic": 154,
+        "bp_diastolic": 96,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 27.3
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 8.1,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 165,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
+          "start_date": "2023-01-27",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 34-year-old female patient is recorded for a initial visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
-        "objective": "Objective findings record blood pressure 124/80 mmHg, heart rate 82 bpm, weight 68.2 kg, and BMI 24.1. Laboratory results for this visit: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-001.",
-        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: initial; timeline link: first documented visit.",
-        "plan": "Medication details in the plan are recorded as Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. This is the first recorded visit in the available record."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 36-year-old male; recorded conditions are HTN. The primary concern today is the documented visit role is initial diagnosis. initial diagnosis was documented. baseline management plan established. Initial hypertension diagnosis was documented and baseline management plan established with Amlodipine. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "objective": "The visit objective data support the charted problem context: 154/96 mmHg; heart rate 76 bpm; weight 74.0 kg; BMI 27.3. Lab entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: HTN. Initial hypertension diagnosis was documented and baseline management plan established with Amlodipine. Clinical event type: diagnosis documented. Event: Initial diagnosis documented. Primary documented evidence: Documented medication trajectory entries include Amlodipine; status started; trajectory simple start continue. Initial hypertension diagnosis was documented and baseline management plan established with Amlodipine. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Amlodipine 5 mg once_daily via oral (status started; trajectory simple_start_continue). The medication list includes documented entries related to hypertension medication documentation. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-002-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial hypertension diagnosis was documented and baseline management plan established with Amlodipine."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "hypertension_control",
+          "bp_followup",
+          "medication_query"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-002-002",
-      "visit_date": "2023-04-11",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 123,
-        "bp_diastolic": 79,
-        "heart_rate": 81,
-        "weight_kg": 67.8,
-        "bmi": 24.0
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.8,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 156,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 34-year-old female patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The visit measurements include blood pressure 123/79 mmHg, heart rate 81 bpm, weight 67.8 kg, and BMI 24.0. Laboratory entries are recorded as: HbA1c 7.8 % (HIGH); FBG 156 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-002.",
-        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-002-001. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-002-002"
-      ],
-      "prior_visit_id": "VST-MOD-002-001"
-    },
-    {
-      "visit_id": "VST-MOD-002-003",
-      "visit_date": "2023-06-10",
+      "visit_date": "2023-04-27",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Laila Mostafa",
       "diagnoses": [
-        "T2DM"
+        "HTN"
       ],
       "vitals": {
-        "bp_systolic": 122,
-        "bp_diastolic": 78,
-        "heart_rate": 80,
-        "weight_kg": 67.4,
-        "bmi": 23.9
+        "bp_systolic": 149,
+        "bp_diastolic": 93,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 27.3
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.6,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 147,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
+          "dose": "5 mg",
+          "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
+          "start_date": "2023-01-27",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 34-year-old female patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 122/78 mmHg, heart rate 80 bpm, weight 67.4 kg, and BMI 23.9. Laboratory results: HbA1c 7.6 % (HIGH); FBG 147 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-003.",
-        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "Medication details in the plan are recorded as Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-002-002."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 37-year-old male; recorded conditions are HTN. The primary concern today is the documented visit role is routine follow up. routine follow-up visit. ongoing medication review conducted. Routine follow-up for hypertension with Amlodipine continued and condition reviewed. Clinical event type: medication continued. Event: Routine follow-up visit.",
+        "objective": "The visit objective data support the charted problem context: 149/93 mmHg; heart rate 76 bpm; weight 74.0 kg; BMI 27.3. Lab entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: HTN. Routine follow-up for hypertension with Amlodipine continued and condition reviewed. Clinical event type: medication continued. Event: Routine follow-up visit. Primary documented evidence: Documented medication trajectory entries include Amlodipine; status continued; trajectory simple start continue. Routine follow-up for hypertension with Amlodipine continued and condition reviewed. Clinical event type: medication continued. Event: Routine follow-up visit.",
+        "plan": "Medication context for the documented issue is recorded as Amlodipine 5 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Amlodipine; status continued; trajectory simple start continue. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: amlodipine; visit type: follow_up; visit role: routine_follow_up; timeline pattern: regular_quarterly; semantic focus: symptom_control; clinical event type: medication_continued; retrieval tags: hypertension_control, bp_followup, and medication_query; timeline link: prior visit documented. No allergy registry entries are documented for this patient."
       },
-      "linked_documents": [
-        "DOC-MOD-002-003"
-      ],
-      "prior_visit_id": "VST-MOD-002-002"
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-002-001",
+      "visit_role": "routine_follow_up",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 90,
+      "clinical_event": {
+        "event_type": "medication_continued",
+        "event_label": "Routine follow-up visit",
+        "event_summary": "Routine follow-up for hypertension with Amlodipine continued and condition reviewed."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "hypertension_control",
+          "bp_followup",
+          "medication_query"
+        ]
+      },
+      "safe_distractors": [
+        {
+          "type": "mild_headache",
+          "text": "Patient mentioned occasional mild headaches not related to primary condition.",
+          "clinical_status": "context_only"
+        }
+      ]
     },
     {
-      "visit_id": "VST-MOD-002-004",
-      "visit_date": "2023-08-09",
+      "visit_id": "VST-MOD-002-003",
+      "visit_date": "2023-07-26",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Hany Fawzy",
       "diagnoses": [
-        "T2DM"
+        "HTN"
       ],
       "vitals": {
-        "bp_systolic": 121,
-        "bp_diastolic": 77,
-        "heart_rate": 79,
-        "weight_kg": 67.0,
-        "bmi": 23.7
+        "bp_systolic": 144,
+        "bp_diastolic": 90,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 27.3
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.3,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 138,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
+      "labs": [],
       "medications": [
         {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
+          "medication_name": "Amlodipine",
+          "medication_class": "Calcium Channel Blocker",
           "dose": "5 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-08-09",
-          "stop_date": null
+          "start_date": "2023-01-27",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "This follow_up note describes a 35-year-old female patient. Conditions recorded in the chart are T2DM. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents type 2 diabetes.",
-        "objective": "Objective findings record blood pressure 121/77 mmHg, heart rate 79 bpm, weight 67.0 kg, and BMI 23.7. Laboratory results for this visit: HbA1c 7.3 % (HIGH); FBG 138 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-004.",
-        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "Medication details in the plan are recorded as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-002-003."
+        "subjective": "The primary concern today is the patient's health status. Problem context for this follow_up encounter is limited to the structured record. Conditions: HTN. The patient-level condition field documents hypertension. Retrieval intent tags documented for this context: hypertension control, bp followup, and medication query. Regarding the clinical course: Symptom control reviewed. Clinical response to therapy assessed.",
+        "objective": "The visit objective data support the charted problem context: 144/90 mmHg; heart rate 76 bpm; weight 74.0 kg; BMI 27.3. Lab entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Symptom control for hypertension with Amlodipine was reviewed and documented as improved at follow-up. The current clinical focus is summarized from structured facts only. Diagnoses: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Amlodipine 5 mg once_daily via oral (status continued; trajectory simple_start_continue). The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-002-002."
       },
-      "linked_documents": [
-        "DOC-MOD-002-004"
-      ],
-      "prior_visit_id": "VST-MOD-002-003"
-    },
-    {
-      "visit_id": "VST-MOD-002-005",
-      "visit_date": "2023-11-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 120,
-        "bp_diastolic": 76,
-        "heart_rate": 78,
-        "weight_kg": 66.6,
-        "bmi": 23.6
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-002-002",
+      "visit_role": "symptom_control_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "symptom_improvement",
+        "event_label": "Symptom control reviewed",
+        "event_summary": "Symptom control for hypertension with Amlodipine was reviewed and documented as improved at follow-up."
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.1,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 129,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-08-09",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 35-year-old female patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Structured objective data lists blood pressure 120/76 mmHg, heart rate 78 bpm, weight 66.6 kg, and BMI 23.6. Lab results documented for the visit: HbA1c 7.1 % (HIGH); FBG 129 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-005.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-002-004."
-      },
-      "linked_documents": [
-        "DOC-MOD-002-005"
-      ],
-      "prior_visit_id": "VST-MOD-002-004"
-    },
-    {
-      "visit_id": "VST-MOD-002-006",
-      "visit_date": "2024-02-05",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 119,
-        "bp_diastolic": 76,
-        "heart_rate": 78,
-        "weight_kg": 66.2,
-        "bmi": 23.5
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.8,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 120,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-02-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-08-09",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow_up note describes a 35-year-old female patient. Conditions recorded in the chart are T2DM. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents type 2 diabetes.",
-        "objective": "Objective data from the encounter records blood pressure 119/76 mmHg, heart rate 78 bpm, weight 66.2 kg, and BMI 23.5. Laboratory results: HbA1c 6.8 % (HIGH); FBG 120 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-002-006.",
-        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-002-005."
-      },
-      "linked_documents": [
-        "DOC-MOD-002-006"
-      ],
-      "prior_visit_id": "VST-MOD-002-005"
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "hypertension_control",
+          "bp_followup",
+          "medication_query"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "htn_amlodipine_bp_control",
+    "timeline_pattern": "regular_quarterly",
+    "semantic_focus": "symptom_control",
+    "retrieval_signature": "HTN|Amlodipine|symptom_control|regular_quarterly|BP-vitals",
+    "retrieval_intent_tags": [
+      "hypertension_control",
+      "bp_followup",
+      "medication_query"
+    ],
+    "soap_style": "problem_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query"
+    ]
   }
 }

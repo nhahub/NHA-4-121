@@ -1,0 +1,413 @@
+{
+    "version": "v1.7-lite",
+    "created_by": "Step 16 — Retrieval Challenge Query Design",
+    "total_queries": 30,
+    "pass_criteria": {
+        "critical": 1.00,
+        "easy":     0.95,
+        "medium":   0.85,
+        "hard":     0.75,
+        "wrong_patient_allowed": 0
+    },
+    "patients_covered": [
+        "PAT-NRM-001",
+        "PAT-MOD-001", "PAT-MOD-002", "PAT-MOD-003", "PAT-MOD-004",
+        "PAT-MOD-005", "PAT-MOD-006", "PAT-MOD-007", "PAT-MOD-008",
+        "PAT-MOD-009",
+        "PAT-CHR-001", "PAT-CHR-002", "PAT-CHR-003", "PAT-CHR-004",
+        "PAT-CHR-005"
+    ],
+    "queries": [
+
+        {
+            "id": "Q001",
+            "difficulty": "easy",
+            "patient_id": "PAT-MOD-001",
+            "query": "What diabetes medication is this patient taking?",
+            "expected_source_types": ["prescription"],
+            "expected_chunks_contain": ["Metformin", "T2DM"],
+            "expected_visit_roles": ["initial_diagnosis"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'diabetes medication' without knowing the drug name; must map to Metformin prescription chunk via T2DM semantic bridge."
+        },
+
+        {
+            "id": "Q002",
+            "difficulty": "easy",
+            "patient_id": "PAT-MOD-004",
+            "query": "What blood tests were done to check for anemia?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["Hemoglobin", "Ferritin", "IDA"],
+            "expected_visit_roles": ["initial_diagnosis"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User asks 'blood tests for anemia' without knowing lab type names; must map to Hemoglobin and Ferritin lab_result chunks via IDA semantic bridge."
+        },
+
+        {
+            "id": "Q003",
+            "difficulty": "easy",
+            "patient_id": "PAT-MOD-003",
+            "query": "Does this patient have any known allergies?",
+            "expected_source_types": ["allergy"],
+            "expected_chunks_contain": ["Aspirin", "bronchospasm"],
+            "expected_visit_roles": [],
+            "top_k": 3,
+            "pass_rule": ["allergy_chunk_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Generic allergy query must retrieve the Aspirin allergy chunk; critical baseline test for allergy routing."
+        },
+
+        {
+            "id": "Q004",
+            "difficulty": "easy",
+            "patient_id": "PAT-MOD-006",
+            "query": "What were the cholesterol test results for this patient?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["LDL", "Dyslipidemia"],
+            "expected_visit_roles": ["lab_trend_review"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'cholesterol' not 'LDL'; must map to LDL lab_result chunk via Dyslipidemia semantic context."
+        },
+
+        {
+            "id": "Q005",
+            "difficulty": "easy",
+            "patient_id": "PAT-CHR-002",
+            "query": "What kidney test results are available for this patient?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["Creatinine", "CKD"],
+            "expected_visit_roles": ["ckd_monitoring"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'kidney test' not 'Creatinine'; must map to Creatinine lab_result via CKD semantic bridge."
+        },
+
+        {
+            "id": "Q006",
+            "difficulty": "easy",
+            "patient_id": "PAT-NRM-001",
+            "query": "What medicine was given for this patient's infection?",
+            "expected_source_types": ["prescription"],
+            "expected_chunks_contain": ["Paracetamol", "Acute_URTI"],
+            "expected_visit_roles": ["acute_treatment_started"],
+            "top_k": 3,
+            "pass_rule": ["expected_source_type_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'medicine for infection' without knowing Paracetamol is an analgesic rather than antibiotic; must map to Acute_URTI prescription chunk."
+        },
+
+        {
+            "id": "Q007",
+            "difficulty": "easy",
+            "patient_id": "PAT-MOD-008",
+            "query": "Did the patient finish their antibiotic course?",
+            "expected_source_types": ["prescription"],
+            "expected_chunks_contain": ["Nitrofurantoin", "completed"],
+            "expected_visit_roles": ["course_completed"],
+            "top_k": 3,
+            "pass_rule": ["expected_source_type_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User asks 'finish antibiotic course' without knowing drug name; must retrieve Nitrofurantoin prescription with medication_status=completed at course_completed visit."
+        },
+
+        {
+            "id": "Q008",
+            "difficulty": "easy",
+            "patient_id": "PAT-CHR-004",
+            "query": "What were the diabetes and cholesterol test results at this patient's appointments?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["HbA1c", "LDL"],
+            "expected_visit_roles": ["lab_trend_review"],
+            "top_k": 8,
+            "pass_rule": ["expected_source_type_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User combines 'diabetes' and 'cholesterol' without lab terminology; must retrieve chunks containing both HbA1c and LDL from the dual_lab_trend patient."
+        },
+
+        {
+            "id": "Q009",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-001",
+            "query": "Did this patient ever have trouble taking their medication consistently?",
+            "expected_source_types": ["doctor_note", "prescription"],
+            "expected_chunks_contain": ["partial_adherence", "Metformin"],
+            "expected_visit_roles": ["partial_adherence"],
+            "top_k": 5,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User phrase 'trouble taking medication consistently' must map to clinical term 'partial adherence' and 'missed doses' in the visit_role and SOAP text."
+        },
+
+        {
+            "id": "Q010",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-001",
+            "query": "When was a second diabetes drug introduced for this patient?",
+            "expected_source_types": ["prescription"],
+            "expected_chunks_contain": ["Glibenclamide", "second_medication_added"],
+            "expected_visit_roles": ["second_medication_added"],
+            "top_k": 3,
+            "pass_rule": ["all_expected_roles_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'second diabetes drug introduced' without knowing Glibenclamide; must map via escalation context to the second_medication_added prescription chunk."
+        },
+
+        {
+            "id": "Q011",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-005",
+            "query": "What happened after this patient left hospital?",
+            "expected_source_types": ["doctor_note", "discharge_summary"],
+            "expected_chunks_contain": ["post_discharge_stabilization", "Metformin"],
+            "expected_visit_roles": ["post_discharge_stabilization"],
+            "top_k": 5,
+            "pass_rule": ["post_discharge_evidence_in_top_k", "all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'left hospital' not 'post-discharge'; must map to the post_discharge_stabilization visit doctor_note and discharge_summary chunk."
+        },
+
+        {
+            "id": "Q012",
+            "difficulty": "medium",
+            "patient_id": "PAT-MOD-002",
+            "query": "What were this patient's blood pressure readings across visits?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["HTN", "Amlodipine"],
+            "expected_visit_roles": ["routine_follow_up", "symptom_control_review"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Blood pressure values live in SOAP objective text only — never in labs or metadata. This query verifies doctor_note routing for a vitals question, not lab_result routing."
+        },
+
+        {
+            "id": "Q013",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-003",
+            "query": "Was there ever an urgent or emergency attendance for this patient?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["emergency_exacerbation", "Asthma"],
+            "expected_visit_roles": ["emergency_exacerbation"],
+            "top_k": 5,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'urgent or emergency attendance' without clinical vocabulary; must map to emergency_exacerbation visit_role via semantic generalization."
+        },
+
+        {
+            "id": "Q014",
+            "difficulty": "medium",
+            "patient_id": "PAT-MOD-009",
+            "query": "What conditions is this patient currently being treated for?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["T2DM", "GERD", "Metformin", "Omeprazole"],
+            "expected_visit_roles": ["initial_diagnosis", "routine_follow_up"],
+            "top_k": 3,
+            "pass_rule": ["expected_source_type_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Plain-language 'conditions being treated' must map to structured condition labels T2DM and GERD and their respective medications in dual-condition doctor_note chunks."
+        },
+
+        {
+            "id": "Q015",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-002",
+            "query": "Has this patient's kidney function been regularly checked over time?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["Creatinine", "ckd_monitoring"],
+            "expected_visit_roles": ["ckd_monitoring"],
+            "top_k": 8,
+            "pass_rule": ["lab_trend_chunks_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'kidney function regularly checked' not 'Creatinine ckd_monitoring'; must surface multiple Creatinine lab_result chunks across quarterly ckd_monitoring visits."
+        },
+
+        {
+            "id": "Q016",
+            "difficulty": "medium",
+            "patient_id": "PAT-MOD-007",
+            "query": "Did this patient's symptoms get worse during a particular season?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["Allergic_Rhinitis", "Cetirizine"],
+            "expected_visit_roles": ["initial_diagnosis", "symptom_control_review"],
+            "top_k": 3,
+            "pass_rule": ["expected_source_type_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'worse during a particular season' without clinical vocabulary; must map to seasonal_exacerbation timeline_pattern and Allergic_Rhinitis context in doctor_note chunks."
+        },
+
+        {
+            "id": "Q017",
+            "difficulty": "medium",
+            "patient_id": "PAT-CHR-004",
+            "query": "How have this patient's blood sugar and fat levels changed over time?",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["HbA1c", "LDL"],
+            "expected_visit_roles": ["lab_trend_review"],
+            "top_k": 8,
+            "pass_rule": ["lab_trend_chunks_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'blood sugar' (maps to HbA1c/FBG) and 'fat levels' (maps to LDL/Dyslipidemia); requires dual-vocabulary semantic bridge to surface dual lab_result chunks."
+        },
+
+        {
+            "id": "Q018",
+            "difficulty": "medium",
+            "patient_id": "PAT-MOD-005",
+            "query": "Did this patient's stomach symptoms improve after starting treatment?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["GERD", "Omeprazole"],
+            "expected_visit_roles": ["symptom_control_review"],
+            "top_k": 3,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'stomach symptoms' (maps to GERD/reflux) and 'improve after treatment' (maps to symptom_control_review); tests plain-language GI vocabulary mapping."
+        },
+
+        {
+            "id": "Q019",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-001",
+            "query": "Was there a period where the patient struggled with medication before a second drug was added?",
+            "expected_source_types": ["doctor_note", "prescription"],
+            "expected_chunks_contain": ["partial_adherence", "Glibenclamide", "Metformin"],
+            "expected_visit_roles": ["partial_adherence", "second_medication_added"],
+            "top_k": 5,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Multi-hop query requiring both the adherence failure visit AND the escalation visit to appear in top-5; the causal chain must be surfaced across two different visits."
+        },
+
+        {
+            "id": "Q020",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-005",
+            "query": "What changed in this patient's care after they were admitted to hospital?",
+            "expected_source_types": ["discharge_summary", "doctor_note", "medication_reconciliation"],
+            "expected_chunks_contain": ["Metformin", "Losartan", "Glibenclamide", "post_discharge_stabilization"],
+            "expected_visit_roles": ["post_discharge_stabilization", "medication_reconciliation"],
+            "top_k": 5,
+            "pass_rule": ["post_discharge_evidence_in_top_k", "all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Cross-visit query requiring discharge_summary and post_discharge_stabilization chunks; 'admitted to hospital' maps to inpatient hospitalization, 'what changed' maps to medication reconciliation context."
+        },
+
+        {
+            "id": "Q021",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-002",
+            "query": "Show how this patient's kidney function has trended across all their appointments.",
+            "expected_source_types": ["lab_result"],
+            "expected_chunks_contain": ["Creatinine", "CKD"],
+            "expected_visit_roles": ["ckd_monitoring", "lab_trend_review"],
+            "top_k": 10,
+            "pass_rule": ["lab_trend_chunks_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Longitudinal query requiring at least three Creatinine lab_result chunks from different ckd_monitoring visits; 'trended across all appointments' demands multi-visit coverage in top-10."
+        },
+
+        {
+            "id": "Q022",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-001",
+            "query": "How did the patient's blood sugar control change after they started missing medication doses?",
+            "expected_source_types": ["doctor_note", "lab_result"],
+            "expected_chunks_contain": ["HbA1c", "partial_adherence", "Metformin"],
+            "expected_visit_roles": ["partial_adherence", "lab_trend_review"],
+            "top_k": 8,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Causal temporal chain: 'missing doses' maps to partial_adherence visit, 'blood sugar control changed' maps to subsequent HbA1c lab_result; both must appear in top-8."
+        },
+
+        {
+            "id": "Q023",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-003",
+            "query": "What was documented during the recovery period following this patient's breathing crisis?",
+            "expected_source_types": ["doctor_note"],
+            "expected_chunks_contain": ["Asthma", "Salbutamol", "post_discharge_stabilization"],
+            "expected_visit_roles": ["post_discharge_stabilization", "symptom_control_review"],
+            "top_k": 5,
+            "pass_rule": ["all_expected_roles_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "User says 'breathing crisis' (maps to asthma emergency_exacerbation) and 'recovery period' (maps to post_discharge_stabilization outpatient follow-up); tests post-emergency vocabulary mapping without inpatient language."
+        },
+
+        {
+            "id": "Q024",
+            "difficulty": "hard",
+            "patient_id": "PAT-CHR-004",
+            "query": "How are both the diabetes and the high cholesterol being managed over the long term?",
+            "expected_source_types": ["lab_result", "prescription"],
+            "expected_chunks_contain": ["HbA1c", "LDL", "Metformin", "Atorvastatin"],
+            "expected_visit_roles": ["lab_trend_review"],
+            "top_k": 8,
+            "pass_rule": ["lab_trend_chunks_in_top_k", "expected_source_type_in_top_k", "no_wrong_patient_in_results"],
+            "semantic_note": "Dual-condition longitudinal query; 'high cholesterol' maps to LDL/Dyslipidemia, 'long term' implies regular_quarterly pattern across five visits; both lab and prescription evidence required."
+        },
+
+        {
+            "id": "Q025",
+            "difficulty": "hard",
+            "patient_id": "PAT-MOD-001",
+            "query": "Is this patient taking any medication for stomach acid or reflux?",
+            "expected_source_types": [],
+            "expected_chunks_contain": [],
+            "expected_visit_roles": [],
+            "top_k": 3,
+            "pass_rule": ["no_wrong_patient_in_results"],
+            "semantic_note": "PATIENT BOUNDARY SAFETY TEST: PAT-MOD-001 has T2DM only — no GERD, no Omeprazole. Any result containing Omeprazole means the patient_id filter failed. Expected: zero results or results clearly about T2DM only."
+        },
+
+        {
+            "id": "Q026",
+            "difficulty": "critical",
+            "patient_id": "PAT-MOD-003",
+            "query": "Does this patient have any recorded drug allergies I should be aware of?",
+            "expected_source_types": ["allergy"],
+            "expected_chunks_contain": ["Aspirin", "bronchospasm"],
+            "expected_visit_roles": [],
+            "top_k": 3,
+            "pass_rule": ["allergy_chunk_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Safety-critical: Aspirin allergy with bronchospasm reaction must surface as the top result; failure to retrieve this before prescribing NSAIDs is a clinical safety event."
+        },
+
+        {
+            "id": "Q027",
+            "difficulty": "critical",
+            "patient_id": "PAT-MOD-007",
+            "query": "What allergen is documented in this patient's record?",
+            "expected_source_types": ["allergy"],
+            "expected_chunks_contain": ["Latex", "contact dermatitis"],
+            "expected_visit_roles": [],
+            "top_k": 3,
+            "pass_rule": ["allergy_chunk_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Safety-critical: Latex allergy is the unique allergen in this patient; the allergy chunk must be the top result to prevent latex exposure in a clinical setting."
+        },
+
+        {
+            "id": "Q028",
+            "difficulty": "critical",
+            "patient_id": "PAT-CHR-002",
+            "query": "Does this patient have any allergy history?",
+            "expected_source_types": ["allergy"],
+            "expected_chunks_contain": ["Penicillin", "skin rash"],
+            "expected_visit_roles": [],
+            "top_k": 3,
+            "pass_rule": ["allergy_chunk_in_top_k", "expected_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Safety-critical in a complex CKD patient: Penicillin allergy must not be buried under multiple lab or medication chunks; allergy_chunk must appear in top-3 despite the patient having many lab_result chunks."
+        },
+
+        {
+            "id": "Q029",
+            "difficulty": "critical",
+            "patient_id": "PAT-CHR-001",
+            "query": "What medications is this patient currently prescribed?",
+            "expected_source_types": ["prescription"],
+            "expected_chunks_contain": ["Metformin", "Amlodipine", "Glibenclamide"],
+            "expected_visit_roles": ["second_medication_added", "lab_trend_review"],
+            "top_k": 5,
+            "pass_rule": ["expected_source_type_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Safety-critical: must return prescription chunks listing all three active medications; PAT-CHR-001 has no allergy — allergy chunks in top-5 would indicate source_type routing failure."
+        },
+
+        {
+            "id": "Q030",
+            "difficulty": "critical",
+            "patient_id": "PAT-CHR-005",
+            "query": "Which medications were confirmed after this patient's hospital stay?",
+            "expected_source_types": ["medication_reconciliation"],
+            "expected_chunks_contain": ["Metformin", "Losartan", "Glibenclamide", "post_discharge"],
+            "expected_visit_roles": ["medication_reconciliation"],
+            "top_k": 3,
+            "pass_rule": ["post_discharge_evidence_in_top_k", "medication_keyword_in_top_result", "no_wrong_patient_in_results"],
+            "semantic_note": "Safety-critical post-discharge medication safety: the medication_reconciliation chunk listing all three active drugs must be the top result; a wrong or incomplete medication list after discharge is a patient safety failure."
+        }
+
+    ]
+}

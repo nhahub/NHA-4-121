@@ -2,310 +2,218 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-006",
   "demographics": {
-    "name": "Mona Fawzy",
-    "date_of_birth": "1992-07-07",
-    "sex": "female"
+    "name": "Ali Fawzy",
+    "date_of_birth": "1982-07-19",
+    "sex": "male"
   },
   "conditions": [
-    "HTN"
+    "Dyslipidemia"
   ],
   "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-MOD-006-001",
-      "visit_date": "2023-06-10",
+      "visit_date": "2023-02-08",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Yasser Amin",
       "diagnoses": [
-        "HTN"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 154,
-        "bp_diastolic": 96,
-        "heart_rate": 82,
-        "weight_kg": 66.2,
-        "bmi": 23.2
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 82.0,
+        "bmi": 26.9
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "LDL",
+          "value": 168,
+          "unit": "mg/dL",
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
+          "start_date": "2023-02-08",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 30-year-old female patient seen for a initial visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as the first encounter type in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 154/96 mmHg, heart rate 82 bpm, weight 66.2 kg, and BMI 23.2. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-001.",
-        "assessment": "Diagnoses documented for this visit are summarized as HTN. The visit diagnosis field documents hypertension for this encounter. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: initial; timeline link: first documented visit.",
-        "plan": "The plan section records the active medication entries as documented: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. This is the first recorded visit in the available record."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 40-year-old male; recorded conditions are Dyslipidemia. The primary concern today is the documented visit role is initial diagnosis. initial diagnosis was documented. baseline management plan established. Initial dyslipidaemia diagnosis was documented and baseline management plan established with Atorvastatin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "objective": "Structured measurements for the documented issue include 120/78 mmHg, heart rate 76 bpm, weight 82.0 kg, and BMI 26.9. Laboratory evidence: LDL 168 mg/dL (HIGH). The visit contains documented monitoring context for dyslipidemia LDL laboratory documentation. Retrieval focus includes patient-level conditions: dyslipidemia; visit diagnoses: dyslipidemia; laboratory entries: ldl; medication entries: atorvastatin; visit type: initial; visit role: initial_diagnosis; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: diagnosis_documented; retrieval tags: dyslipidemia_treatment, ldl_trend, and atorvastatin_response; timeline link: first documented visit.",
+        "assessment": "Initial dyslipidaemia diagnosis was documented and baseline management plan established with Atorvastatin. The current clinical focus is summarized from structured facts only. Diagnoses: Dyslipidemia. The visit diagnosis field documents dyslipidemia for this encounter. The visit contains documented monitoring context for dyslipidemia LDL laboratory documentation.",
+        "plan": "Medication context for the documented issue is recorded as Atorvastatin 20 mg once_daily via oral (status started; trajectory simple_start_continue). Documented medication trajectory entries include Atorvastatin; status started; trajectory simple start continue. Retrieval focus includes patient-level conditions: dyslipidemia; visit diagnoses: dyslipidemia; laboratory entries: ldl; medication entries: atorvastatin; visit type: initial; visit role: initial_diagnosis; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: diagnosis_documented; retrieval tags: dyslipidemia_treatment, ldl_trend, and atorvastatin_response; timeline link: first documented visit. No allergy registry entries are documented for this patient."
       },
-      "linked_documents": [
-        "DOC-MOD-006-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial dyslipidaemia diagnosis was documented and baseline management plan established with Atorvastatin."
+      },
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "dyslipidemia_treatment",
+          "ldl_trend",
+          "atorvastatin_response"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-006-002",
-      "visit_date": "2023-08-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 152,
-        "bp_diastolic": 95,
-        "heart_rate": 81,
-        "weight_kg": 65.8,
-        "bmi": 23.1
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 31-year-old female patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective findings record blood pressure 152/95 mmHg, heart rate 81 bpm, weight 65.8 kg, and BMI 23.1. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-002.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-001. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-006-001."
-      },
-      "linked_documents": [
-        "DOC-MOD-006-002"
-      ],
-      "prior_visit_id": "VST-MOD-006-001"
-    },
-    {
-      "visit_id": "VST-MOD-006-003",
-      "visit_date": "2023-10-08",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 150,
-        "bp_diastolic": 94,
-        "heart_rate": 80,
-        "weight_kg": 65.4,
-        "bmi": 23.0
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 31-year-old female patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Structured objective data lists blood pressure 150/94 mmHg, heart rate 80 bpm, weight 65.4 kg, and BMI 23.0. Lab results documented for the visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-003.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The plan section records the active medication entries as documented: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-002."
-      },
-      "linked_documents": [
-        "DOC-MOD-006-003"
-      ],
-      "prior_visit_id": "VST-MOD-006-002"
-    },
-    {
-      "visit_id": "VST-MOD-006-004",
-      "visit_date": "2023-12-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 93,
-        "heart_rate": 79,
-        "weight_kg": 65.0,
-        "bmi": 22.8
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow_up note describes a 31-year-old female patient. Conditions recorded in the chart are HTN. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents hypertension.",
-        "objective": "The visit measurements include blood pressure 148/93 mmHg, heart rate 79 bpm, weight 65.0 kg, and BMI 22.8. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-004.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-003. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-006-003."
-      },
-      "linked_documents": [
-        "DOC-MOD-006-004"
-      ],
-      "prior_visit_id": "VST-MOD-006-003"
-    },
-    {
-      "visit_id": "VST-MOD-006-005",
-      "visit_date": "2024-03-06",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 146,
-        "bp_diastolic": 92,
-        "heart_rate": 78,
-        "weight_kg": 64.6,
-        "bmi": 22.7
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-03-06",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow_up note describes a 31-year-old female patient. Conditions recorded in the chart are HTN. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents hypertension.",
-        "objective": "The visit measurements include blood pressure 146/92 mmHg, heart rate 78 bpm, weight 64.6 kg, and BMI 22.7. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-005.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-004. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: amlodipine and lisinopril; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-006-005"
-      ],
-      "prior_visit_id": "VST-MOD-006-004"
-    },
-    {
-      "visit_id": "VST-MOD-006-006",
-      "visit_date": "2024-06-04",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 144,
-        "bp_diastolic": 91,
-        "heart_rate": 78,
-        "weight_kg": 64.2,
-        "bmi": 22.6
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-03-06",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 31-year-old female patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective findings record blood pressure 144/91 mmHg, heart rate 78 bpm, weight 64.2 kg, and BMI 22.6. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-006.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-005. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-006-005."
-      },
-      "linked_documents": [
-        "DOC-MOD-006-006"
-      ],
-      "prior_visit_id": "VST-MOD-006-005"
-    },
-    {
-      "visit_id": "VST-MOD-006-007",
-      "visit_date": "2024-09-02",
+      "visit_date": "2023-05-09",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Salma Nabil",
       "diagnoses": [
-        "HTN"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 142,
-        "bp_diastolic": 90,
-        "heart_rate": 78,
-        "weight_kg": 63.8,
-        "bmi": 22.5
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 81.3,
+        "bmi": 26.7
       },
-      "labs": [],
+      "labs": [
+        {
+          "lab_type": "LDL",
+          "value": 156,
+          "unit": "mg/dL",
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-06-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-03-06",
-          "stop_date": null
+          "start_date": "2023-02-08",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 32-year-old female patient is recorded for a follow_up visit. The documented condition list includes HTN. The patient-level condition field documents hypertension. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-006-006.",
-        "objective": "Objective data from the encounter records blood pressure 142/90 mmHg, heart rate 78 bpm, weight 63.8 kg, and BMI 22.5. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-006-007.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-006-006. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-006-006."
+        "subjective": "The primary concern today is the patient's health status. Problem context for this follow_up encounter is limited to the structured record. Conditions: Dyslipidemia. The patient-level condition field documents dyslipidemia. Retrieval intent tags documented for this context: dyslipidemia treatment, ldl trend, and atorvastatin response. Regarding the clinical course: Results compared with prior documented values.",
+        "objective": "Structured measurements for the documented issue include 120/78 mmHg, heart rate 76 bpm, weight 81.3 kg, and BMI 26.7. Laboratory evidence: LDL 156 mg/dL (HIGH). The visit contains documented monitoring context for dyslipidemia LDL laboratory documentation. Retrieval focus includes patient-level conditions: dyslipidemia; visit diagnoses: dyslipidemia; laboratory entries: ldl; medication entries: atorvastatin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: lab_improvement; retrieval tags: dyslipidemia_treatment, ldl_trend, and atorvastatin_response; timeline link: prior visit documented.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: Dyslipidemia. Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include LDL 156 mg/dL flagged HIGH. Documented medication trajectory entries include Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "Medication context for the documented issue is recorded as Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Atorvastatin; status continued; trajectory simple start continue. Retrieval focus includes patient-level conditions: dyslipidemia; visit diagnoses: dyslipidemia; laboratory entries: ldl; medication entries: atorvastatin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: lab_improvement; retrieval tags: dyslipidemia_treatment, ldl_trend, and atorvastatin_response; timeline link: prior visit documented. No allergy registry entries are documented for this patient."
       },
-      "linked_documents": [
-        "DOC-MOD-006-007"
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-006-001",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 90,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "dyslipidemia_treatment",
+          "ldl_trend",
+          "atorvastatin_response"
+        ]
+      }
+    },
+    {
+      "visit_id": "VST-MOD-006-003",
+      "visit_date": "2023-08-07",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Ahmed Farid",
+      "diagnoses": [
+        "Dyslipidemia"
       ],
-      "prior_visit_id": "VST-MOD-006-006"
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 80.6,
+        "bmi": 26.5
+      },
+      "labs": [
+        {
+          "lab_type": "LDL",
+          "value": 128,
+          "unit": "mg/dL",
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-08",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
+        }
+      ],
+      "soap_note": {
+        "subjective": "The primary concern today is the patient's health status. Problem context for this follow_up encounter is limited to the structured record. Conditions: Dyslipidemia. The patient-level condition field documents dyslipidemia. Retrieval intent tags documented for this context: dyslipidemia treatment, ldl trend, and atorvastatin response. Regarding the clinical course: Results compared with prior documented values.",
+        "objective": "The visit objective data support the charted problem context: 120/78 mmHg; heart rate 76 bpm; weight 80.6 kg; BMI 26.5. Lab entries: LDL 128 mg/dL (HIGH). Documented laboratory entries include LDL 128 mg/dL flagged HIGH. Linked documents: none.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: Dyslipidemia. Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include LDL 128 mg/dL flagged HIGH. Documented medication trajectory entries include Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "Medication context for the documented issue is recorded as Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Atorvastatin; status continued; trajectory simple start continue. Retrieval focus includes patient-level conditions: dyslipidemia; visit diagnoses: dyslipidemia; laboratory entries: ldl; medication entries: atorvastatin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: lab_improvement; retrieval tags: dyslipidemia_treatment, ldl_trend, and atorvastatin_response; timeline link: prior visit documented. No allergy registry entries are documented for this patient."
+      },
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-006-002",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for dyslipidaemia was reviewed at scheduled follow-up; Atorvastatin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "dyslipidemia_treatment",
+          "ldl_trend",
+          "atorvastatin_response"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "dyslipidemia_atorvastatin_ldl_improvement",
+    "timeline_pattern": "regular_quarterly",
+    "semantic_focus": "lab_improvement",
+    "retrieval_signature": "Dyslipidemia|Atorvastatin|lab_improvement|regular_quarterly|LDL",
+    "retrieval_intent_tags": [
+      "dyslipidemia_treatment",
+      "ldl_trend",
+      "atorvastatin_response"
+    ],
+    "soap_style": "problem_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "lab_trend_query"
+    ]
   }
 }

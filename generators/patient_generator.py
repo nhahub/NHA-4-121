@@ -1,544 +1,551 @@
 """
 generators/patient_generator.py
 
-Deterministic patient blueprint and patient shell generation.
+Generates patient shell objects for the 15-patient v1.7 Lite synthetic dataset.
 
-This module creates patient shells only:
-- schema_version
-- patient_id
-- demographics
-- conditions
-- empty allergy_registry
-- empty visits
-- metadata.tier
+RESPONSIBILITY
+--------------
+This module builds the patient root JSON object:
+    schema_version, patient_id, demographics, conditions,
+    allergy_registry (empty), visits (empty), metadata.
 
 It does NOT generate:
-- visits
-- vitals
-- labs
-- medications
-- allergies
-- SOAP notes
+    - visits            (→ generators/visit_generator.py)
+    - labs              (→ generators/lab_generator.py)
+    - medications       (→ generators/medication_generator.py)
+    - allergy records   (→ generators/allergy_generator.py)
+    - SOAP notes        (→ soap/soap_generator.py)
+    - ChromaDB chunks   (→ ingestion/chunker.py)
 
-Those are handled by downstream generator modules.
+Downstream generators call this module to get the patient shell, then
+populate `visits` and `allergy_registry` in-place before the record is
+exported to data/patients/.
 
-The generator supports two modes:
-- pilot: first 5 patients only
-- full: full 30-patient dataset
+DETERMINISM
+-----------
+All outputs are deterministic:
+- blueprint.sex drives name-pool selection.
+- The GLOBAL index of the blueprint in ALL_BLUEPRINTS drives name selection
+  and DOB calculation — regardless of which mode (v17_lite / full / pilot) is
+  active.  This guarantees that PAT-CHR-005, for example, always receives the
+  same name and date_of_birth whether it is generated as part of the full
+  15-patient run or the 5-patient pilot run.
+- tier drives the age band.
+- No random module usage anywhere in this file.
 
-This file does not use runtime randomness. All patient identities, IDs,
-tiers, conditions, first visit dates, and visit counts are deterministic.
+USAGE CONTRACT
+--------------
+- Import locked constants from config/constants.py only.
+- Import blueprints from config/patient_blueprints.py only.
+- Return plain Python dicts.
+- Do not write files here.
+- Do not call validators here.
+- Do not call LLMs.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any
+import re
+from datetime import date
+from typing import Final
 
 from config.constants import (
-    CHRONIC_ARCHETYPES,
+    AGE_LIMITS,
+    CONDITIONS,
     DATASET_MODE_FULL,
     DATASET_MODE_PILOT,
-    DEFAULT_DATASET_MODE,
-    EXPECTED_FULL_PATIENT_COUNT,
-    EXPECTED_PILOT_PATIENT_COUNT,
+    DATASET_MODE_V17_LITE,
+    DATASET_VERSION,
+    EXPECTED_V17_LITE_PATIENT_COUNT,
     FEMALE_PATIENT_NAMES,
     FINAL_PATIENT_DISTRIBUTION,
     MALE_PATIENT_NAMES,
-    MODERATE_ARCHETYPES,
-    PILOT_PATIENT_DISTRIBUTION,
+    PATIENT_ID_REGEX,
+    REQUIRED_DEMOGRAPHICS_FIELDS,
+    REQUIRED_PATIENT_METADATA_FIELDS_V17_LITE,
+    REQUIRED_TOP_LEVEL_FIELDS,
     SCHEMA_VERSION,
-    TIER_TO_ID_PREFIX,
-    VISIT_COUNT_PATTERNS,
+    SEX_VALUES,
+    TIERS,
+)
+from config.patient_blueprints import (
+    ALL_BLUEPRINTS,
+    BLUEPRINT_BY_ID,
+    PILOT_BLUEPRINTS,
+    PatientBlueprint,
 )
 
 
-_MAX_CKD_PATIENTS = 2
+# ---------------------------------------------------------------------------
+# Types
+# ---------------------------------------------------------------------------
+
+PatientRecord = dict  # top-level patient JSON-compatible dict
+Demographics = dict   # {"name": str, "date_of_birth": str, "sex": str}
 
 
-@dataclass(frozen=True)
-class PatientBlueprint:
-    """
-    Deterministic source configuration for one synthetic patient.
+# ---------------------------------------------------------------------------
+# Age bands per tier
+# Reference year is fixed so DOB calculation is always identical.
+# Bands are validated against AGE_LIMITS at module level (see bottom).
+# ---------------------------------------------------------------------------
 
-    Downstream generators use this object to build visits, labs,
-    medications, allergies, and SOAP notes without guessing patient-level facts.
-    """
+_REFERENCE_YEAR: Final[int] = 2026
 
-    patient_id: str
-    tier: str
-    name: str
-    date_of_birth: str
-    sex: str
-    conditions: tuple[str, ...]
-    first_visit_date: str
-    visit_count: int
-    archetype: str
-
-
-# These local overrides preserve the first five already-generated pilot identities
-# without keeping the old global config constant PILOT_PATIENT_NAMES.
-_LEGACY_PILOT_NAME_OVERRIDES: dict[tuple[str, int], str] = {
-    ("normal", 1): "Omar Samir",
-    ("normal", 2): "Mariam Adel",
-    ("moderate", 1): "Karim Hassan",
-    ("moderate", 2): "Nour Ahmed",
-    ("chronic", 1): "Youssef Mahmoud",
+_TIER_AGE_BANDS: Final[dict[str, tuple[int, int]]] = {
+    "normal":   (24, 34),   # younger adults — short acute illness arc
+    "moderate": (38, 62),   # middle adults  — managed condition stories
+    "chronic":  (58, 75),   # older adults   — long-term multi-visit stories
 }
 
 
-_LEGACY_PILOT_SEX_OVERRIDES: dict[tuple[str, int], str] = {
-    ("normal", 1): "male",
-    ("normal", 2): "female",
-    ("moderate", 1): "male",
-    ("moderate", 2): "female",
-    ("chronic", 1): "male",
+# ---------------------------------------------------------------------------
+# Errors
+# ---------------------------------------------------------------------------
+
+class PatientGenerationError(ValueError):
+    """Raised when a blueprint produces an invalid or incomplete patient shell."""
+
+
+# ---------------------------------------------------------------------------
+# Global index lookup
+# ---------------------------------------------------------------------------
+
+# Pre-built at import time: maps every patient_id to its 0-based position in
+# ALL_BLUEPRINTS.  This is the single source of index truth for demographics
+# generation.  Using the global position instead of the mode-local enumerate
+# index guarantees that a given patient always receives the same name and
+# date_of_birth regardless of which dataset mode is active.
+_GLOBAL_INDEX: dict[str, int] = {
+    bp.patient_id: idx for idx, bp in enumerate(ALL_BLUEPRINTS)
 }
 
 
-_LEGACY_RESERVED_NAMES: set[str] = set(_LEGACY_PILOT_NAME_OVERRIDES.values())
+def _global_blueprint_index(patient_id: str) -> int:
+    """Return the 0-based position of patient_id in ALL_BLUEPRINTS.
 
+    This index is stable across all dataset modes (v17_lite, full, pilot).
+    It must be used wherever demographics are generated so that name and
+    date_of_birth are identical no matter which mode triggered generation.
 
-def get_patient_blueprints(
-    mode: str = DEFAULT_DATASET_MODE,
-) -> list[PatientBlueprint]:
+    Raises:
+        PatientGenerationError: if patient_id is not in ALL_BLUEPRINTS.
     """
-    Generate deterministic patient blueprints.
+    try:
+        return _GLOBAL_INDEX[patient_id]
+    except KeyError:
+        raise PatientGenerationError(
+            f"patient_id '{patient_id}' not found in ALL_BLUEPRINTS. "
+            f"Known IDs: {list(_GLOBAL_INDEX.keys())}"
+        )
+
+
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
+def get_blueprints_for_mode(mode: str) -> tuple[PatientBlueprint, ...]:
+    """Return the correct blueprint tuple for the requested dataset mode.
+
+    Supported modes:
+        DATASET_MODE_V17_LITE  → all 15 curated blueprints (canonical)
+        DATASET_MODE_FULL      → same as V17_LITE (v1.7 Lite IS the full dataset)
+        DATASET_MODE_PILOT     → 5 blueprints for fast development testing
+
+    Raises:
+        ValueError: if mode is not recognised.
+    """
+    if mode in (DATASET_MODE_V17_LITE, DATASET_MODE_FULL):
+        return ALL_BLUEPRINTS
+    if mode == DATASET_MODE_PILOT:
+        return PILOT_BLUEPRINTS
+    raise ValueError(
+        f"Unsupported dataset mode: '{mode}'. "
+        f"Expected one of: {DATASET_MODE_V17_LITE!r}, "
+        f"{DATASET_MODE_FULL!r}, {DATASET_MODE_PILOT!r}."
+    )
+
+
+def generate_patient_from_blueprint(
+    blueprint: PatientBlueprint,
+    index: int,
+) -> PatientRecord:
+    """Generate a single patient shell from a PatientBlueprint.
+
+    The returned dict has empty visits and allergy_registry lists.
+    Downstream generators (visit_generator, allergy_generator) populate
+    those lists before the record is written to disk.
 
     Args:
-        mode:
-            - "pilot": generate first 5 patients only
-            - "full": generate full 30-patient dataset
+        blueprint: A PatientBlueprint dataclass instance.
+        index:     0-based position of this blueprint in ALL_BLUEPRINTS.
+                   Must always be the GLOBAL position (use
+                   _global_blueprint_index) — never the mode-local enumerate
+                   index — so that name and DOB are stable across modes.
 
     Returns:
-        List of PatientBlueprint objects.
+        A patient JSON-compatible dict matching the v1.7 Lite schema.
+
+    Raises:
+        PatientGenerationError: if any required field is missing or invalid.
     """
-    if mode == DATASET_MODE_PILOT:
-        return get_pilot_blueprints()
+    _validate_blueprint_fields(blueprint)
 
-    if mode == DATASET_MODE_FULL:
-        return get_full_blueprints()
+    demographics = build_demographics(blueprint, index)
+    metadata = _build_metadata(blueprint)
 
-    raise ValueError(
-        f"Unsupported dataset mode '{mode}'. "
-        f"Expected '{DATASET_MODE_PILOT}' or '{DATASET_MODE_FULL}'."
-    )
-
-
-def get_full_blueprints() -> list[PatientBlueprint]:
-    """
-    Generate the full locked 30-patient dataset:
-    - 10 normal
-    - 13 moderate
-    - 7 chronic
-    """
-    blueprints: list[PatientBlueprint] = []
-    used_names: set[str] = set()
-
-    for tier, count in FINAL_PATIENT_DISTRIBUTION.items():
-        for index in range(1, count + 1):
-            blueprint = _build_blueprint(
-                tier=tier,
-                index=index,
-                used_names=used_names,
-            )
-            blueprints.append(blueprint)
-            used_names.add(blueprint.name)
-
-    _assert_expected_count(
-        blueprints=blueprints,
-        expected_count=EXPECTED_FULL_PATIENT_COUNT,
-        mode=DATASET_MODE_FULL,
-    )
-    _assert_distribution(
-        blueprints=blueprints,
-        expected_distribution=FINAL_PATIENT_DISTRIBUTION,
-    )
-    _assert_unique_patient_ids(blueprints)
-    _assert_unique_names(blueprints)
-    _assert_ckd_constraints(blueprints)
-
-    return blueprints
-
-
-def get_pilot_blueprints() -> list[PatientBlueprint]:
-    """
-    Return the first 5 deterministic pilot patients:
-    - 2 normal
-    - 2 moderate
-    - 1 chronic
-
-    This keeps backward compatibility with the original milestone.
-    """
-    blueprint_keys = (
-        ("normal", 1),
-        ("normal", 2),
-        ("moderate", 1),
-        ("moderate", 2),
-        ("chronic", 1),
-    )
-
-    blueprints: list[PatientBlueprint] = []
-    used_names: set[str] = set()
-
-    for tier, index in blueprint_keys:
-        blueprint = _build_blueprint(
-            tier=tier,
-            index=index,
-            used_names=used_names,
-        )
-        blueprints.append(blueprint)
-        used_names.add(blueprint.name)
-
-    _assert_expected_count(
-        blueprints=blueprints,
-        expected_count=EXPECTED_PILOT_PATIENT_COUNT,
-        mode=DATASET_MODE_PILOT,
-    )
-    _assert_distribution(
-        blueprints=blueprints,
-        expected_distribution=PILOT_PATIENT_DISTRIBUTION,
-    )
-    _assert_unique_patient_ids(blueprints)
-    _assert_unique_names(blueprints)
-    _assert_ckd_constraints(blueprints)
-
-    return blueprints
-
-
-def create_patient_shell(blueprint: PatientBlueprint) -> dict[str, Any]:
-    """
-    Build the base patient JSON object.
-
-    The shell follows the locked patient schema but leaves visit-level content
-    empty for later deterministic generator modules.
-    """
-    return {
+    patient: PatientRecord = {
         "schema_version": SCHEMA_VERSION,
         "patient_id": blueprint.patient_id,
-        "demographics": {
-            "name": blueprint.name,
-            "date_of_birth": blueprint.date_of_birth,
-            "sex": blueprint.sex,
-        },
+        "demographics": demographics,
         "conditions": list(blueprint.conditions),
-        "allergy_registry": [],
-        "visits": [],
-        "metadata": {
-            "tier": blueprint.tier,
-        },
+        "allergy_registry": [],  # populated by allergy_generator
+        "visits": [],            # populated by visit_generator
+        "metadata": metadata,
     }
 
+    _validate_patient_shell(patient)
+    return patient
 
-def generate_patient_shells(
-    mode: str = DEFAULT_DATASET_MODE,
-) -> list[dict[str, Any]]:
+
+def generate_patient_by_id(patient_id: str) -> PatientRecord:
+    """Generate a single patient shell by patient_id.
+
+    Convenience wrapper around generate_patient_from_blueprint.
+    Always uses the global ALL_BLUEPRINTS index so demographics are
+    identical to those produced by generate_patients() in any mode.
+
+    Raises:
+        KeyError: if patient_id is not in BLUEPRINT_BY_ID.
+        PatientGenerationError: if generation fails.
     """
-    Generate patient shells for the requested dataset mode.
+    if patient_id not in BLUEPRINT_BY_ID:
+        raise KeyError(
+            f"No blueprint found for patient_id='{patient_id}'. "
+            f"Available IDs: {list(BLUEPRINT_BY_ID.keys())}"
+        )
+    blueprint = BLUEPRINT_BY_ID[patient_id]
+    index = _global_blueprint_index(patient_id)
+    return generate_patient_from_blueprint(blueprint, index)
+
+
+def generate_patients(mode: str = DATASET_MODE_V17_LITE) -> list[PatientRecord]:
+    """Generate all patient shells for the requested dataset mode.
+
+    Returns a list of patient dicts with empty visits and allergy_registry.
+    Ordering is deterministic and matches ALL_BLUEPRINTS or PILOT_BLUEPRINTS.
+
+    Each blueprint is passed its GLOBAL ALL_BLUEPRINTS index (not its
+    position within the mode-local subset) so that demographics are
+    identical across modes.
+
+    Args:
+        mode: Dataset mode string — see get_blueprints_for_mode for options.
+
+    Returns:
+        List of patient shell dicts, one per blueprint.
+
+    Raises:
+        ValueError: if mode is not supported.
+        PatientGenerationError: if any patient shell is invalid.
     """
+    blueprints = get_blueprints_for_mode(mode)
+    _validate_blueprint_collection(blueprints, mode)
+
     return [
-        create_patient_shell(blueprint)
-        for blueprint in get_patient_blueprints(mode=mode)
+        generate_patient_from_blueprint(bp, _global_blueprint_index(bp.patient_id))
+        for bp in blueprints
     ]
 
 
-def generate_pilot_patient_shells() -> list[dict[str, Any]]:
+def build_demographics(blueprint: PatientBlueprint, index: int) -> Demographics:
+    """Build deterministic synthetic demographics from a blueprint.
+
+    Rules:
+    - sex comes from blueprint.sex (not derived from ordinal).
+    - name is selected from the sex-appropriate name pool using index.
+    - date_of_birth is derived from tier age band and index.
+    - 'age' is NEVER stored (forbidden by schema contract).
+
+    Args:
+        blueprint: PatientBlueprint instance.
+        index:     Global 0-based position from ALL_BLUEPRINTS (use
+                   _global_blueprint_index).  Must be the global position,
+                   not a mode-local enumerate value.
+
+    Returns:
+        {"name": str, "date_of_birth": "YYYY-MM-DD", "sex": str}
     """
-    Backward-compatible wrapper for old scripts.
+    sex = blueprint.sex
+    name = _deterministic_name(sex, index)
+    dob  = _deterministic_date_of_birth(blueprint.tier, index)
 
-    Prefer generate_patient_shells(mode="pilot") in new code.
-    """
-    return generate_patient_shells(mode=DATASET_MODE_PILOT)
+    demographics: Demographics = {
+        "name": name,
+        "date_of_birth": dob,
+        "sex": sex,
+    }
+
+    # Defensive: 'age' must never appear in generated demographics.
+    if "age" in demographics:
+        raise PatientGenerationError(
+            f"{blueprint.patient_id}: 'age' field is forbidden in demographics."
+        )
+
+    _check_required_keys(demographics, REQUIRED_DEMOGRAPHICS_FIELDS, "demographics")
+    return demographics
 
 
-def generate_full_patient_shells() -> list[dict[str, Any]]:
-    """
-    Generate all 30 patient shells.
-    """
-    return generate_patient_shells(mode=DATASET_MODE_FULL)
+# ---------------------------------------------------------------------------
+# Internal builders
+# ---------------------------------------------------------------------------
 
+def _build_metadata(blueprint: PatientBlueprint) -> dict:
+    """Build the patient-level metadata dict from blueprint fields.
 
-def blueprint_by_patient_id(
-    mode: str = DEFAULT_DATASET_MODE,
-) -> dict[str, PatientBlueprint]:
-    """
-    Return patient blueprints keyed by patient_id.
-
-    Downstream generators use this to access visit_count, tier, first_visit_date,
-    and condition profile for each patient.
+    Only v1.7 Lite metadata contract fields are included.
+    Blueprint-only fields (visit_roles, lab_focus, initial_medications,
+    added_medications, completed_medications, stopped_medications,
+    medication_arc, retrieval_notes) are intentionally excluded — they
+    belong to generators and documentation, not the patient JSON.
     """
     return {
-        blueprint.patient_id: blueprint
-        for blueprint in get_patient_blueprints(mode=mode)
+        "tier":                    blueprint.tier,
+        "dataset_version":         DATASET_VERSION,
+        "story_arc":               blueprint.story_arc,
+        "timeline_pattern":        blueprint.timeline_pattern,
+        "semantic_focus":          blueprint.semantic_focus,
+        "retrieval_signature":     blueprint.retrieval_signature,
+        "retrieval_intent_tags":   list(blueprint.retrieval_intent_tags),
+        "soap_style":              blueprint.soap_style,
+        "primary_retrieval_targets": list(blueprint.primary_retrieval_targets),
     }
 
 
-def _build_blueprint(
-    tier: str,
-    index: int,
-    used_names: set[str] | None = None,
-) -> PatientBlueprint:
+# ---------------------------------------------------------------------------
+# Internal validation helpers
+# ---------------------------------------------------------------------------
+
+def _validate_blueprint_fields(blueprint: PatientBlueprint) -> None:
+    """Lightweight contract check on the blueprint before generation.
+
+    Full V7/V12 validation is handled by validators/rules.py at pipeline time.
+    This function only checks the minimum fields this module needs.
     """
-    Build a deterministic blueprint for one patient by tier and per-tier index.
-    """
-    patient_id = _make_patient_id(tier=tier, index=index)
-    sex = _sex_for(tier=tier, index=index)
-    name = _name_for(
-        sex=sex,
-        tier=tier,
-        index=index,
-        used_names=used_names or set(),
+    pid = blueprint.patient_id
+
+    if not re.fullmatch(PATIENT_ID_REGEX, pid):
+        raise PatientGenerationError(f"Invalid patient_id format: '{pid}'")
+
+    if blueprint.tier not in TIERS:
+        raise PatientGenerationError(
+            f"{pid}: tier '{blueprint.tier}' not in TIERS"
+        )
+
+    if blueprint.sex not in SEX_VALUES:
+        raise PatientGenerationError(
+            f"{pid}: sex '{blueprint.sex}' not in SEX_VALUES"
+        )
+
+    if not blueprint.conditions:
+        raise PatientGenerationError(f"{pid}: conditions tuple is empty.")
+
+    invalid = sorted(set(blueprint.conditions) - set(CONDITIONS))
+    if invalid:
+        raise PatientGenerationError(
+            f"{pid}: invalid conditions: {invalid}"
+        )
+
+    if blueprint.visit_count <= 0:
+        raise PatientGenerationError(
+            f"{pid}: visit_count must be a positive integer."
+        )
+
+    if len(blueprint.visit_roles) != blueprint.visit_count:
+        raise PatientGenerationError(
+            f"{pid}: len(visit_roles)={len(blueprint.visit_roles)} "
+            f"!= visit_count={blueprint.visit_count}"
+        )
+
+
+def _validate_patient_shell(patient: PatientRecord) -> None:
+    """Check that the generated patient shell satisfies the schema contract."""
+    _check_required_keys(patient, REQUIRED_TOP_LEVEL_FIELDS, "patient")
+
+    if patient["schema_version"] != SCHEMA_VERSION:
+        raise PatientGenerationError(
+            f"schema_version mismatch: expected '{SCHEMA_VERSION}', "
+            f"got '{patient['schema_version']}'."
+        )
+
+    if not isinstance(patient["visits"], list):
+        raise PatientGenerationError("patient['visits'] must be a list.")
+
+    if not isinstance(patient["allergy_registry"], list):
+        raise PatientGenerationError("patient['allergy_registry'] must be a list.")
+
+    # Metadata contract check.
+    _check_required_keys(
+        patient.get("metadata", {}),
+        REQUIRED_PATIENT_METADATA_FIELDS_V17_LITE,
+        "patient.metadata",
     )
 
-    conditions = _conditions_for(tier=tier, index=index)
-    archetype = _archetype_for(tier=tier, conditions=conditions)
-    visit_count = _visit_count_for(tier=tier, index=index)
-    first_visit_date = _first_visit_date_for(tier=tier, index=index)
-    date_of_birth = _date_of_birth_for(tier=tier, index=index, sex=sex)
-
-    return PatientBlueprint(
-        patient_id=patient_id,
-        tier=tier,
-        name=name,
-        date_of_birth=date_of_birth,
-        sex=sex,
-        conditions=conditions,
-        first_visit_date=first_visit_date,
-        visit_count=visit_count,
-        archetype=archetype,
-    )
+    # 'age' must never exist anywhere in demographics.
+    demographics = patient.get("demographics", {})
+    if "age" in demographics:
+        raise PatientGenerationError(
+            f"{patient['patient_id']}: 'age' field must not be stored in demographics."
+        )
 
 
-def _make_patient_id(tier: str, index: int) -> str:
-    """
-    Create stable patient ID:
-    PAT-NRM-001, PAT-MOD-001, PAT-CHR-001, etc.
-    """
-    if tier not in TIER_TO_ID_PREFIX:
-        raise ValueError(f"Unsupported tier '{tier}'.")
-
-    return f"PAT-{TIER_TO_ID_PREFIX[tier]}-{index:03d}"
-
-
-def _conditions_for(tier: str, index: int) -> tuple[str, ...]:
-    """
-    Return deterministic condition tuple for the patient.
-    """
-    if tier == "normal":
-        return ()
-
-    if tier == "moderate":
-        return tuple(MODERATE_ARCHETYPES[index])
-
-    if tier == "chronic":
-        return tuple(CHRONIC_ARCHETYPES[index])
-
-    raise ValueError(f"Unsupported tier '{tier}'.")
-
-
-def _archetype_for(tier: str, conditions: tuple[str, ...]) -> str:
-    """
-    Return human-readable archetype label for internal generation logic.
-    """
-    if tier == "normal":
-        return "acute_simple"
-
-    if "CKD" in conditions:
-        return "t2dm_htn_ckd"
-
-    if set(conditions) == {"T2DM", "HTN"}:
-        return "t2dm_htn"
-
-    return "_".join(condition.lower() for condition in conditions)
-
-
-def _visit_count_for(tier: str, index: int) -> int:
-    """
-    Assign deterministic visit count using tier-specific visit count patterns.
-    """
-    pattern = VISIT_COUNT_PATTERNS[tier]
-    return pattern[(index - 1) % len(pattern)]
-
-
-def _first_visit_date_for(tier: str, index: int) -> str:
-    """
-    Assign deterministic first visit dates.
-
-    Normal patients start in 2024.
-    Moderate patients start in 2023.
-    Chronic patients start in 2021.
-
-    The month varies by index to avoid repeated identical timelines.
-    """
-    month = ((index - 1) % 12) + 1
-
-    if tier == "normal":
-        return f"2024-{month:02d}-05"
-
-    if tier == "moderate":
-        return f"2023-{month:02d}-10"
-
-    if tier == "chronic":
-        return f"2021-{month:02d}-15"
-
-    raise ValueError(f"Unsupported tier '{tier}'.")
-
-
-def _date_of_birth_for(tier: str, index: int, sex: str) -> str:
-    """
-    Generate deterministic adult date_of_birth values.
-
-    The values are designed to keep age_at_visit within 18-80 years.
-    """
-    if tier == "normal":
-        base_year = 1992 if sex == "male" else 1996
-    elif tier == "moderate":
-        base_year = 1980 if sex == "male" else 1986
-    elif tier == "chronic":
-        base_year = 1968 if sex == "male" else 1972
-    else:
-        raise ValueError(f"Unsupported tier '{tier}'.")
-
-    year = base_year + (index % 7)
-    month = ((index * 3) % 12) + 1
-    day = ((index * 5) % 24) + 1
-
-    return f"{year:04d}-{month:02d}-{day:02d}"
-
-
-def _sex_for(tier: str, index: int) -> str:
-    """
-    Deterministically alternate sex values while keeping the first five
-    pilot patients aligned with the original dataset.
-    """
-    if (tier, index) in _LEGACY_PILOT_SEX_OVERRIDES:
-        return _LEGACY_PILOT_SEX_OVERRIDES[(tier, index)]
-
-    return "male" if index % 2 == 1 else "female"
-
-
-def _name_for(
-    sex: str,
-    tier: str,
-    index: int,
-    used_names: set[str],
-) -> str:
-    """
-    Select a deterministic unique name from the configured name pools.
-
-    Legacy pilot names are preserved for the first five known patients.
-    For all later patients, the function selects the first unused name from
-    the correct sex-specific pool while avoiding reserved pilot names.
-    """
-    override_key = (tier, index)
-    if override_key in _LEGACY_PILOT_NAME_OVERRIDES:
-        override_name = _LEGACY_PILOT_NAME_OVERRIDES[override_key]
-        if override_name in used_names:
-            raise ValueError(f"Duplicate legacy patient name detected: {override_name}")
-        return override_name
-
-    if sex == "male":
-        pool = MALE_PATIENT_NAMES
-    elif sex == "female":
-        pool = FEMALE_PATIENT_NAMES
-    else:
-        raise ValueError(f"Unsupported sex '{sex}'.")
-
-    tier_offset = {
-        "normal": 0,
-        "moderate": 5,
-        "chronic": 10,
-    }[tier]
-
-    start_index = (tier_offset + index - 1) % len(pool)
-    ordered_candidates = pool[start_index:] + pool[:start_index]
-
-    for candidate in ordered_candidates:
-        if candidate in used_names:
-            continue
-        if candidate in _LEGACY_RESERVED_NAMES:
-            continue
-        return candidate
-
-    raise ValueError(
-        f"No unused {sex} patient names remain for tier='{tier}', index={index}."
-    )
-
-
-def _assert_expected_count(
-    blueprints: list[PatientBlueprint],
-    expected_count: int,
+def _validate_blueprint_collection(
+    blueprints: tuple[PatientBlueprint, ...],
     mode: str,
 ) -> None:
-    if len(blueprints) != expected_count:
-        raise ValueError(
-            f"Invalid {mode} blueprint count. "
-            f"Expected {expected_count}, got {len(blueprints)}."
-        )
+    """Dataset-level checks before generating the full collection.
+
+    Verifies count, tier distribution (full mode only), and uniqueness.
+    This is NOT a replacement for validators/rules.py — it is a pre-flight
+    guard inside the generator.
+    """
+    if mode in (DATASET_MODE_V17_LITE, DATASET_MODE_FULL):
+        if len(blueprints) != EXPECTED_V17_LITE_PATIENT_COUNT:
+            raise PatientGenerationError(
+                f"Expected {EXPECTED_V17_LITE_PATIENT_COUNT} blueprints "
+                f"for mode '{mode}', got {len(blueprints)}."
+            )
+
+        # Tier distribution check (full dataset only).
+        tier_counts: dict[str, int] = {t: 0 for t in TIERS}
+        for bp in blueprints:
+            tier_counts[bp.tier] = tier_counts.get(bp.tier, 0) + 1
+
+        for tier, expected in FINAL_PATIENT_DISTRIBUTION.items():
+            actual = tier_counts.get(tier, 0)
+            if actual != expected:
+                raise PatientGenerationError(
+                    f"Tier distribution mismatch for '{tier}': "
+                    f"expected {expected}, got {actual}."
+                )
+
+    # Uniqueness checks apply to all modes.
+    seen_ids: set[str] = set()
+    seen_sigs: set[str] = set()
+    for bp in blueprints:
+        if bp.patient_id in seen_ids:
+            raise PatientGenerationError(
+                f"Duplicate patient_id in blueprint collection: '{bp.patient_id}'"
+            )
+        seen_ids.add(bp.patient_id)
+
+        if bp.retrieval_signature in seen_sigs:
+            raise PatientGenerationError(
+                f"Duplicate retrieval_signature: '{bp.retrieval_signature}'"
+            )
+        seen_sigs.add(bp.retrieval_signature)
 
 
-def _assert_distribution(
-    blueprints: list[PatientBlueprint],
-    expected_distribution: dict[str, int],
+def _check_required_keys(
+    mapping: object,
+    required_keys: tuple[str, ...] | list[str],
+    label: str,
 ) -> None:
-    """
-    Fail fast if tier distribution does not match the selected dataset mode.
-    """
-    actual = {tier: 0 for tier in expected_distribution}
-
-    for blueprint in blueprints:
-        actual[blueprint.tier] = actual.get(blueprint.tier, 0) + 1
-
-    if actual != expected_distribution:
-        raise ValueError(
-            f"Invalid tier distribution. "
-            f"Expected {expected_distribution}, got {actual}."
+    """Raise PatientGenerationError if any required key is absent."""
+    if not isinstance(mapping, dict):
+        raise PatientGenerationError(f"{label} must be a dict, got {type(mapping).__name__}.")
+    missing = [k for k in required_keys if k not in mapping]
+    if missing:
+        raise PatientGenerationError(
+            f"{label} missing required keys: {missing}"
         )
 
 
-def _assert_unique_patient_ids(blueprints: list[PatientBlueprint]) -> None:
-    patient_ids = [blueprint.patient_id for blueprint in blueprints]
+# ---------------------------------------------------------------------------
+# Deterministic demographics helpers
+# ---------------------------------------------------------------------------
 
-    if len(patient_ids) != len(set(patient_ids)):
-        raise ValueError("Duplicate patient_id detected in generated blueprints.")
+def _deterministic_name(sex: str, index: int) -> str:
+    """Select a synthetic name deterministically from the sex-specific pool.
 
-
-def _assert_unique_names(blueprints: list[PatientBlueprint]) -> None:
-    names = [blueprint.name for blueprint in blueprints]
-
-    if len(names) != len(set(names)):
-        duplicates = sorted(name for name in set(names) if names.count(name) > 1)
-        raise ValueError(f"Duplicate patient names detected: {duplicates}")
-
-
-def _assert_ckd_constraints(blueprints: list[PatientBlueprint]) -> None:
+    Uses `index` (0-based generation position) so the same blueprint always
+    gets the same name regardless of which mode is active.
     """
-    Enforce CKD semantic rules before patient JSON generation.
+    pool = FEMALE_PATIENT_NAMES if sex == "female" else MALE_PATIENT_NAMES
+    if not pool:
+        raise PatientGenerationError(
+            f"Name pool for sex='{sex}' is empty in constants."
+        )
+    return pool[index % len(pool)]
 
-    CKD is complication-only:
-    - chronic tier only
-    - requires T2DM
-    - requires HTN
-    - allowed in at most two patients in the locked 30-patient dataset
+
+def _deterministic_date_of_birth(tier: str, index: int) -> str:
+    """Generate a deterministic date_of_birth string (YYYY-MM-DD).
+
+    Strategy:
+    - tier determines the age band (see _TIER_AGE_BANDS).
+    - index cycles through ages within the band to ensure variety.
+    - month cycles 1–12 using index.
+    - day uses a small spread to avoid all patients sharing the same day.
+
+    Age is always within AGE_LIMITS to satisfy V3 validation.
     """
-    ckd_blueprints = [
-        blueprint
-        for blueprint in blueprints
-        if "CKD" in blueprint.conditions
-    ]
-
-    if len(ckd_blueprints) > _MAX_CKD_PATIENTS:
-        ckd_patient_ids = [blueprint.patient_id for blueprint in ckd_blueprints]
-        raise ValueError(
-            f"CKD patient count must not exceed {_MAX_CKD_PATIENTS}. "
-            f"Found {len(ckd_blueprints)}: {ckd_patient_ids}."
+    if tier not in _TIER_AGE_BANDS:
+        raise PatientGenerationError(
+            f"No age band defined for tier='{tier}'. "
+            f"Expected one of: {list(_TIER_AGE_BANDS.keys())}"
         )
 
-    for blueprint in ckd_blueprints:
-        conditions = set(blueprint.conditions)
+    min_age, max_age = _TIER_AGE_BANDS[tier]
+    global_min, global_max = AGE_LIMITS
 
-        if blueprint.tier != "chronic":
-            raise ValueError(f"{blueprint.patient_id}: CKD requires chronic tier.")
+    # Defensive: bands must sit within global limits (caught at module level too).
+    if min_age < global_min or max_age > global_max:
+        raise PatientGenerationError(
+            f"Age band ({min_age}–{max_age}) for tier='{tier}' "
+            f"exceeds AGE_LIMITS ({global_min}–{global_max})."
+        )
 
-        if "T2DM" not in conditions or "HTN" not in conditions:
-            raise ValueError(f"{blueprint.patient_id}: CKD requires T2DM and HTN.")
+    age_span = max_age - min_age + 1
+    age   = min_age + (index % age_span)
+    year  = _REFERENCE_YEAR - age
+    month = (index % 12) + 1
+    day   = ((index * 3) % 27) + 1   # 1–27; avoids month-end edge cases
+
+    return date(year, month, day).isoformat()
+
+
+# ---------------------------------------------------------------------------
+# Module-level band validation
+# Catches any future edit to _TIER_AGE_BANDS that violates AGE_LIMITS.
+# ---------------------------------------------------------------------------
+
+def _assert_age_bands_valid() -> None:
+    global_min, global_max = AGE_LIMITS
+    for tier, (lo, hi) in _TIER_AGE_BANDS.items():
+        assert lo >= global_min and hi <= global_max, (
+            f"_TIER_AGE_BANDS['{tier}'] = ({lo}, {hi}) violates "
+            f"AGE_LIMITS = {AGE_LIMITS}."
+        )
+
+
+_assert_age_bands_valid()
+
+
+# ---------------------------------------------------------------------------
+# Backward-compatible aliases
+# The old generate_all.py script may call generate_all_patients() or
+# generate_patient().  These thin wrappers preserve that contract.
+# ---------------------------------------------------------------------------
+
+def generate_all_patients(mode: str = DATASET_MODE_V17_LITE) -> list[PatientRecord]:
+    """Backward-compatible alias for generate_patients()."""
+    return generate_patients(mode)
+
+
+def generate_patient(
+    blueprint: PatientBlueprint,
+    index: int = 0,
+) -> PatientRecord:
+    """Backward-compatible alias for generate_patient_from_blueprint()."""
+    return generate_patient_from_blueprint(blueprint, index)

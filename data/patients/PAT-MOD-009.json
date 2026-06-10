@@ -2,378 +2,284 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-009",
   "demographics": {
-    "name": "Amr Salah",
-    "date_of_birth": "1982-04-22",
+    "name": "Tamer Yasser",
+    "date_of_birth": "1979-10-01",
     "sex": "male"
   },
   "conditions": [
-    "IDA"
+    "T2DM",
+    "GERD"
   ],
   "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-MOD-009-001",
-      "visit_date": "2023-09-10",
+      "visit_date": "2023-02-17",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 123,
-        "bp_diastolic": 78,
-        "heart_rate": 82,
-        "weight_kg": 72.1,
-        "bmi": 22.6
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 10.1,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 14,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 41-year-old male patient seen for a initial visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as the first encounter type in the visit record.",
-        "objective": "The visit measurements include blood pressure 123/78 mmHg, heart rate 82 bpm, weight 72.1 kg, and BMI 22.6. Laboratory entries are recorded as: Hemoglobin 10.1 g/dL (LOW); Ferritin 14 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-001.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "The plan section records the active medication entries as documented: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. This is the first recorded visit in the available record."
-      },
-      "linked_documents": [
-        "DOC-MOD-009-001"
-      ],
-      "prior_visit_id": null
-    },
-    {
-      "visit_id": "VST-MOD-009-002",
-      "visit_date": "2023-11-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 122,
-        "bp_diastolic": 77,
-        "heart_rate": 81,
-        "weight_kg": 71.7,
-        "bmi": 22.5
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 10.5,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 19,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 41-year-old male patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 122/77 mmHg, heart rate 81 bpm, weight 71.7 kg, and BMI 22.5. Laboratory results: Hemoglobin 10.5 g/dL (LOW); Ferritin 19 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-002.",
-        "assessment": "The visit diagnosis list records IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-009-001. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-MOD-009-002"
-      ],
-      "prior_visit_id": "VST-MOD-009-001"
-    },
-    {
-      "visit_id": "VST-MOD-009-003",
-      "visit_date": "2024-01-08",
-      "visit_type": "follow_up",
       "attending_physician": "Dr. Laila Mostafa",
       "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 121,
-        "bp_diastolic": 76,
-        "heart_rate": 80,
-        "weight_kg": 71.3,
-        "bmi": 22.4
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 11.0,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 24,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "A 41-year-old male patient is recorded for a follow_up visit. The documented condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-009-002.",
-        "objective": "Objective data from the encounter records blood pressure 121/76 mmHg, heart rate 80 bpm, weight 71.3 kg, and BMI 22.4. Laboratory results: Hemoglobin 11.0 g/dL (LOW); Ferritin 24 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-003.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
-        "plan": "The plan section records the active medication entries as documented: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-009-002."
-      },
-      "linked_documents": [
-        "DOC-MOD-009-003"
-      ],
-      "prior_visit_id": "VST-MOD-009-002"
-    },
-    {
-      "visit_id": "VST-MOD-009-004",
-      "visit_date": "2024-03-08",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "IDA"
+        "T2DM",
+        "GERD"
       ],
       "vitals": {
         "bp_systolic": 120,
-        "bp_diastolic": 75,
-        "heart_rate": 79,
-        "weight_kg": 70.9,
-        "bmi": 22.2
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 82.0,
+        "bmi": 30.3
       },
       "labs": [
         {
-          "lab_type": "Hemoglobin",
-          "value": 11.4,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
+          "lab_type": "HbA1c",
+          "value": 8.1,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
         },
         {
-          "lab_type": "Ferritin",
-          "value": 29,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "LOW"
+          "lab_type": "FBG",
+          "value": 165,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
         {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": null
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 41-year-old male patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective findings record blood pressure 120/75 mmHg, heart rate 79 bpm, weight 70.9 kg, and BMI 22.2. Laboratory results for this visit: Hemoglobin 11.4 g/dL (LOW); Ferritin 29 ng/mL (LOW). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-004.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "The documented plan includes the following medication entries: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-009-003. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 43-year-old male; recorded conditions are T2DM, GERD. The primary concern today is the documented visit role is initial diagnosis. initial diagnosis was documented. baseline management plan established. Initial type 2 diabetes and GERD diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "objective": "The visit objective data support the charted problem context: 120/78 mmHg; heart rate 76 bpm; weight 82.0 kg; BMI 30.3. Lab entries: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH). Documented laboratory entries include HbA1c 8.1 % flagged HIGH and FBG 165 mg/dL flagged HIGH. Linked documents: none.",
+        "assessment": "Initial type 2 diabetes and GERD diagnosis was documented and baseline management plan established with Metformin. The current clinical focus is summarized from structured facts only. Diagnoses: T2DM, GERD. The visit diagnosis field documents type 2 diabetes and gastroesophageal reflux disease for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Metformin 500 mg twice_daily via oral (status started; trajectory simple_start_continue); Omeprazole 20 mg once_daily via oral (status started; trajectory simple_start_continue). The medication list includes documented entries related to type 2 diabetes medication documentation and gastroesophageal reflux disease medication documentation. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-009-004"
-      ],
-      "prior_visit_id": "VST-MOD-009-003"
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "irregular_followup",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial type 2 diabetes and GERD diagnosis was documented and baseline management plan established with Metformin."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_condition_control",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "gerd_symptom_control",
+          "hba1c_trend"
+        ]
+      }
     },
     {
-      "visit_id": "VST-MOD-009-005",
-      "visit_date": "2024-06-06",
+      "visit_id": "VST-MOD-009-002",
+      "visit_date": "2023-04-03",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Hany Fawzy",
+      "diagnoses": [
+        "T2DM",
+        "GERD"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 81.3,
+        "bmi": 30.0
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 7.8,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 154,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
+        },
+        {
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
+        }
+      ],
+      "soap_note": {
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 43-year-old male; recorded conditions are T2DM, GERD. The primary concern today is the documented visit role is routine follow up. routine follow-up visit. ongoing medication review conducted. Routine follow-up for type 2 diabetes and GERD with Metformin continued and condition reviewed. Clinical event type: medication continued. Event: Routine follow-up visit.",
+        "objective": "The visit objective data support the charted problem context: 120/78 mmHg; heart rate 76 bpm; weight 81.3 kg; BMI 30.0. Lab entries: HbA1c 7.8 % (HIGH); FBG 154 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.8 % flagged HIGH and FBG 154 mg/dL flagged HIGH. Linked documents: none.",
+        "assessment": "Routine follow-up for type 2 diabetes and GERD with Metformin continued and condition reviewed. The current clinical focus is summarized from structured facts only. Diagnoses: T2DM, GERD. The visit diagnosis field documents type 2 diabetes and gastroesophageal reflux disease for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "Medication context for the documented issue is recorded as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Omeprazole 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Omeprazole; status continued; trajectory simple start continue. Retrieval focus includes patient-level conditions: type 2 diabetes and gastroesophageal reflux disease; visit diagnoses: type 2 diabetes and gastroesophageal reflux disease; laboratory entries: fbg and hba1c; medication entries: metformin and omeprazole; visit type: follow_up; visit role: routine_follow_up; timeline pattern: irregular_followup; semantic focus: dual_condition_control; clinical event type: medication_continued; retrieval tags: diabetes_medication, gerd_symptom_control, and hba1c_trend; timeline link: prior visit documented. No allergy registry entries are documented for this patient."
+      },
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-009-001",
+      "visit_role": "routine_follow_up",
+      "timeline_pattern": "irregular_followup",
+      "timeline_gap_days": 45,
+      "clinical_event": {
+        "event_type": "medication_continued",
+        "event_label": "Routine follow-up visit",
+        "event_summary": "Routine follow-up for type 2 diabetes and GERD with Metformin continued and condition reviewed."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_condition_control",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "gerd_symptom_control",
+          "hba1c_trend"
+        ]
+      },
+      "safe_distractors": [
+        {
+          "type": "poor_sleep",
+          "text": "Patient reported reduced sleep quality during a busy period.",
+          "clinical_status": "context_only"
+        }
+      ]
+    },
+    {
+      "visit_id": "VST-MOD-009-003",
+      "visit_date": "2023-08-06",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Mona Kareem",
       "diagnoses": [
-        "IDA"
+        "T2DM",
+        "GERD"
       ],
       "vitals": {
-        "bp_systolic": 119,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 70.5,
-        "bmi": 22.1
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 80.6,
+        "bmi": 29.8
       },
       "labs": [
         {
-          "lab_type": "Hemoglobin",
-          "value": 11.9,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "LOW"
+          "lab_type": "HbA1c",
+          "value": 7.4,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
         },
         {
-          "lab_type": "Ferritin",
-          "value": 34,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
+          "lab_type": "FBG",
+          "value": 140,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
         {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 42-year-old male patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 119/74 mmHg, heart rate 78 bpm, weight 70.5 kg, and BMI 22.1. Laboratory results: Hemoglobin 11.9 g/dL (LOW); Ferritin 34 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-005.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The patient-level condition field documents iron-deficiency anemia.",
-        "plan": "The visit plan lists the medication entries documented in the record: Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-009-004. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-009-004."
-      },
-      "linked_documents": [
-        "DOC-MOD-009-005"
-      ],
-      "prior_visit_id": "VST-MOD-009-004"
-    },
-    {
-      "visit_id": "VST-MOD-009-006",
-      "visit_date": "2024-09-04",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 70.1,
-        "bmi": 22.0
-      },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 12.3,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "NORMAL"
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "lab_type": "Ferritin",
-          "value": 39,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Ferrous sulfate",
-          "medication_class": "Iron supplement",
-          "dose": "200 mg",
-          "frequency": "twice_daily",
+          "medication_name": "Omeprazole",
+          "medication_class": "PPI",
+          "dose": "20 mg",
+          "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-09-10",
-          "stop_date": "2024-09-04"
+          "start_date": "2023-02-17",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 42-year-old male patient is recorded for a follow_up visit. The documented condition list includes IDA. The patient-level condition field documents iron-deficiency anemia. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-009-005.",
-        "objective": "The visit measurements include blood pressure 118/74 mmHg, heart rate 78 bpm, weight 70.1 kg, and BMI 22.0. Laboratory entries are recorded as: Hemoglobin 12.3 g/dL (NORMAL); Ferritin 39 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-006.",
-        "assessment": "Diagnoses documented for this visit are summarized as IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. Retrieval focus includes patient-level conditions: iron-deficiency anemia; visit diagnoses: iron-deficiency anemia; laboratory entries: ferritin and hemoglobin; medication entries: ferrous sulfate; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "Medication details in the plan are recorded as Ferrous sulfate 200 mg twice_daily via oral. The medication list includes documented entries related to iron-deficiency anemia medication documentation. Prior visit reference is VST-MOD-009-005."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 43-year-old male; recorded conditions are T2DM, GERD. The primary concern today is the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes and GERD was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The visit objective data support the charted problem context: 120/78 mmHg; heart rate 76 bpm; weight 80.6 kg; BMI 29.8. Lab entries: HbA1c 7.4 % (HIGH); FBG 140 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.4 % flagged HIGH and FBG 140 mg/dL flagged HIGH. Linked documents: none.",
+        "assessment": "Laboratory trend for type 2 diabetes and GERD was reviewed at scheduled follow-up; Metformin therapy continued. The current clinical focus is summarized from structured facts only. Diagnoses: T2DM, GERD. The visit diagnosis field documents type 2 diabetes and gastroesophageal reflux disease for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Omeprazole 20 mg once_daily via oral (status continued; trajectory simple_start_continue). The medication list includes documented entries related to type 2 diabetes medication documentation and gastroesophageal reflux disease medication documentation. Prior visit reference is VST-MOD-009-002."
       },
-      "linked_documents": [
-        "DOC-MOD-009-006"
-      ],
-      "prior_visit_id": "VST-MOD-009-005"
-    },
-    {
-      "visit_id": "VST-MOD-009-007",
-      "visit_date": "2024-12-03",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "IDA"
-      ],
-      "vitals": {
-        "bp_systolic": 118,
-        "bp_diastolic": 74,
-        "heart_rate": 78,
-        "weight_kg": 69.7,
-        "bmi": 21.9
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-009-002",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "irregular_followup",
+      "timeline_gap_days": 170,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes and GERD was reviewed at scheduled follow-up; Metformin therapy continued."
       },
-      "labs": [
-        {
-          "lab_type": "Hemoglobin",
-          "value": 12.6,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "NORMAL"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 44,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [],
-      "soap_note": {
-        "subjective": "The chart documents a 42-year-old male patient seen for a follow_up visit. The condition list records IDA. The patient-level condition field documents iron-deficiency anemia. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective data from the encounter records blood pressure 118/74 mmHg, heart rate 78 bpm, weight 69.7 kg, and BMI 21.9. Laboratory results: Hemoglobin 12.6 g/dL (NORMAL); Ferritin 44 ng/mL (NORMAL). The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation. Linked document references: DOC-MOD-009-007.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: IDA. The visit diagnosis field documents iron-deficiency anemia for this encounter. The visit contains documented monitoring context for iron-deficiency anemia blood and iron-related laboratory documentation.",
-        "plan": "Medication details in the plan are recorded as no active whitelisted medications recorded. No active medication entries are documented for this visit. Prior visit reference is VST-MOD-009-006."
-      },
-      "linked_documents": [
-        "DOC-MOD-009-007"
-      ],
-      "prior_visit_id": "VST-MOD-009-006"
+      "retrieval_context": {
+        "semantic_focus": "dual_condition_control",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "gerd_symptom_control",
+          "hba1c_trend"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "t2dm_gerd_dual_condition_irregular_management",
+    "timeline_pattern": "irregular_followup",
+    "semantic_focus": "dual_condition_control",
+    "retrieval_signature": "T2DM-GERD|Metformin-Omeprazole|dual_condition_control|irregular_followup|HbA1c-GI",
+    "retrieval_intent_tags": [
+      "diabetes_medication",
+      "gerd_symptom_control",
+      "hba1c_trend"
+    ],
+    "soap_style": "problem_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "lab_trend_query",
+      "symptom_control_query"
+    ]
   }
 }

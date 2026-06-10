@@ -1,0 +1,145 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-CHR-001",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-001",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as an initial encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-001",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-001",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='This is the first recorded visit in the available record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-002",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-002",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-ALLERGY-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-002",
+      "section": null,
+      "message": "Allergen 'Cephalexin' appears near medication or treatment context."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-003",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-003",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-003",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='Prior visit reference is VST-CHR-001-002.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-004",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-004",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-004",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type lab improvement; event label Glycemic trend partially improved; event summary: Follow-up documented partial HbA1c and FBG improvement after medication escalation..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-004",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='Prior visit reference is VST-CHR-001-003.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-005",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-005",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-005",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type post-discharge review event; event label Medication reconciliation reviewed; event summary: Final chronic follow-up reconciled Metformin, Glibenclamide, and Amlodipine therapy..'."
+    },
+    {
+      "rule_id": "SOAP-ALLERGY-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-001",
+      "visit_id": "VST-CHR-001-005",
+      "section": null,
+      "message": "Allergen 'Cephalexin' appears near medication or treatment context."
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "patient_id": "PAT-CHR-002",
   "demographics": {
     "name": "Yasmin Hany",
-    "date_of_birth": "1974-07-11",
+    "date_of_birth": "1957-12-07",
     "sex": "female"
   },
   "conditions": [
@@ -13,30 +13,120 @@
   ],
   "allergy_registry": [
     {
-      "allergen": "Sulfa",
-      "reaction": "itching",
+      "allergen": "Penicillin",
+      "reaction": "skin rash",
       "severity": "moderate",
-      "recorded_date": "2021-02-15",
+      "recorded_date": "2023-02-10",
       "source_visit_id": "VST-CHR-002-001"
     }
   ],
   "visits": [
     {
       "visit_id": "VST-CHR-002-001",
-      "visit_date": "2021-02-15",
+      "visit_date": "2023-02-10",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
         "T2DM",
         "HTN",
         "CKD"
       ],
       "vitals": {
-        "bp_systolic": 146,
-        "bp_diastolic": 92,
-        "heart_rate": 84,
-        "weight_kg": 74.2,
-        "bmi": 26.4
+        "bp_systolic": 154,
+        "bp_diastolic": 96,
+        "heart_rate": 76,
+        "weight_kg": 82.0,
+        "bmi": 30.3
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 8.4,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 172,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "Creatinine",
+          "value": 1.4,
+          "unit": "mg/dL",
+          "reference_range": "0.6-1.2 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
+        },
+        {
+          "medication_name": "Losartan",
+          "medication_class": "ARB",
+          "dose": "50 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
+        }
+      ],
+      "soap_note": {
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. This encounter is described as part of the longitudinal record. The patient is 65 years old and female; conditions are T2DM, HTN, CKD. This encounter has no prior_visit_id and is the first documented visit in the available timeline. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 0. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: initial; visit role: initial_diagnosis; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: diagnosis_documented; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: first documented visit. Regarding the clinical course: Initial diagnosis was documented.",
+        "objective": "The longitudinal objective record for this encounter includes 154/96 mmHg, heart rate 76 bpm, weight 82.0 kg, and BMI 30.3. Labs: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Documented laboratory entries include HbA1c 8.4 % flagged HIGH, FBG 172 mg/dL flagged HIGH, and Creatinine 1.4 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, HTN, CKD. Initial type 2 diabetes, hypertension and chronic kidney disease diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented. Primary documented evidence: Documented laboratory entries include HbA1c 8.4 % flagged HIGH, FBG 172 mg/dL flagged HIGH, and Creatinine 1.4 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status started; trajectory simple start continue and Losartan; status started; trajectory simple start continue. Initial type 2 diabetes, hypertension and chronic kidney disease diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status started; trajectory simple_start_continue); Losartan 50 mg once_daily via oral (status started; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status started; trajectory simple start continue and Losartan; status started; trajectory simple start continue. This encounter has no prior_visit_id and is the first documented visit in the available timeline. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 0. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: initial; visit role: initial_diagnosis; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: diagnosis_documented; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: first documented visit."
+      },
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial type 2 diabetes, hypertension and chronic kidney disease diagnosis was documented and baseline management plan established with Metformin."
+      },
+      "retrieval_context": {
+        "semantic_focus": "ckd_monitoring",
+        "retrieval_intent_tags": [
+          "ckd_monitoring",
+          "creatinine_trend",
+          "hypertension_control",
+          "diabetes_medication"
+        ]
+      }
+    },
+    {
+      "visit_id": "VST-CHR-002-002",
+      "visit_date": "2023-05-11",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Laila Mostafa",
+      "diagnoses": [
+        "T2DM",
+        "HTN",
+        "CKD"
+      ],
+      "vitals": {
+        "bp_systolic": 149,
+        "bp_diastolic": 93,
+        "heart_rate": 76,
+        "weight_kg": 81.3,
+        "bmi": 30.0
       },
       "labs": [
         {
@@ -48,14 +138,14 @@
         },
         {
           "lab_type": "FBG",
-          "value": 165,
+          "value": 162,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
           "lab_type": "Creatinine",
-          "value": 1.4,
+          "value": 1.5,
           "unit": "mg/dL",
           "reference_range": "0.6-1.2 mg/dL",
           "flag": "HIGH"
@@ -68,35 +158,54 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Losartan",
+          "medication_class": "ARB",
+          "dose": "50 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 46-year-old female patient seen for a initial visit. The condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. This is documented as the first encounter type in the visit record.",
-        "objective": "The visit record lists blood pressure 146/92 mmHg, heart rate 84 bpm, weight 74.2 kg, and BMI 26.4. Documented lab results: HbA1c 8.1 % (HIGH); FBG 165 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-001.",
-        "assessment": "Recorded diagnoses for this encounter are summarized as T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. This is the first recorded visit in the available record. This encounter has no prior_visit_id and is the first documented visit in the available timeline."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-001. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 90. Compared with the previous visit, the documented visit role is CKD monitoring. CKD monitoring visit. renal function parameters reviewed. Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. Clinical event type: baseline labs reviewed. Event: CKD monitoring visit.",
+        "objective": "The longitudinal objective record for this encounter includes 149/93 mmHg, heart rate 76 bpm, weight 81.3 kg, and BMI 30.0. Labs: HbA1c 8.1 % (HIGH); FBG 162 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Documented laboratory entries include HbA1c 8.1 % flagged HIGH, FBG 162 mg/dL flagged HIGH, and Creatinine 1.5 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, HTN, CKD. Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. Clinical event type: baseline labs reviewed. Event: CKD monitoring visit. Primary documented evidence: Documented laboratory entries include HbA1c 8.1 % flagged HIGH, FBG 162 mg/dL flagged HIGH, and Creatinine 1.5 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. Clinical event type: baseline labs reviewed. Event: CKD monitoring visit.",
+        "plan": "Compared with prior record context, the plan lists only documented medication entries: Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Losartan 50 mg once_daily via oral (status continued; trajectory simple_start_continue). Prior visit reference is VST-CHR-002-001. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. The allergy registry documents Penicillin; reaction skin rash; severity moderate."
       },
-      "linked_documents": [
-        "DOC-CHR-002-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-002-001",
+      "visit_role": "ckd_monitoring",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 90,
+      "clinical_event": {
+        "event_type": "baseline_labs_reviewed",
+        "event_label": "CKD monitoring visit",
+        "event_summary": "Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "ckd_monitoring",
+        "retrieval_intent_tags": [
+          "ckd_monitoring",
+          "creatinine_trend",
+          "hypertension_control",
+          "diabetes_medication"
+        ]
+      }
     },
     {
-      "visit_id": "VST-CHR-002-002",
-      "visit_date": "2021-05-16",
+      "visit_id": "VST-CHR-002-003",
+      "visit_date": "2023-08-09",
       "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
+      "attending_physician": "Dr. Hany Fawzy",
       "diagnoses": [
         "T2DM",
         "HTN",
@@ -104,10 +213,10 @@
       ],
       "vitals": {
         "bp_systolic": 144,
-        "bp_diastolic": 91,
-        "heart_rate": 83,
-        "weight_kg": 73.5,
-        "bmi": 26.3
+        "bp_diastolic": 90,
+        "heart_rate": 76,
+        "weight_kg": 80.6,
+        "bmi": 29.8
       },
       "labs": [
         {
@@ -119,78 +228,7 @@
         },
         {
           "lab_type": "FBG",
-          "value": 156,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.5,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow_up encounter is recorded for a 46-year-old female patient. The charted condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-001.",
-        "objective": "For this encounter, recorded objective data includes blood pressure 144/91 mmHg, heart rate 83 bpm, weight 73.5 kg, and BMI 26.3. Laboratory results: HbA1c 7.8 % (HIGH); FBG 156 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-002.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-001. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-001."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-002"
-      ],
-      "prior_visit_id": "VST-CHR-002-001"
-    },
-    {
-      "visit_id": "VST-CHR-002-003",
-      "visit_date": "2021-08-14",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
-        "bp_systolic": 142,
-        "bp_diastolic": 90,
-        "heart_rate": 82,
-        "weight_kg": 72.8,
-        "bmi": 26.2
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.6,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 147,
+          "value": 150,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -210,113 +248,52 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Losartan",
+          "medication_class": "ARB",
+          "dose": "50 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The longitudinal chart includes a follow_up visit for a 47-year-old female patient. Documented conditions are T2DM, HTN, CKD. This is documented as a follow-up encounter in the visit record. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "objective": "The objective record for this visit includes blood pressure 142/90 mmHg, heart rate 82 bpm, weight 72.8 kg, and BMI 26.2. Laboratory values are recorded as: HbA1c 7.6 % (HIGH); FBG 147 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-003.",
-        "assessment": "The visit diagnosis summary includes T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "For this record entry, the plan documents medications as Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-002."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Compared with the previous visit, the documented visit role is CKD monitoring. CKD monitoring visit. renal function parameters reviewed. Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. Clinical event type: baseline labs reviewed. Event: CKD monitoring visit.",
+        "objective": "Objective evidence at this visit is recorded as 144/90 mmHg; heart rate 76 bpm; weight 80.6 kg; BMI 29.8. Labs: HbA1c 7.8 % (HIGH); FBG 150 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Primary documented evidence: Documented laboratory entries include HbA1c 7.8 % flagged HIGH, FBG 150 mg/dL flagged HIGH, and Creatinine 1.6 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. Clinical event type: baseline labs reviewed. Event: CKD monitoring visit.",
+        "assessment": "Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. The timeline-oriented assessment records only the visit diagnoses: T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: ckd_monitoring; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: baseline_labs_reviewed; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Losartan 50 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: ckd_monitoring; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: baseline_labs_reviewed; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented."
       },
-      "linked_documents": [
-        "DOC-CHR-002-003"
-      ],
-      "prior_visit_id": "VST-CHR-002-002"
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-002-002",
+      "visit_role": "ckd_monitoring",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "baseline_labs_reviewed",
+        "event_label": "CKD monitoring visit",
+        "event_summary": "Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "ckd_monitoring",
+        "retrieval_intent_tags": [
+          "ckd_monitoring",
+          "creatinine_trend",
+          "hypertension_control",
+          "diabetes_medication"
+        ]
+      }
     },
     {
       "visit_id": "VST-CHR-002-004",
-      "visit_date": "2021-11-12",
-      "visit_type": "hospitalization",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 93,
-        "heart_rate": 81,
-        "weight_kg": 72.1,
-        "bmi": 26.0
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.3,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 138,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.7,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow-up record section describes a 47-year-old female patient at a hospitalization visit. The documented condition list includes T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-003. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "objective": "The visit record lists blood pressure 148/93 mmHg, heart rate 81 bpm, weight 72.1 kg, and BMI 26.0. Documented lab results: HbA1c 7.3 % (HIGH); FBG 138 mg/dL (HIGH); Creatinine 1.7 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-004.",
-        "assessment": "The visit diagnosis summary includes T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: glibenclamide, lisinopril, and metformin; visit type: hospitalization; timeline link: prior visit documented.",
-        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-003. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-003."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-004"
-      ],
-      "prior_visit_id": "VST-CHR-002-003"
-    },
-    {
-      "visit_id": "VST-CHR-002-005",
-      "visit_date": "2022-02-10",
+      "visit_date": "2023-11-07",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Mona Kareem",
       "diagnoses": [
@@ -325,30 +302,30 @@
         "CKD"
       ],
       "vitals": {
-        "bp_systolic": 138,
-        "bp_diastolic": 88,
-        "heart_rate": 80,
-        "weight_kg": 71.4,
-        "bmi": 25.9
+        "bp_systolic": 139,
+        "bp_diastolic": 87,
+        "heart_rate": 76,
+        "weight_kg": 79.9,
+        "bmi": 29.5
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 7.1,
+          "value": 7.7,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 129,
+          "value": 145,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
           "lab_type": "Creatinine",
-          "value": 1.6,
+          "value": 1.5,
           "unit": "mg/dL",
           "reference_range": "0.6-1.2 mg/dL",
           "flag": "HIGH"
@@ -361,51 +338,52 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
+          "medication_name": "Losartan",
+          "medication_class": "ARB",
+          "dose": "50 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 47-year-old female patient seen for a follow_up visit. The condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Objective findings record blood pressure 138/88 mmHg, heart rate 80 bpm, weight 71.4 kg, and BMI 25.9. Laboratory results for this visit: HbA1c 7.1 % (HIGH); FBG 129 mg/dL (HIGH); Creatinine 1.6 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-005.",
-        "assessment": "For this longitudinal record entry, the visit diagnoses are documented as T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-004. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-004."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. This encounter is described as part of the longitudinal record. The patient is 65 years old and female; conditions are T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-003. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 270. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: ckd_monitoring; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: baseline_labs_reviewed; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented. Regarding the clinical course: Ckd monitoring visit. Renal function parameters reviewed.",
+        "objective": "The longitudinal objective record for this encounter includes 139/87 mmHg, heart rate 76 bpm, weight 79.9 kg, and BMI 29.5. Labs: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.7 % flagged HIGH, FBG 145 mg/dL flagged HIGH, and Creatinine 1.5 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation.",
+        "assessment": "Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued. The timeline-oriented assessment records only the visit diagnoses: T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-003. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 270. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: ckd_monitoring; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: baseline_labs_reviewed; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Losartan 50 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-003. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 270. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: ckd_monitoring; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: baseline_labs_reviewed; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented."
       },
-      "linked_documents": [
-        "DOC-CHR-002-005"
-      ],
-      "prior_visit_id": "VST-CHR-002-004"
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-002-003",
+      "visit_role": "ckd_monitoring",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 270,
+      "clinical_event": {
+        "event_type": "baseline_labs_reviewed",
+        "event_label": "CKD monitoring visit",
+        "event_summary": "Scheduled CKD monitoring visit completed; kidney function labs and type 2 diabetes, hypertension and chronic kidney disease control reviewed with Metformin continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "ckd_monitoring",
+        "retrieval_intent_tags": [
+          "ckd_monitoring",
+          "creatinine_trend",
+          "hypertension_control",
+          "diabetes_medication"
+        ]
+      }
     },
     {
-      "visit_id": "VST-CHR-002-006",
-      "visit_date": "2022-05-11",
+      "visit_id": "VST-CHR-002-005",
+      "visit_date": "2024-02-05",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Yasser Amin",
       "diagnoses": [
@@ -414,290 +392,23 @@
         "CKD"
       ],
       "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 87,
-        "heart_rate": 79,
-        "weight_kg": 70.7,
-        "bmi": 25.8
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.8,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 120,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.5,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "For this follow_up entry, the record identifies a 47-year-old female patient. The condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, glibenclamide, lisinopril, and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The visit record lists blood pressure 136/87 mmHg, heart rate 79 bpm, weight 70.7 kg, and BMI 25.8. Documented lab results: HbA1c 6.8 % (HIGH); FBG 120 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-006.",
-        "assessment": "Recorded diagnoses for this encounter are summarized as T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "plan": "The plan data records medication entries without changing their documented form: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-005. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, glibenclamide, lisinopril, and metformin; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-006"
-      ],
-      "prior_visit_id": "VST-CHR-002-005"
-    },
-    {
-      "visit_id": "VST-CHR-002-007",
-      "visit_date": "2022-08-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
         "bp_systolic": 134,
-        "bp_diastolic": 86,
-        "heart_rate": 79,
-        "weight_kg": 70.0,
-        "bmi": 25.7
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.6,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 111,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.5,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow-up record section describes a 48-year-old female patient at a follow_up visit. The documented condition list includes T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-006. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "objective": "Recorded vitals include blood pressure 134/86 mmHg, heart rate 79 bpm, weight 70.0 kg, and BMI 25.7. Laboratory results for the encounter: HbA1c 6.6 % (HIGH); FBG 111 mg/dL (HIGH); Creatinine 1.5 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-007.",
-        "assessment": "Recorded diagnoses for this encounter are summarized as T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-006. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-006."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-007"
-      ],
-      "prior_visit_id": "VST-CHR-002-006"
-    },
-    {
-      "visit_id": "VST-CHR-002-008",
-      "visit_date": "2022-11-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
-        "bp_systolic": 132,
-        "bp_diastolic": 85,
-        "heart_rate": 79,
-        "weight_kg": 69.3,
-        "bmi": 25.6
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.4,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 105,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.4,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "For this follow_up entry, the record identifies a 48-year-old female patient. The condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, glibenclamide, lisinopril, and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The objective record for this visit includes blood pressure 132/85 mmHg, heart rate 79 bpm, weight 69.3 kg, and BMI 25.6. Laboratory values are recorded as: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-008.",
-        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-007.",
-        "plan": "The care plan entry lists medication details as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-007. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-007."
-      },
-      "linked_documents": [
-        "DOC-CHR-002-008"
-      ],
-      "prior_visit_id": "VST-CHR-002-007"
-    },
-    {
-      "visit_id": "VST-CHR-002-009",
-      "visit_date": "2023-02-05",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "CKD"
-      ],
-      "vitals": {
-        "bp_systolic": 130,
         "bp_diastolic": 84,
-        "heart_rate": 79,
-        "weight_kg": 68.6,
-        "bmi": 25.4
+        "heart_rate": 76,
+        "weight_kg": 79.2,
+        "bmi": 29.3
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 6.4,
+          "value": 7.5,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 105,
+          "value": 140,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -717,50 +428,68 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
+          "medication_name": "Losartan",
+          "medication_class": "ARB",
+          "dose": "50 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-11-12",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-02-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-02-10",
-          "stop_date": null
+          "start_date": "2023-02-10",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 48-year-old female patient seen for a follow_up visit. The condition list records T2DM, HTN, CKD. The patient-level condition field documents type 2 diabetes, hypertension, and chronic kidney disease. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Recorded vitals include blood pressure 130/84 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 25.4. Laboratory results for the encounter: HbA1c 6.4 % (HIGH); FBG 105 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation. Linked document references: DOC-CHR-002-009.",
-        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, CKD. The visit diagnosis field documents type 2 diabetes, hypertension, and chronic kidney disease for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-008.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation and hypertension medication documentation. Prior visit reference is VST-CHR-002-008. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-008."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-004. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 360. Compared with the previous visit, the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes, hypertension and chronic kidney disease was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The longitudinal objective record for this encounter includes 134/84 mmHg, heart rate 76 bpm, weight 79.2 kg, and BMI 29.3. Labs: HbA1c 7.5 % (HIGH); FBG 140 mg/dL (HIGH); Creatinine 1.4 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.5 % flagged HIGH, FBG 140 mg/dL flagged HIGH, and Creatinine 1.4 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up, hypertension kidney-related laboratory documentation, and chronic kidney disease kidney-related laboratory documentation.",
+        "assessment": "Laboratory trend for type 2 diabetes, hypertension and chronic kidney disease was reviewed at scheduled follow-up; Metformin therapy continued. The timeline-oriented assessment records only the visit diagnoses: T2DM, HTN, CKD. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-004. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 360. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: lab_improvement; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Losartan 50 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Losartan; status continued; trajectory simple start continue. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-002-004. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 360. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and chronic kidney disease; visit diagnoses: type 2 diabetes, hypertension, and chronic kidney disease; laboratory entries: creatinine, fbg, and hba1c; medication entries: losartan and metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: ckd_monitoring; clinical event type: lab_improvement; retrieval tags: ckd_monitoring, creatinine_trend, hypertension_control, and diabetes_medication; timeline link: prior visit documented."
       },
-      "linked_documents": [
-        "DOC-CHR-002-009"
-      ],
-      "prior_visit_id": "VST-CHR-002-008"
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-002-004",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 360,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes, hypertension and chronic kidney disease was reviewed at scheduled follow-up; Metformin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "ckd_monitoring",
+        "retrieval_intent_tags": [
+          "ckd_monitoring",
+          "creatinine_trend",
+          "hypertension_control",
+          "diabetes_medication"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "chronic"
+    "tier": "chronic",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "t2dm_htn_ckd_creatinine_monitoring",
+    "timeline_pattern": "regular_quarterly",
+    "semantic_focus": "ckd_monitoring",
+    "retrieval_signature": "T2DM-HTN-CKD|Metformin-Losartan|ckd_monitoring|regular_quarterly|Creatinine-HbA1c",
+    "retrieval_intent_tags": [
+      "ckd_monitoring",
+      "creatinine_trend",
+      "hypertension_control",
+      "diabetes_medication"
+    ],
+    "soap_style": "timeline_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "lab_trend_query",
+      "timeline_query"
+    ]
   }
 }

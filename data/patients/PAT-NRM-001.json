@@ -3,96 +3,140 @@
   "patient_id": "PAT-NRM-001",
   "demographics": {
     "name": "Omar Samir",
-    "date_of_birth": "1993-04-06",
+    "date_of_birth": "2002-01-01",
     "sex": "male"
   },
-  "conditions": [],
+  "conditions": [
+    "Acute_URTI"
+  ],
   "allergy_registry": [],
   "visits": [
     {
       "visit_id": "VST-NRM-001-001",
-      "visit_date": "2024-01-05",
+      "visit_date": "2023-01-10",
       "visit_type": "initial",
       "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [],
+      "diagnoses": [
+        "Acute_URTI"
+      ],
       "vitals": {
-        "bp_systolic": 123,
-        "bp_diastolic": 79,
-        "heart_rate": 73,
-        "weight_kg": 75.1,
-        "bmi": 23.9
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 72.0,
+        "bmi": 27.4
       },
-      "labs": [
+      "labs": [],
+      "medications": [
         {
-          "lab_type": "Hemoglobin",
-          "value": 14.1,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "NORMAL"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 73,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
+          "medication_name": "Paracetamol",
+          "medication_class": "Analgesic/Antipyretic",
+          "dose": "500 mg",
+          "frequency": "as_needed",
+          "route": "oral",
+          "start_date": "2023-01-10",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
-      "medications": [],
       "soap_note": {
-        "subjective": "The chart documents a 30-year-old male patient seen for a initial visit. The condition list records no chronic conditions. The record does not list chronic conditions in the patient-level condition field. This is documented as the first encounter type in the visit record.",
-        "objective": "Recorded measurements include blood pressure 123/79 mmHg, heart rate 73 bpm, weight 75.1 kg, and BMI 23.9. The lab section records: Hemoglobin 14.1 g/dL (NORMAL); Ferritin 73 ng/mL (NORMAL). The visit includes laboratory entries documented in the objective data. Linked document references: DOC-NRM-001-001.",
-        "assessment": "The documented diagnosis summary for this encounter is: no chronic diagnosis listed. The visit diagnosis field does not list a chronic diagnosis for this encounter. This is documented as the first encounter type in the visit record.",
-        "plan": "The plan section records the active medication entries as documented: no active whitelisted medications recorded. No active medication entries are documented for this visit. This is the first recorded visit in the available record."
+        "subjective": "This encounter records the patient's clinical status. The chart records a 21-year-old male patient at a initial visit. Conditions: Acute_URTI. This encounter records the documented visit role is acute treatment started. acute treatment course initiated. short-course therapy commenced. Acute treatment with Paracetamol was started for acute upper respiratory tract infection at initial presentation. Clinical event type: medication started. Event: Acute treatment started.",
+        "objective": "Objective data are documented as 120/78 mmHg; heart rate 76 bpm; weight 72.0 kg; BMI 27.4. Labs: no lab results recorded. No laboratory entries are documented for this visit. Linked documents: none.",
+        "assessment": "Assessment is limited to diagnoses documented for this visit: Acute_URTI. The visit diagnosis field documents acute upper respiratory tract infection for this encounter. Acute treatment with Paracetamol was started for acute upper respiratory tract infection at initial presentation. Clinical event type: medication started. Event: Acute treatment started.",
+        "plan": "Plan data list medication entries as documented: Paracetamol 500 mg as_needed via oral (status started; trajectory simple_start_continue). The medication list includes documented entries related to acute upper respiratory tract infection medication documentation. This is the first recorded visit in the available record. No allergy registry entries are documented for this patient."
       },
-      "linked_documents": [
-        "DOC-NRM-001-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "acute_treatment_started",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "medication_started",
+        "event_label": "Acute treatment started",
+        "event_summary": "Acute treatment with Paracetamol was started for acute upper respiratory tract infection at initial presentation."
+      },
+      "retrieval_context": {
+        "semantic_focus": "recovery",
+        "retrieval_intent_tags": [
+          "medication_query",
+          "acute_recovery",
+          "symptom_control_query"
+        ]
+      }
     },
     {
       "visit_id": "VST-NRM-001-002",
-      "visit_date": "2024-01-12",
+      "visit_date": "2023-05-10",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [],
+      "diagnoses": [
+        "Acute_URTI"
+      ],
       "vitals": {
-        "bp_systolic": 122,
+        "bp_systolic": 120,
         "bp_diastolic": 78,
-        "heart_rate": 72,
-        "weight_kg": 75.1,
-        "bmi": 23.7
+        "heart_rate": 76,
+        "weight_kg": 72.0,
+        "bmi": 27.4
       },
-      "labs": [
+      "labs": [],
+      "medications": [
         {
-          "lab_type": "Hemoglobin",
-          "value": 14.1,
-          "unit": "g/dL",
-          "reference_range": "12.0-16.0 g/dL",
-          "flag": "NORMAL"
-        },
-        {
-          "lab_type": "Ferritin",
-          "value": 74,
-          "unit": "ng/mL",
-          "reference_range": "30-300 ng/mL",
-          "flag": "NORMAL"
+          "medication_name": "Paracetamol",
+          "medication_class": "Analgesic/Antipyretic",
+          "dose": "500 mg",
+          "frequency": "as_needed",
+          "route": "oral",
+          "start_date": "2023-01-10",
+          "stop_date": "2023-05-10",
+          "medication_status": "completed",
+          "trajectory_event": "course_completed",
+          "reason": "Paracetamol short course was documented as completed at follow-up."
         }
       ],
-      "medications": [],
       "soap_note": {
-        "subjective": "This visit note concerns a 30-year-old male patient presenting for a follow_up encounter. The recorded condition list includes no chronic conditions. This is documented as a follow-up encounter in the visit record. The record does not list chronic conditions in the patient-level condition field.",
-        "objective": "Objective findings record blood pressure 122/78 mmHg, heart rate 72 bpm, weight 75.1 kg, and BMI 23.7. Laboratory results for this visit: Hemoglobin 14.1 g/dL (NORMAL); Ferritin 74 ng/mL (NORMAL). The visit includes laboratory entries documented in the objective data. Linked document references: DOC-NRM-001-002.",
-        "assessment": "The assessment entry lists the visit diagnoses as no chronic diagnosis listed. The visit diagnosis field does not list a chronic diagnosis for this encounter. Retrieval focus includes laboratory entries: ferritin and hemoglobin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The plan section records the active medication entries as documented: no active whitelisted medications recorded. No active medication entries are documented for this visit. Prior visit reference is VST-NRM-001-001."
+        "subjective": "This encounter records the patient's clinical status. The chart records a 21-year-old male patient at a follow_up visit. Conditions: Acute_URTI. This encounter records the documented visit role is recovery confirmed. recovery confirmed at this visit. resolution of acute episode documented. Recovery from acute upper respiratory tract infection was confirmed; Paracetamol course completed and no further follow-up required at this time. Clinical event type: recovery confirmed. Event: Recovery confirmed.",
+        "objective": "Objective data are documented as 120/78 mmHg; heart rate 76 bpm; weight 72.0 kg; BMI 27.4. Labs: no lab results recorded. No laboratory entries are documented for this visit. Linked documents: none.",
+        "assessment": "Assessment is limited to diagnoses documented for this visit: Acute_URTI. The visit diagnosis field documents acute upper respiratory tract infection for this encounter. Recovery from acute upper respiratory tract infection was confirmed; Paracetamol course completed and no further follow-up required at this time. Clinical event type: recovery confirmed. Event: Recovery confirmed.",
+        "plan": "Plan data list medication entries as documented: Paracetamol 500 mg as_needed via oral (status completed; trajectory course_completed; reason Paracetamol short course was documented as completed at follow-up.). The medication list includes documented entries related to acute upper respiratory tract infection medication documentation. Prior visit reference is VST-NRM-001-001. No allergy registry entries are documented for this patient."
       },
-      "linked_documents": [
-        "DOC-NRM-001-002"
-      ],
-      "prior_visit_id": "VST-NRM-001-001"
+      "linked_documents": [],
+      "prior_visit_id": "VST-NRM-001-001",
+      "visit_role": "recovery_confirmed",
+      "timeline_pattern": "delayed_followup",
+      "timeline_gap_days": 120,
+      "clinical_event": {
+        "event_type": "recovery_confirmed",
+        "event_label": "Recovery confirmed",
+        "event_summary": "Recovery from acute upper respiratory tract infection was confirmed; Paracetamol course completed and no further follow-up required at this time."
+      },
+      "retrieval_context": {
+        "semantic_focus": "recovery",
+        "retrieval_intent_tags": [
+          "medication_query",
+          "acute_recovery",
+          "symptom_control_query"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "normal"
+    "tier": "normal",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "acute_urti_recovery",
+    "timeline_pattern": "delayed_followup",
+    "semantic_focus": "recovery",
+    "retrieval_signature": "Acute_URTI|Paracetamol|recovery|delayed_followup|acute",
+    "retrieval_intent_tags": [
+      "medication_query",
+      "acute_recovery",
+      "symptom_control_query"
+    ],
+    "soap_style": "concise",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query"
+    ]
   }
 }

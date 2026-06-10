@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "./clinical-rag-env/bin/python3",
+    "openai.baseUrl": "https://agentrouter.org/v1",
+    "openai.apiKey": "sk-gb8hx9xL8tfSZjV5ZgwXCh9Vp25MvQyBf3T4KxYsEwvy8zPc",
+    "openai.model": "model-basic"
+}

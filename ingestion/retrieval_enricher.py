@@ -1,660 +1,614 @@
 """
 ingestion/retrieval_enricher.py
 
-Deterministic Retrieval Enrichment Layer.
+Deterministic Retrieval Enrichment Layer — Step 12.
 
-This module builds retrieval-oriented text from documented structured facts.
-It is intentionally deterministic and does not call an LLM, mutate patient
-records, perform chunking, build metadata, create embeddings, or write to
-ChromaDB.
+Builds retrieval-oriented text from documented structured patient facts.
+This module is intentionally deterministic and does NOT:
+  - call any LLM or external API
+  - mutate patient JSON
+  - build embeddings or write to ChromaDB
+  - invent medical facts, diagnoses, lab values, or medications
+  - exceed three sentences per enrichment output
 
-The generated retrieval text is retrieval support only. Structured patient
-JSON and generated SOAP notes remain the source of truth.
+Source truth remains: validated patient JSON + deterministic SOAP notes.
+Enrichment text is retrieval support only.
 """
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping
+import re
+from collections.abc import Mapping
 from typing import Any
 
 from config.constants import (
-    CONDITIONS,
-    LAB_TYPES,
+    CORE_SOURCE_TYPES,
+    LAB_FOCUS_BY_CONDITION,
     MEDICATION_NAMES,
-    MEDICATION_WHITELIST,
-    SOURCE_TYPES,
 )
+from config.patient_blueprints import BLUEPRINT_BY_ID, PatientBlueprint
 
 
-CONDITION_LAB_CONTEXT: dict[str, tuple[str, ...]] = {
-    "T2DM": ("HbA1c", "FBG"),
-    "HTN": ("Creatinine",),
-    "CKD": ("Creatinine",),
-    "IDA": ("Hemoglobin", "Ferritin"),
+# ---------------------------------------------------------------------------
+# Custom exception
+# ---------------------------------------------------------------------------
+
+class RetrievalEnrichmentError(ValueError):
+    """Raised when build_retrieval_text is called with invalid arguments."""
+
+
+# ---------------------------------------------------------------------------
+# Visit-role vocabulary — mirrors soap_semantics.VISIT_ROLE_VOCABULARY.
+# Reproduced here so the enrichment layer has no runtime dependency on the
+# SOAP generation layer.  Must stay in sync with soap_semantics.py.
+# ---------------------------------------------------------------------------
+
+_VISIT_ROLE_PHRASES: dict[str, tuple[str, ...]] = {
+    "initial_diagnosis": (
+        "initial diagnosis was documented",
+        "baseline management plan established",
+    ),
+    "baseline_assessment": (
+        "baseline assessment conducted",
+        "initial laboratory and clinical data reviewed",
+    ),
+    "routine_follow_up": (
+        "routine follow-up visit",
+        "ongoing medication review conducted",
+    ),
+    "partial_adherence": (
+        "reported partial adherence",
+        "missed doses noted",
+        "adherence counselling provided",
+    ),
+    "poor_adherence": (
+        "documented poor medication adherence",
+        "patient reported inconsistent medication use",
+    ),
+    "lab_trend_review": (
+        "laboratory trend reviewed",
+        "results compared with prior documented values",
+    ),
+    "medication_started": (
+        "new medication initiated",
+        "treatment commenced at this visit",
+    ),
+    "medication_continued": (
+        "current medication regimen continued",
+        "no changes to prescribed therapy",
+    ),
+    "dose_adjustment": (
+        "dose adjustment documented",
+        "medication regimen modified at this visit",
+    ),
+    "second_medication_added": (
+        "second medication added to regimen",
+        "combination therapy initiated",
+    ),
+    "acute_treatment_started": (
+        "acute treatment course initiated",
+        "short-course therapy commenced",
+    ),
+    "course_completed": (
+        "treatment course completed",
+        "short-course therapy concluded at this visit",
+    ),
+    "symptom_flare": (
+        "symptom flare documented",
+        "exacerbation of existing condition noted",
+    ),
+    "symptom_control_review": (
+        "symptom control reviewed",
+        "clinical response to therapy assessed",
+    ),
+    "emergency_exacerbation": (
+        "emergency presentation documented",
+        "acute exacerbation requiring urgent management",
+    ),
+    "hospitalization": (
+        "inpatient hospitalization documented",
+        "hospital admission recorded for this encounter",
+    ),
+    "post_discharge_stabilization": (
+        "following recent hospitalization",
+        "post-discharge review conducted",
+        "discharge medications reviewed",
+    ),
+    "ckd_monitoring": (
+        "CKD monitoring visit",
+        "renal function parameters reviewed",
+        "kidney function test results reviewed at this visit",
+    ),
+    "medication_reconciliation": (
+        "medication reconciliation performed",
+        "post-discharge medication list verified",
+    ),
+    "recovery_confirmed": (
+        "recovery confirmed at this visit",
+        "resolution of acute episode documented",
+    ),
 }
 
-CONDITION_LAB_RETRIEVAL_LABELS: dict[str, str] = {
+# Condition → human-readable retrieval label
+_CONDITION_LABELS: dict[str, str] = {
+    "T2DM": "type 2 diabetes",
+    "HTN": "hypertension",
+    "CKD": "chronic kidney disease",
+    "IDA": "iron deficiency anemia",
+    "Dyslipidemia": "dyslipidemia",
+    "Asthma": "asthma",
+    "GERD": "gastroesophageal reflux disease",
+    "Allergic_Rhinitis": "allergic rhinitis",
+    "UTI": "urinary tract infection",
+    "Acute_URTI": "acute upper respiratory infection",
+}
+
+# Condition → lab semantic label (matches LAB_FOCUS_BY_CONDITION)
+_LAB_CONDITION_RETRIEVAL_LABELS: dict[str, str] = {
     "T2DM": "diabetes-related",
     "HTN": "hypertension-related",
     "CKD": "CKD-related",
     "IDA": "anemia-related",
+    "Dyslipidemia": "dyslipidaemia-related",
+}
+
+# medication_status / trajectory_event → query-aligned status phrase
+_MED_STATUS_PHRASE: dict[str, str] = {
+    "started": "first prescribed at this visit",
+    "added": "newly added at this visit",
+    "completed": "course completed at this visit",
+}
+
+_MED_TRAJECTORY_PHRASE: dict[str, str] = {
+    "adherence_interruption": "missed doses documented",
+    "post_discharge_reconciliation": "reviewed during post-discharge reconciliation",
+    "course_completed": "course completed at this visit",
+    "second_medication_added": "newly added at this visit",
 }
 
 
+# ---------------------------------------------------------------------------
+# Public API
+# ---------------------------------------------------------------------------
+
 def build_retrieval_text(
-    patient: dict[str, Any],
-    visit: dict[str, Any] | None = None,
-    source_type: str = "doctor_note",
+    patient: dict,
+    visit: dict | None,
+    source_type: str,
 ) -> str:
     """
     Build deterministic retrieval-oriented text for one supported source type.
 
     Args:
-        patient: Full patient JSON dictionary.
-        visit: One visit dictionary for visit-level source types.
-            Required for doctor_note, lab_result, and prescription.
-            Not required for allergy.
-        source_type: One value from config.constants.SOURCE_TYPES:
-            doctor_note, lab_result, prescription, allergy.
+        patient:     Full patient JSON dictionary.
+        visit:       Visit dictionary. Required for doctor_note, lab_result,
+                     and prescription. Ignored for allergy.
+        source_type: One of CORE_SOURCE_TYPES.
 
     Returns:
-        Retrieval support text derived only from documented structured facts.
+        Retrieval support text as a plain string (max three sentences).
 
     Raises:
-        ValueError:
-            If source_type is not supported.
-            If source_type is not allergy and visit is None.
+        RetrievalEnrichmentError: Invalid source_type or missing visit.
     """
-    if source_type not in SOURCE_TYPES:
-        raise ValueError(
+    if source_type not in CORE_SOURCE_TYPES:
+        raise RetrievalEnrichmentError(
             f"Unsupported source_type {source_type!r}. "
-            f"Expected one of: {', '.join(SOURCE_TYPES)}"
+            f"Expected one of: {', '.join(CORE_SOURCE_TYPES)}"
         )
 
     if source_type == "allergy":
-        return build_allergy_retrieval_text(patient)
+        return _build_allergy_enrichment(patient)
 
     if visit is None:
-        raise ValueError(
-            f"visit is required when source_type={source_type!r}. "
+        raise RetrievalEnrichmentError(
+            f"source_type={source_type!r} requires a visit dictionary. "
             "Only source_type='allergy' supports visit=None."
         )
 
     if source_type == "doctor_note":
-        return build_doctor_note_retrieval_text(patient, visit)
+        return _build_doctor_note_enrichment(patient, visit)
 
     if source_type == "lab_result":
-        return build_lab_retrieval_text(patient, visit)
+        return _build_lab_result_enrichment(patient, visit)
 
-    if source_type == "prescription":
-        return build_prescription_retrieval_text(patient, visit)
-
-    raise AssertionError("Unreachable source_type routing branch")
+    # prescription
+    return _build_prescription_enrichment(patient, visit)
 
 
-def build_doctor_note_retrieval_text(
-    patient: dict[str, Any],
-    visit: dict[str, Any],
-) -> str:
+def build_all_retrieval_texts(
+    patient: dict,
+    blueprint: PatientBlueprint | None = None,
+) -> dict[str, list[str]]:
     """
-    Build retrieval text for doctor_note chunks.
+    Build all retrieval enrichment texts for a patient.
 
-    The output includes documented patient, visit, condition, diagnosis,
-    vital-sign, lab, medication, and prior-visit context without adding
-    medical interpretation.
+    Returns:
+        Dict mapping source_type → list of enrichment strings.
+        Visit-level types have one entry per visit.
+        lab_result only includes visits that have documented labs.
+        allergy has exactly one entry per patient.
     """
-    patient_id = _safe_text(patient.get("patient_id"))
-    visit_id = _safe_text(visit.get("visit_id"))
-    visit_date = _safe_text(visit.get("visit_date"))
-    visit_type = _safe_text(visit.get("visit_type"))
-    tier = _safe_text(_metadata_value(patient, "tier"))
+    result: dict[str, list[str]] = {
+        "doctor_note": [],
+        "lab_result": [],
+        "prescription": [],
+        "allergy": [],
+    }
 
-    patient_conditions = _documented_patient_conditions(patient)
-    visit_diagnoses = _documented_visit_diagnoses(visit)
-    lab_names = _lab_type_names(_dict_list(visit.get("labs")))
-    medication_names = _medication_names(_dict_list(visit.get("medications")))
-    prior_visit_id = _safe_text(visit.get("prior_visit_id"))
-
-    sentences: list[str] = []
-
-    opening_parts = []
-    if visit_type:
-        opening_parts.append(f"{visit_type} doctor-note retrieval context")
-    else:
-        opening_parts.append("Doctor-note retrieval context")
-
-    if patient_id:
-        opening_parts.append(f"for patient {patient_id}")
-    if visit_id:
-        opening_parts.append(f"and visit {visit_id}")
-    if visit_date:
-        opening_parts.append(f"on {visit_date}")
-
-    sentences.append(_sentence_from_parts(opening_parts))
-
-    if tier:
-        sentences.append(f"Documented patient tier is {tier}.")
-
-    if patient_conditions:
-        sentences.append(
-            "Documented patient conditions include "
-            f"{_join_phrases(patient_conditions)}."
+    for visit in _safe_visits(patient):
+        result["doctor_note"].append(
+            build_retrieval_text(patient, visit, "doctor_note")
         )
-    else:
-        sentences.append("No patient conditions are documented in the record.")
-
-    if visit_diagnoses:
-        sentences.append(
-            "Visit diagnoses include "
-            f"{_join_phrases(visit_diagnoses)}."
-        )
-    else:
-        sentences.append("No visit diagnoses are documented for this visit.")
-
-    if isinstance(visit.get("vitals"), Mapping) and visit.get("vitals"):
-        sentences.append(
-            "The visit contains vital-sign documentation for retrieval "
-            "matching."
-        )
-    else:
-        sentences.append(
-            "The visit contains no documented vital-sign entries."
-        )
-
-    if lab_names:
-        sentences.append(
-            "The visit contains documented laboratory entries for "
-            f"{_join_phrases(lab_names)}."
-        )
-    else:
-        sentences.append(
-            "The visit contains no documented laboratory entries."
-        )
-
-    if medication_names:
-        sentences.append(
-            "The visit contains documented medication entries for "
-            f"{_join_phrases(medication_names)}."
-        )
-    else:
-        sentences.append(
-            "The visit contains no documented medication entries."
-        )
-
-    if prior_visit_id:
-        sentences.append(
-            f"The visit links to prior visit {prior_visit_id} for timeline "
-            "retrieval context."
-        )
-    else:
-        sentences.append("The visit has no documented prior_visit_id.")
-
-    return " ".join(sentences)
-
-
-def build_lab_retrieval_text(
-    patient: dict[str, Any],
-    visit: dict[str, Any],
-) -> str:
-    """
-    Build retrieval text for lab_result chunks.
-
-    Condition-related lab wording is included only when the condition is
-    documented in patient conditions or visit diagnoses.
-    """
-    patient_id = _safe_text(patient.get("patient_id"))
-    visit_id = _safe_text(visit.get("visit_id"))
-    visit_date = _safe_text(visit.get("visit_date"))
-    visit_type = _safe_text(visit.get("visit_type"))
-
-    documented_conditions = _documented_conditions_for_visit(patient, visit)
-    labs = _dict_list(visit.get("labs"))
-    lab_names = _lab_type_names(labs)
-    lab_flag_pairs = _lab_flag_pairs(labs)
-
-    sentences: list[str] = []
-
-    opening_parts = ["Laboratory retrieval context"]
-    if patient_id:
-        opening_parts.append(f"for patient {patient_id}")
-    if visit_id:
-        opening_parts.append(f"and visit {visit_id}")
-    if visit_date:
-        opening_parts.append(f"on {visit_date}")
-    if visit_type:
-        opening_parts.append(f"during a {visit_type} visit")
-
-    sentences.append(_sentence_from_parts(opening_parts))
-
-    if lab_names:
-        sentences.append(
-            "Documented lab types in this visit include "
-            f"{_join_phrases(lab_names)}."
-        )
-    else:
-        sentences.append(
-            "No documented lab types are present in this visit."
-        )
-
-    condition_context_sentences = _lab_condition_context_sentences(
-        documented_conditions=documented_conditions,
-        lab_names=lab_names,
-    )
-
-    if condition_context_sentences:
-        sentences.extend(condition_context_sentences)
-    else:
-        sentences.append(
-            "No chronic condition-specific lab wording is added because the "
-            "documented patient and visit conditions do not match these lab "
-            "entries."
-        )
-
-    if lab_flag_pairs:
-        sentences.append(
-            "Lab flags are included exactly as documented: "
-            f"{_join_phrases(lab_flag_pairs)}."
-        )
-    else:
-        sentences.append("No lab flags are documented in this visit.")
-
-    return " ".join(sentences)
-
-
-def build_prescription_retrieval_text(
-    patient: dict[str, Any],
-    visit: dict[str, Any],
-) -> str:
-    """
-    Build retrieval text for prescription chunks.
-
-    Medication-condition wording is included only when both requirements hold:
-    the medication exists in MEDICATION_WHITELIST and the whitelist condition is
-    documented in patient conditions or visit diagnoses.
-    """
-    patient_id = _safe_text(patient.get("patient_id"))
-    visit_id = _safe_text(visit.get("visit_id"))
-    visit_date = _safe_text(visit.get("visit_date"))
-    visit_type = _safe_text(visit.get("visit_type"))
-
-    documented_conditions = _documented_conditions_for_visit(patient, visit)
-    medications = _dict_list(visit.get("medications"))
-    medication_names = _medication_names(medications)
-
-    sentences: list[str] = []
-
-    opening_parts = ["Prescription retrieval context"]
-    if patient_id:
-        opening_parts.append(f"for patient {patient_id}")
-    if visit_id:
-        opening_parts.append(f"and visit {visit_id}")
-    if visit_date:
-        opening_parts.append(f"on {visit_date}")
-    if visit_type:
-        opening_parts.append(f"during a {visit_type} visit")
-
-    sentences.append(_sentence_from_parts(opening_parts))
-
-    if medication_names:
-        sentences.append(
-            "Documented medications in this visit include "
-            f"{_join_phrases(medication_names)}."
-        )
-    else:
-        sentences.append(
-            "No documented medications are present in this visit."
-        )
-
-    detail_sentences = _medication_detail_sentences(medications)
-    if detail_sentences:
-        sentences.extend(detail_sentences)
-
-    condition_context = _medication_condition_context_phrases(
-        medications=medications,
-        documented_conditions=documented_conditions,
-    )
-    if condition_context:
-        sentences.append(
-            "Medication-condition retrieval context is included only for "
-            "documented condition matches: "
-            f"{_join_phrases(condition_context)}."
-        )
-    else:
-        sentences.append(
-            "No medication-condition retrieval wording is added because no "
-            "documented medication has a matching documented condition in "
-            "this source context."
-        )
-
-    return " ".join(sentences)
-
-
-def build_allergy_retrieval_text(patient: dict[str, Any]) -> str:
-    """
-    Build patient-level retrieval text for allergy chunks.
-
-    This function does not require a visit. It uses patient.allergy_registry
-    only and does not make risk predictions or allergy inferences.
-    """
-    patient_id = _safe_text(patient.get("patient_id"))
-    allergies = _dict_list(patient.get("allergy_registry"))
-
-    if not allergies:
-        if patient_id:
-            return (
-                f"Allergy retrieval context for patient {patient_id} contains "
-                "no documented allergy entries in the allergy_registry."
+        if _visit_lab_names(visit):
+            result["lab_result"].append(
+                build_retrieval_text(patient, visit, "lab_result")
             )
-        return (
-            "Allergy retrieval context contains no documented allergy entries "
-            "in the allergy_registry."
+        result["prescription"].append(
+            build_retrieval_text(patient, visit, "prescription")
         )
 
-    sentences: list[str] = []
-    if patient_id:
-        sentences.append(
-            f"Allergy retrieval context for patient {patient_id} includes "
-            "documented allergy entries."
+    result["allergy"].append(build_retrieval_text(patient, None, "allergy"))
+    return result
+
+
+# ---------------------------------------------------------------------------
+# Source-type builders (max 3 sentences each)
+# ---------------------------------------------------------------------------
+
+def _build_doctor_note_enrichment(patient: dict, visit: dict) -> str:
+    """Build doctor_note enrichment — exactly 3 sentences."""
+    patient_id = _s(patient.get("patient_id"))
+    visit_id   = _s(visit.get("visit_id"))
+    visit_date = _s(visit.get("visit_date"))
+    visit_type = _s(visit.get("visit_type", ""))
+    visit_role = _s(visit.get("visit_role", ""))
+
+    conditions = _combined_conditions(patient, visit)
+    med_names  = _visit_medication_names(visit)
+    lab_names  = _visit_lab_names(visit)
+    has_vitals = bool(visit.get("vitals"))
+
+    cond_label     = _condition_display(conditions)
+    visit_type_txt = visit_type.replace("_", " ") if visit_type else "encounter"
+
+    # Sentence 1: header + key clinical facts
+    header = (
+        f"Doctor note retrieval context for {patient_id} visit {visit_id} "
+        f"on {visit_date}: "
+    )
+    s1_facts = [f"{cond_label} {visit_type_txt} encounter"]
+    if has_vitals:
+        s1_facts.append("vitals documented")
+    if lab_names:
+        s1_facts.append(f"labs: {_comma(lab_names)}")
+    if med_names:
+        s1_facts.append(f"medications: {_comma(med_names)}")
+    s1 = header + "; ".join(s1_facts) + "."
+
+    # Sentence 2: visit_role vocabulary re-injection (required)
+    role_phrases = _VISIT_ROLE_PHRASES.get(visit_role, ())
+    if role_phrases:
+        raw = role_phrases[0].rstrip(",").rstrip(".")
+        s2 = raw[0].upper() + raw[1:] + "."
+    else:
+        role_txt = visit_role.replace("_", " ") if visit_role else "clinical"
+        s2 = f"This visit is documented as a {role_txt} encounter."
+
+    # Sentence 3: monitoring context
+    lab_labels = _lab_condition_labels_for(lab_names, conditions)
+    if lab_labels:
+        s3 = (
+            f"Laboratory trend monitoring for "
+            f"{_and(lab_labels)} documented at this visit."
+        )
+    elif med_names:
+        s3 = (
+            f"Medication documentation for {cond_label} "
+            "updated at this visit."
         )
     else:
-        sentences.append(
-            "Allergy retrieval context includes documented allergy entries."
+        s3 = (
+            f"Clinical findings for {cond_label} documented at "
+            f"this {visit_type_txt} encounter."
         )
 
-    for allergy in allergies:
-        allergy_sentence = _allergy_entry_sentence(allergy)
-        if allergy_sentence:
-            sentences.append(allergy_sentence)
-
-    return " ".join(sentences)
+    return f"{s1} {s2} {s3}"
 
 
-def _documented_patient_conditions(patient: dict[str, Any]) -> tuple[str, ...]:
-    """Return valid documented patient conditions from patient['conditions']."""
-    return _ordered_allowed_values(_sequence(patient.get("conditions")), CONDITIONS)
+def _build_lab_result_enrichment(patient: dict, visit: dict) -> str:
+    """Build lab_result enrichment — exactly 3 sentences. 'trend' must appear."""
+    patient_id = _s(patient.get("patient_id"))
+    visit_id   = _s(visit.get("visit_id"))
+    visit_date = _s(visit.get("visit_date"))
 
+    conditions = _combined_conditions(patient, visit)
+    lab_names  = _visit_lab_names(visit)
+    cond_label = _condition_display(conditions)
 
-def _documented_visit_diagnoses(visit: dict[str, Any]) -> tuple[str, ...]:
-    """Return valid documented visit diagnoses from visit['diagnoses']."""
-    return _ordered_allowed_values(_sequence(visit.get("diagnoses")), CONDITIONS)
+    # Condition-specific vocabulary bridge for kidney/renal queries.
+    # When CKD is documented, the lab chunk must win over doctor_note for
+    # queries like "kidney test results" / "renal function test".
+    has_ckd = "CKD" in conditions
 
-
-def _documented_conditions_for_visit(
-    patient: dict[str, Any],
-    visit: dict[str, Any],
-) -> tuple[str, ...]:
-    """Return ordered unique patient conditions plus visit diagnoses."""
-    return _ordered_unique(
-        (
-            *_documented_patient_conditions(patient),
-            *_documented_visit_diagnoses(visit),
-        )
+    # Sentence 1: header + lab names  [+ kidney-test bridge if CKD patient]
+    header = (
+        f"Lab result retrieval context for {patient_id} visit {visit_id} "
+        f"on {visit_date}: "
     )
+    if lab_names:
+        base = f"{_and(list(lab_names))} documented"
+        if has_ckd:
+            s1 = header + base + (" — kidney function test results and renal function test "
+                                   "values recorded at this visit.")
+        else:
+            s1 = header + base + "."
+    else:
+        s1 = header + "No laboratory results documented at this visit."
 
-
-def _lab_type_names(labs: Iterable[Mapping[str, Any]]) -> tuple[str, ...]:
-    """Return documented lab_type names only, preserving deterministic order."""
-    values = (_safe_text(lab.get("lab_type")) for lab in labs)
-    return _ordered_allowed_values(values, LAB_TYPES)
-
-
-def _medication_names(
-    medications: Iterable[Mapping[str, Any]],
-) -> tuple[str, ...]:
-    """
-    Return documented medication_name values only.
-
-    Medication names are not replaced by whitelist defaults. They are read from
-    the structured visit data. Validation remains responsible for rejecting
-    non-whitelisted medications before ingestion.
-    """
-    values = (_safe_text(med.get("medication_name")) for med in medications)
-    return _ordered_unique(value for value in values if value)
-
-
-def _join_phrases(values: Iterable[str]) -> str:
-    """Join values deterministically for readable retrieval text."""
-    items = _ordered_unique(values)
-
-    if not items:
-        return "none"
-
-    if len(items) == 1:
-        return items[0]
-
-    if len(items) == 2:
-        return f"{items[0]} and {items[1]}"
-
-    return f"{', '.join(items[:-1])}, and {items[-1]}"
-
-
-def _has_condition_context(
-    documented_conditions: Iterable[str],
-    condition: str,
-) -> bool:
-    """Return True only if condition is documented."""
-    return condition in set(documented_conditions)
-
-
-def _lab_condition_context_sentences(
-    *,
-    documented_conditions: tuple[str, ...],
-    lab_names: tuple[str, ...],
-) -> tuple[str, ...]:
-    """Build safe condition-lab context sentences."""
-    sentences: list[str] = []
-
-    for condition, mapped_labs in CONDITION_LAB_CONTEXT.items():
-        if not _has_condition_context(documented_conditions, condition):
+    # Sentence 2: condition-lab semantic labels
+    label_parts: list[str] = []
+    for condition in conditions:
+        focus = LAB_FOCUS_BY_CONDITION.get(condition, ())
+        relevant = [lb for lb in focus if lb in lab_names]
+        if not relevant:
             continue
+        lbl = _LAB_CONDITION_RETRIEVAL_LABELS.get(condition, "")
+        if lbl:
+            label_parts.append(f"{_and(relevant)} is {lbl}")
 
-        relevant_labs = tuple(lab for lab in mapped_labs if lab in lab_names)
-        if not relevant_labs:
-            continue
+    if label_parts:
+        s2 = "; ".join(label_parts) + " monitoring."
+        if has_ckd and "CKD-related" in s2:
+            # Inject renal-test retrieval bridge into S2 for CKD
+            s2 = s2.rstrip(".") + "; Creatinine is a kidney function blood test result."
+    elif lab_names:
+        s2 = f"Laboratory values for {cond_label} documented at this visit."
+    else:
+        s2 = "No condition-specific laboratory documentation at this visit."
 
-        label = CONDITION_LAB_RETRIEVAL_LABELS[condition]
-        sentences.append(
-            f"Documented {condition} context allows "
-            f"{_join_phrases(relevant_labs)} to be described as {label} "
-            "laboratory entries for retrieval matching only."
+    # Sentence 3: must contain the word "trend"
+    if lab_names:
+        s3 = (
+            f"Laboratory trend tracked at this scheduled visit "
+            f"for {cond_label}."
         )
+    else:
+        s3 = "No laboratory trend data available at this visit."
 
-    return tuple(sentences)
-
-
-def _lab_flag_pairs(labs: Iterable[Mapping[str, Any]]) -> tuple[str, ...]:
-    """Return deterministic lab_type flag phrases from documented labs."""
-    pairs: list[str] = []
-
-    for lab in labs:
-        lab_type = _safe_text(lab.get("lab_type"))
-        flag = _safe_text(lab.get("flag"))
-
-        if lab_type in LAB_TYPES and flag:
-            pairs.append(f"{lab_type} {flag}")
-
-    return _ordered_unique(pairs)
+    return f"{s1} {s2} {s3}"
 
 
-def _medication_detail_sentences(
-    medications: Iterable[Mapping[str, Any]],
-) -> tuple[str, ...]:
-    """Build deterministic medication detail sentences from visit data."""
-    sentences: list[str] = []
+def _build_prescription_enrichment(patient: dict, visit: dict) -> str:
+    """Build prescription enrichment — exactly 3 sentences."""
+    patient_id = _s(patient.get("patient_id"))
+    visit_id   = _s(visit.get("visit_id"))
+    visit_date = _s(visit.get("visit_date"))
 
-    for medication in medications:
-        name = _safe_text(medication.get("medication_name"))
+    conditions  = _combined_conditions(patient, visit)
+    medications = _safe_medications(visit)
+    med_names   = [
+        _s(m.get("medication_name"))
+        for m in medications
+        if _s(m.get("medication_name"))
+    ]
+    cond_label = _condition_display(conditions)
+
+    # Sentence 1: header + medication names
+    header = (
+        f"Prescription retrieval context for {patient_id} visit {visit_id} "
+        f"on {visit_date}: "
+    )
+    if med_names:
+        s1 = header + f"{_and(med_names)} documented."
+    else:
+        s1 = header + "No medications documented at this visit."
+
+    # Sentence 2: per-medication status phrases
+    status_parts: list[str] = []
+    for med in medications:
+        name = _s(med.get("medication_name"))
         if not name:
             continue
+        status     = _s(med.get("medication_status", ""))
+        trajectory = _s(med.get("trajectory_event", ""))
+        phrase     = _med_status_phrase(status, trajectory)
+        status_parts.append(f"{name} {phrase}")
 
-        details = []
-        medication_class = _safe_text(medication.get("medication_class"))
-        dose = _safe_text(medication.get("dose"))
-        frequency = _safe_text(medication.get("frequency"))
-        route = _safe_text(medication.get("route"))
-        start_date = _safe_text(medication.get("start_date"))
-        stop_date = _safe_text(medication.get("stop_date"))
-
-        if medication_class:
-            details.append(f"class {medication_class}")
-        if dose:
-            details.append(f"dose {dose}")
-        if frequency:
-            details.append(f"frequency {frequency}")
-        if route:
-            details.append(f"route {route}")
-        if start_date:
-            details.append(f"start date {start_date}")
-        if stop_date:
-            details.append(f"stop date {stop_date}")
-
-        if details:
-            sentences.append(
-                f"{name} is documented with {_join_phrases(details)}."
-            )
-        else:
-            sentences.append(
-                f"{name} is documented in the prescription entries."
-            )
-
-    return tuple(sentences)
-
-
-def _medication_condition_context_phrases(
-    *,
-    medications: Iterable[Mapping[str, Any]],
-    documented_conditions: tuple[str, ...],
-) -> tuple[str, ...]:
-    """
-    Return medication-condition context phrases only when safe.
-
-    A phrase is safe when:
-    1. the medication exists in MEDICATION_WHITELIST, and
-    2. the whitelist condition is documented in patient conditions or visit
-       diagnoses.
-    """
-    phrases: list[str] = []
-
-    for medication in medications:
-        medication_name = _safe_text(medication.get("medication_name"))
-        if medication_name not in MEDICATION_NAMES:
-            continue
-
-        whitelist_condition = _safe_text(
-            MEDICATION_WHITELIST[medication_name].get("condition")
-        )
-
-        if _has_condition_context(documented_conditions, whitelist_condition):
-            phrases.append(f"{medication_name} with documented {whitelist_condition}")
-
-    return _ordered_unique(phrases)
-
-
-def _allergy_entry_sentence(allergy: Mapping[str, Any]) -> str:
-    """Build one allergy sentence from documented allergy fields."""
-    allergen = _safe_text(allergy.get("allergen"))
-    reaction = _safe_text(allergy.get("reaction"))
-    severity = _safe_text(allergy.get("severity"))
-    recorded_date = _safe_text(allergy.get("recorded_date"))
-    source_visit_id = _safe_text(allergy.get("source_visit_id"))
-
-    if not any((allergen, reaction, severity, recorded_date, source_visit_id)):
-        return ""
-
-    if allergen:
-        sentence = f"Documented allergen {allergen}"
+    if status_parts:
+        s2 = "; ".join(status_parts) + "."
+    elif med_names:
+        s2 = f"{_and(med_names)} continued from prior visit."
     else:
-        sentence = "Documented allergy entry"
+        s2 = "No medication status changes documented at this visit."
 
-    details: list[str] = []
-    if reaction:
-        details.append(f"reaction {reaction}")
-    if severity:
-        details.append(f"severity {severity}")
-    if recorded_date:
-        details.append(f"recorded date {recorded_date}")
-    if source_visit_id:
-        details.append(f"source visit {source_visit_id}")
-
-    if details:
-        sentence += f" has {_join_phrases(details)}."
-
+    # Sentence 3: conditions treated
+    if conditions and med_names:
+        s3 = f"Medications prescribed for {cond_label} management."
+    elif med_names:
+        s3 = "Prescription documentation updated at this visit."
     else:
-        sentence += " is listed in the allergy_registry."
+        s3 = "No prescription updates at this visit."
 
-    return sentence
-
-
-def _metadata_value(patient: Mapping[str, Any], key: str) -> Any:
-    """Read one metadata value from patient['metadata'] when available."""
-    metadata = patient.get("metadata")
-    if not isinstance(metadata, Mapping):
-        return ""
-    return metadata.get(key, "")
+    return f"{s1} {s2} {s3}"
 
 
-def _sequence(value: Any) -> tuple[Any, ...]:
-    """Return a tuple for list or tuple values; otherwise return empty tuple."""
-    if isinstance(value, (list, tuple)):
-        return tuple(value)
-    return ()
+def _build_allergy_enrichment(patient: dict) -> str:
+    """Build allergy enrichment — patient-level (no visit required)."""
+    patient_id = _s(patient.get("patient_id"))
+    allergies  = _safe_dict_list(patient.get("allergy_registry"))
 
-
-def _dict_list(value: Any) -> tuple[Mapping[str, Any], ...]:
-    """Return mapping items from a list/tuple; ignore non-dict entries."""
-    if not isinstance(value, (list, tuple)):
-        return ()
-
-    return tuple(item for item in value if isinstance(item, Mapping))
-
-
-def _ordered_allowed_values(
-    values: Iterable[Any],
-    allowed_values: Iterable[str],
-) -> tuple[str, ...]:
-    """Return ordered unique values that exactly match allowed constants."""
-    allowed = set(allowed_values)
-    return _ordered_unique(
-        text for text in (_safe_text(value) for value in values) if text in allowed
+    header = (
+        f"Allergy retrieval context for {patient_id}: "
+        if patient_id
+        else "Allergy retrieval context: "
     )
 
+    if not allergies:
+        return header + "No documented allergies recorded in the available records."
 
-def _ordered_unique(values: Iterable[str]) -> tuple[str, ...]:
-    """Return values without duplicates while preserving first-seen order."""
+    allergy_sentences: list[str] = []
+    for allergy in allergies:
+        allergen  = _s(allergy.get("allergen", ""))
+        reaction  = _s(allergy.get("reaction", ""))
+        severity  = _s(allergy.get("severity", ""))
+
+        parts: list[str] = []
+        if allergen:
+            parts.append(f"{allergen} allergy documented")
+        if reaction:
+            parts.append(f"with {reaction} reaction")
+        if severity:
+            parts.append(f"severity {severity}")
+        if parts:
+            allergy_sentences.append(", ".join(parts) + ".")
+
+    # Sentence 1: header + first allergy detail
+    if allergy_sentences:
+        s1 = header + allergy_sentences[0]
+    else:
+        s1 = header + "Allergy entry documented in this patient record."
+
+    # Sentence 2: "documented allergy history" framing
+    allergen_names = [
+        _s(a.get("allergen", ""))
+        for a in allergies
+        if _s(a.get("allergen", ""))
+    ]
+    if allergen_names:
+        s2 = (
+            f"The documented allergy history for this patient includes "
+            f"{_and(allergen_names)}."
+        )
+    else:
+        s2 = "The documented allergy history for this patient is recorded above."
+
+    return f"{s1} {s2}"
+
+
+# ---------------------------------------------------------------------------
+# Internal helpers
+# ---------------------------------------------------------------------------
+
+def _med_status_phrase(status: str, trajectory: str) -> str:
+    """Return a query-aligned phrase for a medication's status/trajectory."""
+    # trajectory takes precedence for specific trajectory events
+    if trajectory in _MED_TRAJECTORY_PHRASE:
+        return _MED_TRAJECTORY_PHRASE[trajectory]
+    if status in _MED_STATUS_PHRASE:
+        return _MED_STATUS_PHRASE[status]
+    return "continued from prior visit"
+
+
+def _combined_conditions(patient: dict, visit: dict) -> tuple[str, ...]:
+    """Return ordered unique conditions from patient + visit diagnoses."""
+    patient_conds = tuple(
+        c for c in (patient.get("conditions") or [])
+        if isinstance(c, str) and c.strip()
+    )
+    visit_diags = tuple(
+        d for d in (visit.get("diagnoses") or [])
+        if isinstance(d, str) and d.strip()
+    )
     seen: set[str] = set()
-    output: list[str] = []
+    out: list[str] = []
+    for c in (*patient_conds, *visit_diags):
+        if c not in seen:
+            seen.add(c)
+            out.append(c)
+    return tuple(out)
 
-    for value in values:
-        text = _safe_text(value)
-        if not text or text in seen:
+
+def _visit_medication_names(visit: dict) -> tuple[str, ...]:
+    """Return medication names documented in the visit."""
+    names: list[str] = []
+    seen: set[str] = set()
+    for med in _safe_medications(visit):
+        name = _s(med.get("medication_name", ""))
+        if name and name not in seen:
+            seen.add(name)
+            names.append(name)
+    return tuple(names)
+
+
+def _visit_lab_names(visit: dict) -> tuple[str, ...]:
+    """Return lab_type names documented in the visit."""
+    names: list[str] = []
+    seen: set[str] = set()
+    for lab in _safe_dict_list(visit.get("labs")):
+        name = _s(lab.get("lab_type", ""))
+        if name and name not in seen:
+            seen.add(name)
+            names.append(name)
+    return tuple(names)
+
+
+def _lab_condition_labels_for(
+    lab_names: tuple[str, ...],
+    conditions: tuple[str, ...],
+) -> list[str]:
+    """Return semantic label strings like 'diabetes-related' for matched labs."""
+    labels: list[str] = []
+    seen: set[str] = set()
+    for condition in conditions:
+        lbl = _LAB_CONDITION_RETRIEVAL_LABELS.get(condition, "")
+        if not lbl:
             continue
-        seen.add(text)
-        output.append(text)
+        if any(lb in lab_names for lb in LAB_FOCUS_BY_CONDITION.get(condition, ())):
+            if lbl not in seen:
+                seen.add(lbl)
+                labels.append(lbl)
+    return labels
 
-    return tuple(output)
+
+def _condition_display(conditions: tuple[str, ...]) -> str:
+    """Return a comma-and joined human-readable condition string."""
+    labels = [_CONDITION_LABELS.get(c, c.replace("_", " ")) for c in conditions]
+    if not labels:
+        return "documented conditions"
+    return _and(labels)
 
 
-def _safe_text(value: Any) -> str:
-    """Convert a structured value to a stripped string without inventing data."""
+def _safe_visits(patient: dict) -> list[dict]:
+    visits = patient.get("visits") or []
+    return [v for v in visits if isinstance(v, dict)]
+
+
+def _safe_medications(visit: dict) -> list[dict]:
+    return _safe_dict_list(visit.get("medications"))
+
+
+def _safe_dict_list(value: Any) -> list[dict]:
+    if not isinstance(value, (list, tuple)):
+        return []
+    return [item for item in value if isinstance(item, Mapping)]
+
+
+def _s(value: Any) -> str:
+    """Convert to stripped string; return empty string for None."""
     if value is None:
         return ""
     return str(value).strip()
 
 
-def _sentence_from_parts(parts: Iterable[str]) -> str:
-    """Join sentence parts and ensure final punctuation."""
-    text = " ".join(part for part in parts if part).strip()
-    if not text:
+def _comma(items: tuple[str, ...] | list[str]) -> str:
+    return ", ".join(items)
+
+
+def _and(items: list[str] | tuple[str, ...]) -> str:
+    """Join with Oxford-style 'and'."""
+    lst = list(items)
+    if not lst:
         return ""
-    if text.endswith("."):
-        return text
-    return f"{text}."
+    if len(lst) == 1:
+        return lst[0]
+    if len(lst) == 2:
+        return f"{lst[0]} and {lst[1]}"
+    return f"{', '.join(lst[:-1])}, and {lst[-1]}"
 
 
 __all__ = [
+    "RetrievalEnrichmentError",
     "build_retrieval_text",
-    "build_doctor_note_retrieval_text",
-    "build_lab_retrieval_text",
-    "build_prescription_retrieval_text",
-    "build_allergy_retrieval_text",
+    "build_all_retrieval_texts",
 ]

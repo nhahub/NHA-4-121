@@ -1,0 +1,65 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-001",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-001",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as an initial encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-001",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-002",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-002",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type lab improvement; event label Partial glycemic improvement; event summary: Follow-up labs showed partial HbA1c and FBG improvement while Metformin continued..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-003",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-003",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-001",
+      "visit_id": "VST-MOD-001-003",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type lab improvement; event label Improved Metformin response; event summary: Later follow-up documented continued HbA1c improvement with ongoing Metformin therapy..'."
+    }
+  ]
+}

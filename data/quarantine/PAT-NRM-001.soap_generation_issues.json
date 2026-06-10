@@ -1,0 +1,25 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-NRM-001",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-NRM-001",
+      "visit_id": "VST-NRM-001-001",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as an initial encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-NRM-001",
+      "visit_id": "VST-NRM-001-002",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    }
+  ]
+}

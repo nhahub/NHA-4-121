@@ -2,29 +2,37 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-001",
   "demographics": {
-    "name": "Karim Hassan",
-    "date_of_birth": "1981-04-06",
-    "sex": "male"
+    "name": "Nour Ahmed",
+    "date_of_birth": "1987-02-04",
+    "sex": "female"
   },
   "conditions": [
     "T2DM"
   ],
-  "allergy_registry": [],
+  "allergy_registry": [
+    {
+      "allergen": "Penicillin",
+      "reaction": "skin rash",
+      "severity": "moderate",
+      "recorded_date": "2023-01-24",
+      "source_visit_id": "VST-MOD-001-001"
+    }
+  ],
   "visits": [
     {
       "visit_id": "VST-MOD-001-001",
-      "visit_date": "2023-01-10",
+      "visit_date": "2023-01-24",
       "visit_type": "initial",
       "attending_physician": "Dr. Salma Nabil",
       "diagnoses": [
         "T2DM"
       ],
       "vitals": {
-        "bp_systolic": 123,
-        "bp_diastolic": 79,
-        "heart_rate": 82,
-        "weight_kg": 79.1,
-        "bmi": 25.1
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 82.0,
+        "bmi": 31.2
       },
       "labs": [
         {
@@ -49,47 +57,63 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-01-10",
-          "stop_date": null
+          "start_date": "2023-01-24",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 41-year-old male patient is recorded for a initial visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter has no prior_visit_id and is the first documented visit in the available timeline.",
-        "objective": "Structured objective data lists blood pressure 123/79 mmHg, heart rate 82 bpm, weight 79.1 kg, and BMI 25.1. Lab results documented for the visit: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-001.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
-        "plan": "The visit plan lists the medication entries documented in the record: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. This is the first recorded visit in the available record. This encounter has no prior_visit_id and is the first documented visit in the available timeline."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 35-year-old female; recorded conditions are T2DM. The primary concern today is the documented visit role is initial diagnosis. initial diagnosis was documented. baseline management plan established. Initial type 2 diabetes diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "objective": "Structured measurements for the documented issue include 120/78 mmHg, heart rate 76 bpm, weight 82.0 kg, and BMI 31.2. Laboratory evidence: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: initial; visit role: initial_diagnosis; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: diagnosis_documented; retrieval tags: diabetes_medication, hba1c_trend, and metformin_response; timeline link: first documented visit.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: T2DM. Initial type 2 diabetes diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented. Primary documented evidence: Documented laboratory entries include HbA1c 8.4 % flagged HIGH and FBG 172 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status started; trajectory simple start continue. Initial type 2 diabetes diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Metformin 500 mg twice_daily via oral (status started; trajectory simple_start_continue). The medication list includes documented entries related to type 2 diabetes medication documentation. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-001-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial type 2 diabetes diagnosis was documented and baseline management plan established with Metformin."
+      },
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "hba1c_trend",
+          "metformin_response"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-001-002",
-      "visit_date": "2023-03-11",
+      "visit_date": "2023-04-24",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
         "T2DM"
       ],
       "vitals": {
-        "bp_systolic": 122,
+        "bp_systolic": 120,
         "bp_diastolic": 78,
-        "heart_rate": 81,
-        "weight_kg": 78.7,
-        "bmi": 24.9
+        "heart_rate": 76,
+        "weight_kg": 81.3,
+        "bmi": 31.0
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 8.2,
+          "value": 7.6,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 163,
+          "value": 146,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -102,100 +126,63 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-01-10",
-          "stop_date": null
+          "start_date": "2023-01-24",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "A 41-year-old male patient is recorded for a follow_up visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-001.",
-        "objective": "Objective findings record blood pressure 122/78 mmHg, heart rate 81 bpm, weight 78.7 kg, and BMI 24.9. Laboratory results for this visit: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-002.",
-        "assessment": "Diagnoses documented for this visit are summarized as T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-001."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 36-year-old female; recorded conditions are T2DM. The primary concern today is the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The visit objective data support the charted problem context: 120/78 mmHg; heart rate 76 bpm; weight 81.3 kg; BMI 31.0. Lab entries: HbA1c 7.6 % (HIGH); FBG 146 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.6 % flagged HIGH and FBG 146 mg/dL flagged HIGH. Linked documents: none.",
+        "assessment": "Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued. The current clinical focus is summarized from structured facts only. Diagnoses: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
+        "plan": "Problem-oriented plan wording preserves the recorded medication entries: Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue). The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-001."
       },
-      "linked_documents": [
-        "DOC-MOD-001-002"
-      ],
-      "prior_visit_id": "VST-MOD-001-001"
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-001-001",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 90,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "hba1c_trend",
+          "metformin_response"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-001-003",
-      "visit_date": "2023-05-10",
+      "visit_date": "2023-07-23",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Laila Mostafa",
       "diagnoses": [
         "T2DM"
       ],
       "vitals": {
-        "bp_systolic": 121,
-        "bp_diastolic": 77,
-        "heart_rate": 80,
-        "weight_kg": 78.3,
-        "bmi": 24.8
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.9,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 154,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-01-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "A 42-year-old male patient is recorded for a follow_up visit. The documented condition list includes T2DM. The patient-level condition field documents type 2 diabetes. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-002.",
-        "objective": "Objective findings record blood pressure 121/77 mmHg, heart rate 80 bpm, weight 78.3 kg, and BMI 24.8. Laboratory results for this visit: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-003.",
-        "assessment": "The visit diagnosis list records T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "The visit plan lists the medication entries documented in the record: Metformin 500 mg twice_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-002. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-001-002."
-      },
-      "linked_documents": [
-        "DOC-MOD-001-003"
-      ],
-      "prior_visit_id": "VST-MOD-001-002"
-    },
-    {
-      "visit_id": "VST-MOD-001-004",
-      "visit_date": "2023-07-09",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
         "bp_systolic": 120,
-        "bp_diastolic": 76,
-        "heart_rate": 79,
-        "weight_kg": 77.9,
-        "bmi": 24.7
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 80.6,
+        "bmi": 30.7
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 7.7,
+          "value": 7.2,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
         },
         {
           "lab_type": "FBG",
-          "value": 145,
+          "value": 132,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
@@ -208,94 +195,54 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2023-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-07-09",
-          "stop_date": null
+          "start_date": "2023-01-24",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 42-year-old male patient. The condition list includes T2DM. The patient-level condition field documents type 2 diabetes. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The visit measurements include blood pressure 120/76 mmHg, heart rate 79 bpm, weight 77.9 kg, and BMI 24.7. Laboratory entries are recorded as: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-004.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up.",
-        "plan": "The documented plan includes the following medication entries: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-003. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: glibenclamide and metformin; visit type: follow_up; timeline link: prior visit documented."
+        "subjective": "The primary concern today is the patient's health status. This visit is organized around the charted clinical focus. The patient is a 36-year-old female; recorded conditions are T2DM. The primary concern today is the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "Structured measurements for the documented issue include 120/78 mmHg, heart rate 76 bpm, weight 80.6 kg, and BMI 30.7. Laboratory evidence: HbA1c 7.2 % (HIGH); FBG 132 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: lab_improvement; retrieval tags: diabetes_medication, hba1c_trend, and metformin_response; timeline link: prior visit documented.",
+        "assessment": "Problem-oriented assessment remains limited to recorded diagnoses: T2DM. Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include HbA1c 7.2 % flagged HIGH and FBG 132 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "Medication context for the documented issue is recorded as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue. Retrieval focus includes patient-level conditions: type 2 diabetes; visit diagnoses: type 2 diabetes; laboratory entries: fbg and hba1c; medication entries: metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: lab_improvement; clinical event type: lab_improvement; retrieval tags: diabetes_medication, hba1c_trend, and metformin_response; timeline link: prior visit documented. The allergy registry documents Penicillin; reaction skin rash; severity moderate."
       },
-      "linked_documents": [
-        "DOC-MOD-001-004"
-      ],
-      "prior_visit_id": "VST-MOD-001-003"
-    },
-    {
-      "visit_id": "VST-MOD-001-005",
-      "visit_date": "2023-10-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "T2DM"
-      ],
-      "vitals": {
-        "bp_systolic": 119,
-        "bp_diastolic": 75,
-        "heart_rate": 78,
-        "weight_kg": 77.5,
-        "bmi": 24.6
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-001-002",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes was reviewed at scheduled follow-up; Metformin therapy continued."
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.4,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 136,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2023-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-07-09",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 42-year-old male patient seen for a follow_up visit. The condition list records T2DM. The patient-level condition field documents type 2 diabetes. This is documented as a follow-up encounter in the visit record.",
-        "objective": "Structured objective data lists blood pressure 119/75 mmHg, heart rate 78 bpm, weight 77.5 kg, and BMI 24.6. Lab results documented for the visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up. Linked document references: DOC-MOD-001-005.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM. The visit diagnosis field documents type 2 diabetes for this encounter. The patient-level condition field documents type 2 diabetes.",
-        "plan": "Medication details in the plan are recorded as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral. The medication list includes documented entries related to type 2 diabetes medication documentation. Prior visit reference is VST-MOD-001-004."
-      },
-      "linked_documents": [
-        "DOC-MOD-001-005"
-      ],
-      "prior_visit_id": "VST-MOD-001-004"
+      "retrieval_context": {
+        "semantic_focus": "lab_improvement",
+        "retrieval_intent_tags": [
+          "diabetes_medication",
+          "hba1c_trend",
+          "metformin_response"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "t2dm_metformin_hba1c_improvement",
+    "timeline_pattern": "regular_quarterly",
+    "semantic_focus": "lab_improvement",
+    "retrieval_signature": "T2DM|Metformin|lab_improvement|regular_quarterly|HbA1c-FBG",
+    "retrieval_intent_tags": [
+      "diabetes_medication",
+      "hba1c_trend",
+      "metformin_response"
+    ],
+    "soap_style": "problem_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "lab_trend_query"
+    ]
   }
 }

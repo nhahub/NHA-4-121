@@ -22,7 +22,6 @@ The system uses:
 - ChromaDB for local vector storage
 - Sentence-transformers for local embeddings
 - Groq API for grounded RAG answer generation
-- Google Vision OCR with offline cache
 - Synthetic JSON medical records
 - Docker and Docker Compose for reproducible local execution
 
@@ -59,7 +58,7 @@ FastAPI Backend
         ↓
 Streamlit Frontend
         ↓
-Offline Demo Execution
+Demo Execution
 ```
 
 The system must only retrieve and summarize documented synthetic records. It must not diagnose, recommend treatment, predict disease, infer undocumented medical conditions, use real patient data, or connect to real hospital systems.
@@ -86,7 +85,6 @@ The following rules are mandatory and must not be changed during implementation.
 | RAG LLM usage | The LLM is used later only for grounded answer generation from retrieved evidence |
 | Retrieval enrichment | Enrichment text is deterministic support text, not source truth |
 | RAG priority | Retrieval quality is the highest engineering priority |
-| OCR demo | OCR demo must use offline cached OCR during presentation |
 | Answers | All answers must be grounded and citation-based |
 | Deployment | Docker must remain simple and local-first |
 | Architecture | No Kubernetes, no microservices, no PostgreSQL primary database |
@@ -109,7 +107,6 @@ AI-Based-Clinical-Record-Summarization-System/
 ├── generators/
 ├── ingestion/
 ├── logs/
-├── ocr/
 ├── rag/
 ├── scripts/
 ├── soap/
@@ -135,7 +132,6 @@ This structure separates the project into clear engineering areas:
 | `generators/` | Deterministic synthetic structured patient data generation |
 | `validators/` | V1–V11 validation rules and validation reporting |
 | `soap/` | Deterministic SOAP generation and SOAP safety auditing |
-| `ocr/` | Google Vision OCR, OCR cache, and offline OCR loading |
 | `data/` | Synthetic patient JSON, schema files, quarantine, and ChromaDB storage |
 | `config/` | Constants, paths, prompts, settings, and showcase patient configuration |
 | `scripts/` | Pipeline automation scripts |
@@ -276,7 +272,6 @@ docs/
 ├── rag_pipeline.md
 ├── citation_contract.md
 ├── api_contract.md
-├── ocr_workflow.md
 ├── demo_script.md
 ├── fallback_plan.md
 ├── showcase_patients.md
@@ -295,7 +290,6 @@ Purpose:
 - Document retrieval enrichment behavior
 - Document chunking and metadata expectations
 - Document API behavior
-- Document OCR workflow
 - Provide demo script
 - Provide fallback plan
 - Support DEPI evaluation, GitHub presentation, and LLM-assisted team work
@@ -322,7 +316,6 @@ Purpose:
 - Display citations
 - Display timeline view
 - Display allergy history
-- Display OCR demo output
 
 The frontend should communicate with the backend only through API calls. It must not call ChromaDB, Groq, validators, data generators, or ingestion modules directly.
 
@@ -411,35 +404,8 @@ A single readable log file is enough for this academic system. A complex logging
 
 ---
 
-## 4.10 `ocr/`
 
-Recommended internal structure:
-
-```text
-ocr/
-├── ocr_cache/
-├── sample_scans/
-├── ocr_cache_manager.py
-├── ocr_cleaner.py
-├── ocr_extractor.py
-└── offline_loader.py
-```
-
-Purpose:
-
-- Store sample scanned synthetic documents
-- Extract OCR text using Google Vision during preparation
-- Cache extracted OCR text
-- Load cached OCR text during demo
-- Clean OCR text lightly using simple rules
-
-Important rule:
-
-During demo, OCR must operate in offline mode and must not depend on a live Google Vision API call.
-
----
-
-## 4.11 `rag/`
+## 4.10 `rag/`
 
 Recommended internal structure:
 
@@ -472,7 +438,7 @@ The RAG layer must never generate unsupported medical conclusions. If evidence i
 
 ---
 
-## 4.12 `scripts/`
+## 4.11 `scripts/`
 
 Recommended internal structure:
 
@@ -507,7 +473,7 @@ Ownership note:
 
 ---
 
-## 4.13 `soap/`
+## 4.12 `soap/`
 
 Recommended internal structure:
 
@@ -541,7 +507,7 @@ Important rules:
 
 ---
 
-## 4.14 `tests/`
+## 4.13 `tests/`
 
 Recommended internal structure:
 
@@ -551,7 +517,6 @@ tests/
 ├── test_chunking.py
 ├── test_retrieval.py
 ├── test_validation.py
-├── test_ocr_cache.py
 └── test_demo_smoke.py
 ```
 
@@ -561,12 +526,11 @@ Purpose:
 - Test chunking behavior
 - Test retrieval quality
 - Test API endpoints
-- Test OCR cache behavior
 - Test demo readiness
 
 ---
 
-## 4.15 `validators/`
+## 4.14 `validators/`
 
 Recommended internal structure:
 
@@ -598,7 +562,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 | `backend/app/main.py` | Creates FastAPI app and registers routes |
 | `backend/app/routes.py` | Defines `/query`, `/timeline/{patient_id}`, `/summary/{patient_id}`, and `/health` |
 | `backend/app/schemas.py` | Defines Pydantic request and response models |
-| `backend/app/services.py` | Calls RAG, timeline, OCR, and summary services |
+| `backend/app/services.py` | Calls RAG, timeline, and summary services |
 | `backend/app/health.py` | Provides backend health checks if separated from routes |
 | `backend/README.md` | Backend setup and API usage guide |
 
@@ -655,18 +619,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 | `rag/query_models.py` | Defines internal RAG data models |
 | `rag/README.md` | Documents RAG behavior and retrieval rules |
 
-## 5.7 OCR Files
-
-| File | Responsibility |
-|---|---|
-| `ocr/ocr_extractor.py` | Calls Google Vision OCR when live extraction is allowed |
-| `ocr/ocr_cache_manager.py` | Reads and writes cached OCR text |
-| `ocr/ocr_cleaner.py` | Performs light OCR text cleaning |
-| `ocr/offline_loader.py` | Loads OCR cache during offline demo mode |
-| `ocr/sample_scans/` | Stores synthetic scanned documents |
-| `ocr/ocr_cache/` | Stores pre-extracted OCR text files |
-
-## 5.8 SOAP Files
+## ## 5.7  SOAP Files
 
 | File | Responsibility |
 |---|---|
@@ -679,7 +632,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 | `soap/soap_safety.py` | Stores SOAP safety constants and forbidden wording policy |
 | `soap/soap_auditor.py` | Audits SOAP text for unsupported or inconsistent content |
 
-## 5.9 Validator Files
+## 5.8 Validator Files
 
 | File | Responsibility |
 |---|---|
@@ -688,7 +641,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 | `validators/validation_report.py` | Produces readable validation reports |
 | `validators/__init__.py` | Marks validators as a package |
 
-## 5.10 Script Files
+## 5.9 Script Files
 
 | File | Responsibility | Primary Owner |
 |---|---|---|
@@ -709,7 +662,6 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 | `tests/test_chunking.py` | Tests chunk structure and metadata |
 | `tests/test_retrieval.py` | Tests retrieval quality and expected source types |
 | `tests/test_api.py` | Tests FastAPI endpoints |
-| `tests/test_ocr_cache.py` | Tests OCR cache loading behavior |
 | `tests/test_demo_smoke.py` | Tests demo startup and key workflows |
 
 ---
@@ -750,14 +702,14 @@ Streamlit display
 
 | Step | Owner | Implementation |
 |---|---|---|
-| Query input | Mahmoud Tarek Mahmoud | `backend/app/routes.py` |
+| Query input | Youssef Yassin Ibrahim | `backend/app/routes.py` |
 | Retrieval | Gamal Mohamed Gad | `rag/retriever.py` |
 | Prompt building | Gamal Mohamed Gad | `rag/prompt_builder.py` |
 | LLM call | Gamal Mohamed Gad | `rag/llm_client.py` |
 | Answer generation | Gamal Mohamed Gad | `rag/answer_generator.py` |
 | Citation formatting | Gamal Mohamed Gad | `rag/citations.py` |
 | Grounding validation | Gamal Mohamed Gad | `rag/grounding.py` |
-| API response | Mahmoud Tarek Mahmoud | `backend/app/schemas.py` |
+| API response | Youssef Yassin Ibrahim | `backend/app/schemas.py` |
 | UI display | Youssef Yassin Ibrahim | `frontend/app.py` |
 
 ## Retrieval Rules
@@ -949,52 +901,7 @@ Ingest into ChromaDB
 
 ---
 
-# 10. OCR Workflow
-
-OCR supports the demo by showing that scanned synthetic documents can be extracted and retrieved.
-
-## OCR Development Mode
-
-```text
-Synthetic scanned document
-        ↓
-Google Vision OCR
-        ↓
-Raw extracted text
-        ↓
-Light OCR cleaning
-        ↓
-Save to ocr_cache/
-        ↓
-Use cached text for ingestion/demo
-```
-
-## OCR Demo Mode
-
-```text
-OFFLINE_MODE=true
-        ↓
-Load text from ocr/ocr_cache/
-        ↓
-Display cached OCR text in Streamlit
-        ↓
-Use cached text for retrieval demo
-        ↓
-No live Google Vision call
-```
-
-## OCR Rules
-
-- Use Google Vision only during preparation.
-- Cache every OCR result.
-- During demo, use cached OCR only.
-- Do not rely on internet during presentation.
-- Do not use LLM-based OCR correction.
-- Use light regex-based cleaning only.
-
----
-
-# 11. API Workflow
+# 10. API Workflow
 
 The backend exposes a simple API layer.
 
@@ -1067,7 +974,7 @@ Recommended response:
 {
   "status": "ok",
   "chromadb": "available",
-  "offline_mode": true
+  "demo_ready": true
 }
 ```
 
@@ -1122,31 +1029,29 @@ Demo runs locally
 |---|---|---|---|
 | Ahmed Hesham Kamel | Team Leader & Data Engineering Lead | `generators/`, `validators/`, `data/`, `config/`, `soap/`, `docs/` | Valid dataset, schema, validation rules, deterministic SOAP, showcase patients, documentation |
 | Gamal Mohamed Gad | Retrieval-Augmented Generation Engineer | `ingestion/`, `rag/`, `data/chromadb/`, retrieval tests | Retrieval enrichment integration, chunking, embeddings, ChromaDB ingestion, retrieval, grounding, citations |
-| Mahmoud Tarek Mahmoud | FastAPI Backend Engineer | `backend/`, API services, API testing | API routes, schemas, backend orchestration |
-| Youssef Yassin Ibrahim | Streamlit and OCR Engineer | `frontend/`, `ocr/` | Demo UI, API client, OCR cache flow, OCR display |
+| Youssef Yassin Ibrahim | Frontend and Backend Engineer | `frontend/`, `backend/` | FastAPI backend, API routes, schemas, backend orchestration, Streamlit UI, API client, frontend-backend integration |
 | Mahmoud Mohamed El Faham | Deployment and Testing Engineer | `deployment/`, demo scripts, smoke tests, logs | Docker setup, reproducible local demo, tests, smoke checks |
 
 ---
 
 # 14. Folder Ownership Table
 
-| Folder | Primary Owner | Secondary Support |
-|---|---|---|
-| `backend/` | Mahmoud Tarek Mahmoud | Gamal Mohamed Gad |
-| `config/` | Ahmed Hesham Kamel | Mahmoud Mohamed El Faham |
-| `data/` | Ahmed Hesham Kamel | Gamal Mohamed Gad |
-| `deployment/` | Mahmoud Mohamed El Faham | Mahmoud Tarek Mahmoud and Youssef Yassin Ibrahim |
-| `docs/` | Ahmed Hesham Kamel | All team members |
-| `frontend/` | Youssef Yassin Ibrahim | Mahmoud Tarek Mahmoud |
-| `generators/` | Ahmed Hesham Kamel | None |
-| `ingestion/` | Gamal Mohamed Gad | Ahmed Hesham Kamel |
-| `logs/` | Mahmoud Mohamed El Faham | Ahmed Hesham Kamel |
-| `ocr/` | Youssef Yassin Ibrahim | Mahmoud Mohamed El Faham |
-| `rag/` | Gamal Mohamed Gad | Mahmoud Tarek Mahmoud |
-| `scripts/` | Shared by script type | Ahmed Hesham Kamel, Gamal Mohamed Gad, Mahmoud Mohamed El Faham |
-| `soap/` | Ahmed Hesham Kamel | Gamal Mohamed Gad |
-| `tests/` | Mahmoud Mohamed El Faham | All team members |
-| `validators/` | Ahmed Hesham Kamel | Mahmoud Mohamed El Faham |
+| Folder        | Primary Owner            | Secondary Support                                               |
+| ------------- | ------------------------ | --------------------------------------------------------------- |
+| `backend/`    | Youssef Yassin Ibrahim   | Gamal Mohamed Gad                                               |
+| `config/`     | Ahmed Hesham Kamel       | Mahmoud Mohamed El Faham                                        |
+| `data/`       | Ahmed Hesham Kamel       | Gamal Mohamed Gad                                               |
+| `deployment/` | Mahmoud Mohamed El Faham | Youssef Yassin Ibrahim                                          |
+| `docs/`       | Ahmed Hesham Kamel       | All team members                                                |
+| `frontend/`   | Youssef Yassin Ibrahim   | Gamal Mohamed Gad                                               |
+| `generators/` | Ahmed Hesham Kamel       | None                                                            |
+| `ingestion/`  | Gamal Mohamed Gad        | Ahmed Hesham Kamel                                              |
+| `logs/`       | Mahmoud Mohamed El Faham | Ahmed Hesham Kamel                                              |
+| `rag/`        | Gamal Mohamed Gad        | Youssef Yassin Ibrahim                                          |
+| `scripts/`    | Shared by script type    | Ahmed Hesham Kamel, Gamal Mohamed Gad, Mahmoud Mohamed El Faham |
+| `soap/`       | Ahmed Hesham Kamel       | Gamal Mohamed Gad                                               |
+| `tests/`      | Mahmoud Mohamed El Faham | All team members                                                |
+| `validators/` | Ahmed Hesham Kamel       | Mahmoud Mohamed El Faham                                        |
 
 ---
 
@@ -1156,43 +1061,29 @@ Demo runs locally
 
 Gamal depends on Ahmed for:
 
-- Stable patient schema
-- Valid patient JSON records
-- Correct constants and enums
-- Deterministic SOAP notes
-- Retrieval enrichment contract
-- Validation reports
-- Showcase patient list
+* Stable patient schema
+* Valid patient JSON records
+* Correct constants and enums
+* Deterministic SOAP notes
+* Retrieval enrichment contract
+* Validation reports
+* Showcase patient list
 
 If validation fails, ingestion must not proceed.
 
 ---
 
-## Gamal Mohamed Gad → Mahmoud Tarek Mahmoud
+## Gamal Mohamed Gad → Youssef Yassin Ibrahim
 
-Mahmoud Tarek depends on Gamal for:
+Youssef depends on Gamal for:
 
-- Working retriever
-- Working ChromaDB collection
-- Answer generation interface
-- Citation format
-- Retrieval test results
+* Working retriever
+* Working ChromaDB collection
+* Answer generation interface
+* Citation format
+* Retrieval test results
 
 The backend should call RAG modules instead of duplicating RAG logic.
-
----
-
-## Mahmoud Tarek Mahmoud → Youssef Yassin Ibrahim
-
-Youssef depends on Mahmoud Tarek for:
-
-- Stable API endpoints
-- Clear request/response schemas
-- Citation response format
-- Timeline response format
-- Summary response format
-
-The frontend should not bypass the backend.
 
 ---
 
@@ -1200,7 +1091,7 @@ The frontend should not bypass the backend.
 
 Mahmoud El Faham depends on the frontend and backend being runnable locally before Docker hardening.
 
-The OCR workflow must also be stable before demo smoke testing.
+The frontend-backend integration, API communication, and core demo workflow must be stable before demo smoke testing.
 
 ---
 
@@ -1208,13 +1099,13 @@ The OCR workflow must also be stable before demo smoke testing.
 
 The entire team depends on Mahmoud El Faham for:
 
-- Clean local setup
-- Docker Compose workflow
-- Environment variable documentation
-- Test execution
-- Demo warmup
-- Smoke testing
-- Runtime stability
+* Clean local setup
+* Docker Compose workflow
+* Environment variable documentation
+* Test execution
+* Demo warmup
+* Smoke testing
+* Runtime stability
 
 ---
 
@@ -1240,7 +1131,7 @@ The project must be developed in dependency order.
 15. Build FastAPI backend
 16. Test API endpoints
 17. Build Streamlit frontend
-18. Integrate OCR cache workflow
+18. Integrate frontend with backend
 19. Build Docker workflow
 20. Run smoke tests
 21. Prepare demo script
@@ -1254,6 +1145,7 @@ Do not build the frontend before retrieval works.
 ```
 
 A polished UI cannot compensate for weak retrieval quality.
+
 
 ---
 
@@ -1270,13 +1162,11 @@ What is blocked
 What I need from another member
 What should be tested next
 ```
-
 ## Integration Rules
 
 - Ahmed Hesham Kamel controls schema changes, validation rules, dataset generation, deterministic SOAP, and data documentation.
 - Gamal Mohamed Gad controls retrieval enrichment integration, chunking, metadata, retrieval behavior, grounding, and citations.
-- Mahmoud Tarek Mahmoud controls API contract and backend orchestration.
-- Youssef Yassin Ibrahim controls Streamlit display and OCR user flow.
+- Youssef Yassin Ibrahim controls API contracts, backend orchestration, Streamlit frontend development, and frontend-backend integration.
 - Mahmoud Mohamed El Faham controls Docker, demo scripts, test execution, logs, and local reproducibility.
 
 ## Pull Request Rules
@@ -1300,8 +1190,8 @@ Each pull request should include:
 | Ingestion checkpoint | ChromaDB has expected chunk count |
 | Retrieval checkpoint | Retrieval tests pass for showcase patients |
 | API checkpoint | `/query`, `/timeline`, `/summary`, `/health` work |
-| Frontend checkpoint | Streamlit displays answers, citations, timeline, allergy, OCR |
-| Demo checkpoint | Offline mode works and warmup script passes |
+| Frontend checkpoint | Streamlit displays answers, citations, timeline, and allergy history |
+| Demo checkpoint | Warmup script passes and the full demo workflow runs successfully |
 
 ---
 
@@ -1317,13 +1207,11 @@ The demo should show a stable and explainable system.
 3. Confirm deterministic SOAP exists and passes audit
 4. Confirm retrieval enrichment output is audited
 5. Confirm ChromaDB is populated
-6. Confirm OCR cache exists
-7. Set OFFLINE_MODE=true
-8. Run warmup_demo.py
-9. Start backend
-10. Start frontend
-11. Test showcase queries
-12. Prepare fallback screenshots
+6. Run warmup_demo.py
+7. Start backend
+8. Start frontend
+9. Test showcase queries
+10. Prepare fallback screenshots
 ```
 
 ## Demo Sequence
@@ -1338,22 +1226,21 @@ The demo should show a stable and explainable system.
 7. Show chronological patient history
 8. Open allergy history tab
 9. Show documented allergy retrieval
-10. Open OCR demo tab
-11. Show cached OCR text
-12. Ask question based on OCR content
-13. Show cited answer
+10. Show patient summary
+11. Demonstrate citation transparency
+12. Show retrieval-based answering from documented records
 ```
 
 ## Demo Rules
 
-- Use showcase patients only.
-- Use rehearsed queries.
-- Do not introduce new features during demo.
-- Do not claim diagnosis or treatment recommendation.
-- Use the phrase “retrieves documented records,” not “detects disease.”
-- Keep fallback screenshots ready.
+* Use showcase patients only.
+* Use rehearsed queries.
+* Do not introduce new features during demo.
+* Do not claim diagnosis or treatment recommendation.
+* Use the phrase “retrieves documented records,” not “detects disease.”
+* Keep fallback screenshots ready.
 
----
+```
 
 # 19. Required Commands
 
@@ -1399,7 +1286,7 @@ python scripts/warmup_demo.py
 
 ## Clear Separation of Concerns
 
-Each folder has a clear engineering responsibility. Data generation, validation, SOAP, retrieval enrichment, RAG, backend, frontend, OCR, and deployment are separated cleanly.
+Each folder has a clear engineering responsibility. Data generation, validation, SOAP, retrieval enrichment, RAG, backend, frontend, and deployment are separated cleanly.
 
 ## Strong Safety Boundaries
 
@@ -1407,11 +1294,11 @@ The architecture prevents unsupported medical claims by requiring retrieved evid
 
 ## Good Team Ownership
 
-The five-member structure maps naturally to the repository structure.
+The four-member structure maps naturally to the repository structure and provides clear ownership boundaries across the system.
 
 ## Demo Stability
 
-The system includes OCR cache, warmup scripts, validation gates, Docker Compose, and fallback planning.
+The system includes warmup scripts, validation gates, Docker Compose, and fallback planning to ensure a stable demonstration environment.
 
 ## Academic Suitability
 
@@ -1419,7 +1306,7 @@ The repository demonstrates realistic AI engineering practices without unnecessa
 
 ## Portfolio Value
 
-The system shows practical experience with FastAPI, Streamlit, ChromaDB, RAG, OCR, Docker, validation, and modular Python design.
+The system shows practical experience with FastAPI, Streamlit, ChromaDB, RAG, Docker, validation, and modular Python design.
 
 ---
 
@@ -1427,15 +1314,14 @@ The system shows practical experience with FastAPI, Streamlit, ChromaDB, RAG, OC
 
 The structure is strong, but the following areas should be strengthened before final demo:
 
-| Weakness | Recommended Fix |
-|---|---|
-| RAG documentation needs detailed implementation rules | Add `docs/rag_pipeline.md` |
-| Validation documentation needs official handoff clarity | Add `docs/validation_rules.md` |
-| Retrieval enrichment needs formal handoff documentation | Add `docs/retrieval_enrichment_contract.md` |
-| Chunking and metadata need a strict contract | Add `docs/chunking_and_metadata_contract.md` |
-| Citation output needs stable format | Add `docs/citation_contract.md` |
-| OCR tests may be missing | Add `tests/test_ocr_cache.py` |
-| Demo smoke tests may be missing | Add `tests/test_demo_smoke.py` |
+| Weakness                                                | Recommended Fix                              |
+| ------------------------------------------------------- | -------------------------------------------- |
+| RAG documentation needs detailed implementation rules   | Add `docs/rag_pipeline.md`                   |
+| Validation documentation needs official handoff clarity | Add `docs/validation_rules.md`               |
+| Retrieval enrichment needs formal handoff documentation | Add `docs/retrieval_enrichment_contract.md`  |
+| Chunking and metadata need a strict contract            | Add `docs/chunking_and_metadata_contract.md` |
+| Citation output needs stable format                     | Add `docs/citation_contract.md`              |
+| Demo smoke tests may be missing                         | Add `tests/test_demo_smoke.py`               |
 
 ---
 
@@ -1449,8 +1335,6 @@ Add docs/validation_rules.md
 Add docs/retrieval_enrichment_contract.md
 Add docs/chunking_and_metadata_contract.md
 Add docs/citation_contract.md
-Add docs/ocr_workflow.md
-Add tests/test_ocr_cache.py
 Add tests/test_demo_smoke.py
 Add frontend/components.py if Streamlit grows too large
 Add backend/app/health.py if health logic grows
@@ -1477,23 +1361,23 @@ Treatment recommendation
 Diagnosis support
 ```
 
+
 ---
 
 # 23. Why This Architecture Avoids Overengineering
 
 This architecture avoids overengineering by using simple, direct components:
 
-| Need | Practical Solution |
-|---|---|
-| Data storage | Local JSON files |
-| Vector search | Local ChromaDB |
-| Backend | Single FastAPI app |
-| Frontend | Single Streamlit app |
-| OCR | Google Vision with local cache |
-| Validation | Plain Python validation scripts |
-| SOAP | Deterministic template-based generation |
-| Deployment | Docker Compose only |
-| Testing | Focused project-level tests |
+| Need          | Practical Solution                      |
+| ------------- | --------------------------------------- |
+| Data storage  | Local JSON files                        |
+| Vector search | Local ChromaDB                          |
+| Backend       | Single FastAPI app                      |
+| Frontend      | Single Streamlit app                    |
+| Validation    | Plain Python validation scripts         |
+| SOAP          | Deterministic template-based generation |
+| Deployment    | Docker Compose only                     |
+| Testing       | Focused project-level tests             |
 
 The system does not introduce distributed infrastructure, unnecessary databases, message queues, autonomous agents, or production hospital features.
 
@@ -1505,19 +1389,18 @@ This is appropriate because the project is an academic AI engineering demo, not 
 
 This architecture is suitable for DEPI because it demonstrates:
 
-- Clear project scope
-- Safe AI usage
-- Grounded RAG workflow
-- Citation-based answers
-- Synthetic data handling
-- Validation rules
-- Retrieval enrichment for stronger semantic retrieval
-- OCR integration
-- Timeline retrieval
-- Allergy history retrieval
-- Docker-based reproducibility
-- Clear team ownership
-- Demo readiness
+* Clear project scope
+* Safe AI usage
+* Grounded RAG workflow
+* Citation-based answers
+* Synthetic data handling
+* Validation rules
+* Retrieval enrichment for stronger semantic retrieval
+* Timeline retrieval
+* Allergy history retrieval
+* Docker-based reproducibility
+* Clear team ownership
+* Demo readiness
 
 The architecture is easy to explain to evaluators and shows that the team understands both AI and software engineering.
 
@@ -1527,18 +1410,18 @@ The architecture is easy to explain to evaluators and shows that the team unders
 
 This architecture is suitable for GitHub because it demonstrates:
 
-- Clean repository organization
-- Modular Python engineering
-- FastAPI backend development
-- Streamlit frontend development
-- RAG pipeline implementation
-- ChromaDB integration
-- OCR cache workflow
-- Docker Compose setup
-- Testing and validation
-- Professional documentation
+* Clean repository organization
+* Modular Python engineering
+* FastAPI backend development
+* Streamlit frontend development
+* RAG pipeline implementation
+* ChromaDB integration
+* Docker Compose setup
+* Testing and validation
+* Professional documentation
 
 A reviewer can understand the project by reading the README, architecture documentation, API contract, RAG handoff contract, and demo script.
+
 
 ---
 
@@ -1546,24 +1429,23 @@ A reviewer can understand the project by reading the README, architecture docume
 
 This architecture is suitable for academic AI engineering because it includes:
 
-- Data generation
-- Schema design
-- Validation
-- Deterministic SOAP generation
-- Retrieval enrichment
-- Retrieval engineering
-- Chunking
-- Metadata design
-- Embeddings
-- Vector storage
-- Prompt construction
-- Grounding
-- Citation formatting
-- OCR preprocessing
-- API design
-- Frontend integration
-- Deployment reproducibility
-- Demo planning
+* Data generation
+* Schema design
+* Validation
+* Deterministic SOAP generation
+* Retrieval enrichment
+* Retrieval engineering
+* Chunking
+* Metadata design
+* Embeddings
+* Vector storage
+* Prompt construction
+* Grounding
+* Citation formatting
+* API design
+* Frontend integration
+* Deployment reproducibility
+* Demo planning
 
 It demonstrates AI engineering practice rather than only model usage.
 
@@ -1577,28 +1459,27 @@ The architecture is strong, modular, practical, and suitable for the project goa
 
 ## Strengths Behind the Score
 
-- Clear folder responsibilities
-- Strong team ownership boundaries
-- Correct separation between structured data, deterministic SOAP, retrieval enrichment, and RAG answer generation
-- Strong validation-first workflow
-- RAG pipeline is isolated and testable
-- OCR is cache-first and demo-safe
-- Docker is simple and local-first
-- Architecture avoids medical inference
-- Suitable for DEPI and GitHub
+* Clear folder responsibilities
+* Strong team ownership boundaries
+* Correct separation between structured data, deterministic SOAP, retrieval enrichment, and RAG answer generation
+* Strong validation-first workflow
+* RAG pipeline is isolated and testable
+* Docker is simple and local-first
+* Architecture avoids medical inference
+* Suitable for DEPI and GitHub
 
 ## Why It Is Not 10 / 10
 
 The structure can be improved by adding:
 
-- OCR cache tests
-- Demo smoke tests
-- More detailed RAG documentation
-- More detailed validation documentation
-- Chunking and citation contracts
-- Optional frontend component separation
+* Demo smoke tests
+* More detailed RAG documentation
+* More detailed validation documentation
+* Chunking and citation contracts
+* Optional frontend component separation
 
 These are improvements, not major architectural problems.
+
 
 ---
 
@@ -1619,7 +1500,7 @@ Data quality
 → demo stability
 ```
 
-The project is suitable for a five-member academic AI engineering team because each member owns a clear technical area and each folder maps naturally to real implementation responsibilities.
+The project is suitable for a four-member academic AI engineering team because each member owns a clear technical area and each folder maps naturally to real implementation responsibilities.
 
 The architecture avoids unnecessary complexity while still demonstrating strong software engineering practice. It is suitable for DEPI evaluation, GitHub portfolio presentation, team handoff, and academic AI engineering documentation.
 

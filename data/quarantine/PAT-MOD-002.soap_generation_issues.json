@@ -1,0 +1,49 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-002",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-002",
+      "visit_id": "VST-MOD-002-001",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as an initial encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-002",
+      "visit_id": "VST-MOD-002-002",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-002",
+      "visit_id": "VST-MOD-002-002",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='Prior visit reference is VST-MOD-002-001.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-002",
+      "visit_id": "VST-MOD-002-003",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-002",
+      "visit_id": "VST-MOD-002-003",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type symptom improvement event; event label Hypertension follow-up improved; event summary: Later follow-up documented improved blood pressure control in vitals while Amlodipine continued..'."
+    }
+  ]
+}

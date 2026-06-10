@@ -32,7 +32,7 @@ import pytest
 from soap.soap_contract import (
     ALLOWED_TEMPLATE_PLACEHOLDERS,
     CORE_TEMPLATE_PLACEHOLDERS,
-    EXPECTED_TEMPLATE_COUNTS,
+    EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER,
     PATIENT_TIERS,
     SEMANTIC_TEMPLATE_PLACEHOLDERS,
     SOAP_SECTIONS,
@@ -235,7 +235,7 @@ def test_expected_template_count_per_tier_for_each_section() -> None:
         moderate -> 4 templates per section
         chronic  -> 5 templates per section
     """
-    assert EXPECTED_TEMPLATE_COUNTS == {
+    assert EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER == {
         "normal": 3,
         "moderate": 4,
         "chronic": 5,
@@ -243,7 +243,7 @@ def test_expected_template_count_per_tier_for_each_section() -> None:
 
     for section in SOAP_SECTIONS:
         for tier in PATIENT_TIERS:
-            assert len(SOAP_TEMPLATES[section][tier]) == EXPECTED_TEMPLATE_COUNTS[tier]
+            assert len(SOAP_TEMPLATES[section][tier]) == EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER[tier]
 
 
 def test_every_registry_entry_is_soap_template_instance() -> None:
@@ -587,4 +587,4 @@ def test_each_section_has_templates_for_all_tiers(section: str) -> None:
 def test_each_tier_has_templates_for_all_sections(tier: str) -> None:
     """Parametrized tier coverage check for maintainability."""
     for section in SOAP_SECTIONS:
-        assert len(SOAP_TEMPLATES[section][tier]) == EXPECTED_TEMPLATE_COUNTS[tier]
+        assert len(SOAP_TEMPLATES[section][tier]) == EXPECTED_TEMPLATE_COUNT_PER_SECTION_BY_TIER[tier]

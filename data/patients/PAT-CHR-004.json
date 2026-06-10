@@ -2,193 +2,39 @@
   "schema_version": "1.0",
   "patient_id": "PAT-CHR-004",
   "demographics": {
-    "name": "Rana Emad",
-    "date_of_birth": "1976-01-21",
-    "sex": "female"
+    "name": "Amr Salah",
+    "date_of_birth": "1955-02-13",
+    "sex": "male"
   },
   "conditions": [
     "T2DM",
-    "HTN",
-    "Asthma"
+    "Dyslipidemia"
   ],
-  "allergy_registry": [],
+  "allergy_registry": [
+    {
+      "allergen": "Ibuprofen",
+      "reaction": "gastric discomfort",
+      "severity": "mild",
+      "recorded_date": "2023-02-16",
+      "source_visit_id": "VST-CHR-004-001"
+    }
+  ],
   "visits": [
     {
       "visit_id": "VST-CHR-004-001",
-      "visit_date": "2021-04-15",
+      "visit_date": "2023-02-16",
       "visit_type": "initial",
-      "attending_physician": "Dr. Salma Nabil",
+      "attending_physician": "Dr. Hany Fawzy",
       "diagnoses": [
         "T2DM",
-        "HTN",
-        "Asthma"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 150,
-        "bp_diastolic": 94,
-        "heart_rate": 84,
-        "weight_kg": 71.0,
-        "bmi": 25.6
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 8.7,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 181,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 45-year-old female patient seen for a initial visit. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This is documented as the first encounter type in the visit record.",
-        "objective": "Objective findings record blood pressure 150/94 mmHg, heart rate 84 bpm, weight 71.0 kg, and BMI 25.6. Laboratory results for this visit: HbA1c 8.7 % (HIGH); FBG 181 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-001.",
-        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: initial; timeline link: first documented visit.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. This is the first recorded visit in the available record."
-      },
-      "linked_documents": [
-        "DOC-CHR-004-001"
-      ],
-      "prior_visit_id": null
-    },
-    {
-      "visit_id": "VST-CHR-004-002",
-      "visit_date": "2021-07-14",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "Asthma"
-      ],
-      "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 93,
-        "heart_rate": 83,
-        "weight_kg": 70.6,
-        "bmi": 25.5
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 8.4,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 172,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "This follow-up record section describes a 45-year-old female patient at a follow_up visit. The documented condition list includes T2DM, HTN, Asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-001. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "objective": "The objective record for this visit includes blood pressure 148/93 mmHg, heart rate 83 bpm, weight 70.6 kg, and BMI 25.5. Laboratory values are recorded as: HbA1c 8.4 % (HIGH); FBG 172 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-002.",
-        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The plan data records medication entries without changing their documented form: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-001. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented."
-      },
-      "linked_documents": [
-        "DOC-CHR-004-002"
-      ],
-      "prior_visit_id": "VST-CHR-004-001"
-    },
-    {
-      "visit_id": "VST-CHR-004-003",
-      "visit_date": "2021-10-12",
-      "visit_type": "emergency",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "Asthma"
-      ],
-      "vitals": {
-        "bp_systolic": 146,
-        "bp_diastolic": 92,
-        "heart_rate": 96,
-        "weight_kg": 70.2,
-        "bmi": 25.4
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 82.0,
+        "bmi": 28.5
       },
       "labs": [
         {
@@ -200,17 +46,17 @@
         },
         {
           "lab_type": "FBG",
-          "value": 163,
+          "value": 166,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
-          "lab_type": "Creatinine",
-          "value": 1.0,
+          "lab_type": "LDL",
+          "value": 168,
           "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
@@ -220,64 +66,153 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The longitudinal chart includes a emergency visit for a 45-year-old female patient. Documented conditions are T2DM, HTN, Asthma. This is documented as an emergency encounter in the visit record. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "objective": "Recorded vitals include blood pressure 146/92 mmHg, heart rate 96 bpm, weight 70.2 kg, and BMI 25.4. Laboratory results for the encounter: HbA1c 8.2 % (HIGH); FBG 163 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-003.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-002. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-002."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this initial visit is documented with conditions T2DM, Dyslipidemia. This encounter has no prior_visit_id and is the first documented visit in the available timeline. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 0. Compared with the previous visit, the documented visit role is initial diagnosis. initial diagnosis was documented. baseline management plan established. Initial type 2 diabetes and dyslipidaemia diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "objective": "Objective evidence at this visit is recorded as 120/78 mmHg; heart rate 76 bpm; weight 82.0 kg; BMI 28.5. Labs: HbA1c 8.2 % (HIGH); FBG 166 mg/dL (HIGH); LDL 168 mg/dL (HIGH). This encounter has no prior_visit_id and is the first documented visit in the available timeline. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 0. Primary documented evidence: Documented laboratory entries include HbA1c 8.2 % flagged HIGH, FBG 166 mg/dL flagged HIGH, and LDL 168 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status started; trajectory simple start continue and Atorvastatin; status started; trajectory simple start continue. Initial type 2 diabetes and dyslipidaemia diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, Dyslipidemia. Initial type 2 diabetes and dyslipidaemia diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented. Primary documented evidence: Documented laboratory entries include HbA1c 8.2 % flagged HIGH, FBG 166 mg/dL flagged HIGH, and LDL 168 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status started; trajectory simple start continue and Atorvastatin; status started; trajectory simple start continue. Initial type 2 diabetes and dyslipidaemia diagnosis was documented and baseline management plan established with Metformin. Clinical event type: diagnosis documented. Event: Initial diagnosis documented.",
+        "plan": "Compared with prior record context, the plan lists only documented medication entries: Metformin 500 mg twice_daily via oral (status started; trajectory simple_start_continue); Atorvastatin 20 mg once_daily via oral (status started; trajectory simple_start_continue). This is the first recorded visit in the available record. Documented medication trajectory entries include Metformin; status started; trajectory simple start continue and Atorvastatin; status started; trajectory simple start continue. The allergy registry documents Ibuprofen; reaction gastric discomfort; severity mild."
       },
-      "linked_documents": [
-        "DOC-CHR-004-003"
-      ],
-      "prior_visit_id": "VST-CHR-004-002"
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial type 2 diabetes and dyslipidaemia diagnosis was documented and baseline management plan established with Metformin."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_lab_trend",
+        "retrieval_intent_tags": [
+          "dual_lab_trend",
+          "hba1c_trend",
+          "ldl_trend",
+          "diabetes_medication"
+        ]
+      }
     },
     {
-      "visit_id": "VST-CHR-004-004",
-      "visit_date": "2022-01-10",
-      "visit_type": "hospitalization",
-      "attending_physician": "Dr. Hany Fawzy",
+      "visit_id": "VST-CHR-004-002",
+      "visit_date": "2023-05-17",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Mona Kareem",
       "diagnoses": [
         "T2DM",
-        "HTN",
-        "Asthma"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 152,
-        "bp_diastolic": 95,
-        "heart_rate": 81,
-        "weight_kg": 69.8,
-        "bmi": 25.3
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 81.3,
+        "bmi": 28.3
+      },
+      "labs": [
+        {
+          "lab_type": "HbA1c",
+          "value": 8.4,
+          "unit": "%",
+          "reference_range": "4.0-5.6 %",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "FBG",
+          "value": 174,
+          "unit": "mg/dL",
+          "reference_range": "70-99 mg/dL",
+          "flag": "HIGH"
+        },
+        {
+          "lab_type": "LDL",
+          "value": 162,
+          "unit": "mg/dL",
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "Metformin",
+          "medication_class": "Biguanide",
+          "dose": "500 mg",
+          "frequency": "twice_daily",
+          "route": "oral",
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
+        },
+        {
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
+          "frequency": "once_daily",
+          "route": "oral",
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
+        }
+      ],
+      "soap_note": {
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, Dyslipidemia. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-001. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 90. Compared with the previous visit, the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The longitudinal objective record for this encounter includes 120/78 mmHg, heart rate 76 bpm, weight 81.3 kg, and BMI 28.3. Labs: HbA1c 8.4 % (HIGH); FBG 174 mg/dL (HIGH); LDL 162 mg/dL (HIGH). Documented laboratory entries include HbA1c 8.4 % flagged HIGH, FBG 174 mg/dL flagged HIGH, and LDL 162 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and dyslipidemia LDL laboratory documentation.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, Dyslipidemia. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include HbA1c 8.4 % flagged HIGH, FBG 174 mg/dL flagged HIGH, and LDL 162 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "Compared with prior record context, the plan lists only documented medication entries: Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Prior visit reference is VST-CHR-004-001. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. The allergy registry documents Ibuprofen; reaction gastric discomfort; severity mild."
+      },
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-004-001",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 90,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_lab_trend",
+        "retrieval_intent_tags": [
+          "dual_lab_trend",
+          "hba1c_trend",
+          "ldl_trend",
+          "diabetes_medication"
+        ]
+      }
+    },
+    {
+      "visit_id": "VST-CHR-004-003",
+      "visit_date": "2023-08-15",
+      "visit_type": "follow_up",
+      "attending_physician": "Dr. Yasser Amin",
+      "diagnoses": [
+        "T2DM",
+        "Dyslipidemia"
+      ],
+      "vitals": {
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 80.6,
+        "bmi": 28.1
       },
       "labs": [
         {
@@ -289,17 +224,17 @@
         },
         {
           "lab_type": "FBG",
-          "value": 154,
+          "value": 158,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
-          "lab_type": "Creatinine",
-          "value": 1.0,
+          "lab_type": "LDL",
+          "value": 145,
           "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
@@ -309,78 +244,69 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "The chart documents a 45-year-old female patient seen for a hospitalization visit. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This is documented as a hospitalization encounter in the visit record.",
-        "objective": "Recorded vitals include blood pressure 152/95 mmHg, heart rate 81 bpm, weight 69.8 kg, and BMI 25.3. Laboratory results for the encounter: HbA1c 7.9 % (HIGH); FBG 154 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-004.",
-        "assessment": "Recorded diagnoses for this encounter are summarized as T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "plan": "For this record entry, the plan documents medications as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-003."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. This encounter is described as part of the longitudinal record. The patient is 68 years old and male; conditions are T2DM, Dyslipidemia. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Retrieval focus includes patient-level conditions: type 2 diabetes and dyslipidemia; visit diagnoses: type 2 diabetes and dyslipidemia; laboratory entries: fbg, hba1c, and ldl; medication entries: atorvastatin and metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: dual_lab_trend; clinical event type: lab_improvement; retrieval tags: dual_lab_trend, hba1c_trend, ldl_trend, and diabetes_medication; timeline link: prior visit documented. Regarding the clinical course: Results compared with prior documented values.",
+        "objective": "Objective evidence at this visit is recorded as 120/78 mmHg; heart rate 76 bpm; weight 80.6 kg; BMI 28.1. Labs: HbA1c 7.9 % (HIGH); FBG 158 mg/dL (HIGH); LDL 145 mg/dL (HIGH). This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-002. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 180. Primary documented evidence: Documented laboratory entries include HbA1c 7.9 % flagged HIGH, FBG 158 mg/dL flagged HIGH, and LDL 145 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, Dyslipidemia. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include HbA1c 7.9 % flagged HIGH, FBG 158 mg/dL flagged HIGH, and LDL 145 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "Compared with prior record context, the plan lists only documented medication entries: Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Prior visit reference is VST-CHR-004-002. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. The allergy registry documents Ibuprofen; reaction gastric discomfort; severity mild."
       },
-      "linked_documents": [
-        "DOC-CHR-004-004"
-      ],
-      "prior_visit_id": "VST-CHR-004-003"
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-004-002",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 180,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_lab_trend",
+        "retrieval_intent_tags": [
+          "dual_lab_trend",
+          "hba1c_trend",
+          "ldl_trend",
+          "diabetes_medication"
+        ]
+      }
     },
     {
-      "visit_id": "VST-CHR-004-005",
-      "visit_date": "2022-04-10",
+      "visit_id": "VST-CHR-004-004",
+      "visit_date": "2023-11-13",
       "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
+      "attending_physician": "Dr. Salma Nabil",
       "diagnoses": [
         "T2DM",
-        "HTN",
-        "Asthma"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 142,
-        "bp_diastolic": 90,
-        "heart_rate": 80,
-        "weight_kg": 69.4,
-        "bmi": 25.2
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 79.9,
+        "bmi": 27.8
       },
       "labs": [
         {
           "lab_type": "HbA1c",
-          "value": 7.7,
+          "value": 7.5,
           "unit": "%",
           "reference_range": "4.0-5.6 %",
           "flag": "HIGH"
@@ -393,11 +319,11 @@
           "flag": "HIGH"
         },
         {
-          "lab_type": "Creatinine",
-          "value": 0.9,
+          "lab_type": "LDL",
+          "value": 125,
           "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
@@ -407,189 +333,64 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-04-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "This follow_up encounter is recorded for a 46-year-old female patient. The charted condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004.",
-        "objective": "The objective record for this visit includes blood pressure 142/90 mmHg, heart rate 80 bpm, weight 69.4 kg, and BMI 25.2. Laboratory values are recorded as: HbA1c 7.7 % (HIGH); FBG 145 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-005.",
-        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004.",
-        "plan": "For this record entry, the plan documents medications as Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-004."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, Dyslipidemia. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-003. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 270. Compared with the previous visit, the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The longitudinal objective record for this encounter includes 120/78 mmHg, heart rate 76 bpm, weight 79.9 kg, and BMI 27.8. Labs: HbA1c 7.5 % (HIGH); FBG 145 mg/dL (HIGH); LDL 125 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.5 % flagged HIGH, FBG 145 mg/dL flagged HIGH, and LDL 125 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and dyslipidemia LDL laboratory documentation.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, Dyslipidemia. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include HbA1c 7.5 % flagged HIGH, FBG 145 mg/dL flagged HIGH, and LDL 125 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-003. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 270. Retrieval focus includes patient-level conditions: type 2 diabetes and dyslipidemia; visit diagnoses: type 2 diabetes and dyslipidemia; laboratory entries: fbg, hba1c, and ldl; medication entries: atorvastatin and metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: dual_lab_trend; clinical event type: lab_improvement; retrieval tags: dual_lab_trend, hba1c_trend, ldl_trend, and diabetes_medication; timeline link: prior visit documented."
       },
-      "linked_documents": [
-        "DOC-CHR-004-005"
-      ],
-      "prior_visit_id": "VST-CHR-004-004"
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-004-003",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 270,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued."
+      },
+      "retrieval_context": {
+        "semantic_focus": "dual_lab_trend",
+        "retrieval_intent_tags": [
+          "dual_lab_trend",
+          "hba1c_trend",
+          "ldl_trend",
+          "diabetes_medication"
+        ]
+      }
     },
     {
-      "visit_id": "VST-CHR-004-006",
-      "visit_date": "2022-07-09",
+      "visit_id": "VST-CHR-004-005",
+      "visit_date": "2024-02-11",
       "visit_type": "follow_up",
-      "attending_physician": "Dr. Yasser Amin",
+      "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
         "T2DM",
-        "HTN",
-        "Asthma"
+        "Dyslipidemia"
       ],
       "vitals": {
-        "bp_systolic": 140,
-        "bp_diastolic": 89,
-        "heart_rate": 79,
-        "weight_kg": 69.0,
-        "bmi": 25.0
-      },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 7.4,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 136,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 1.0,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-04-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "For this follow_up entry, the record identifies a 46-year-old female patient. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective findings record blood pressure 140/89 mmHg, heart rate 79 bpm, weight 69.0 kg, and BMI 25.0. Laboratory results for this visit: HbA1c 7.4 % (HIGH); FBG 136 mg/dL (HIGH); Creatinine 1.0 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-006.",
-        "assessment": "The visit diagnosis summary includes T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-005."
-      },
-      "linked_documents": [
-        "DOC-CHR-004-006"
-      ],
-      "prior_visit_id": "VST-CHR-004-005"
-    },
-    {
-      "visit_id": "VST-CHR-004-007",
-      "visit_date": "2022-10-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Salma Nabil",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "Asthma"
-      ],
-      "vitals": {
-        "bp_systolic": 138,
-        "bp_diastolic": 88,
-        "heart_rate": 79,
-        "weight_kg": 68.6,
-        "bmi": 24.9
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 79.2,
+        "bmi": 27.6
       },
       "labs": [
         {
@@ -601,17 +402,17 @@
         },
         {
           "lab_type": "FBG",
-          "value": 127,
+          "value": 134,
           "unit": "mg/dL",
           "reference_range": "70-99 mg/dL",
           "flag": "HIGH"
         },
         {
-          "lab_type": "Creatinine",
-          "value": 0.9,
+          "lab_type": "LDL",
+          "value": 108,
           "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
+          "reference_range": "<100 mg/dL",
+          "flag": "HIGH"
         }
       ],
       "medications": [
@@ -621,175 +422,68 @@
           "dose": "500 mg",
           "frequency": "twice_daily",
           "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         },
         {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
+          "medication_name": "Atorvastatin",
+          "medication_class": "Statin",
+          "dose": "20 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2022-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-04-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
+          "start_date": "2023-02-16",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "This follow-up record section describes a 46-year-old female patient at a follow_up visit. The documented condition list includes T2DM, HTN, Asthma. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-006. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "objective": "Objective findings record blood pressure 138/88 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.9. Laboratory results for this visit: HbA1c 7.2 % (HIGH); FBG 127 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-007.",
-        "assessment": "The assessment entry is limited to the diagnoses recorded for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-006.",
-        "plan": "The plan section records the active medication entries as documented: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-006."
+        "subjective": "Compared with the previous visit, the clinical timeline has been updated. Compared with the surrounding record context, this follow_up visit is documented with conditions T2DM, Dyslipidemia. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 360. Compared with the previous visit, the documented visit role is lab trend review. laboratory trend reviewed. results compared with prior documented values. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "objective": "The longitudinal objective record for this encounter includes 120/78 mmHg, heart rate 76 bpm, weight 79.2 kg, and BMI 27.6. Labs: HbA1c 7.2 % (HIGH); FBG 134 mg/dL (HIGH); LDL 108 mg/dL (HIGH). Documented laboratory entries include HbA1c 7.2 % flagged HIGH, FBG 134 mg/dL flagged HIGH, and LDL 108 mg/dL flagged HIGH. The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and dyslipidemia LDL laboratory documentation.",
+        "assessment": "Across the documented sequence, this encounter lists diagnoses as T2DM, Dyslipidemia. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed. Primary documented evidence: Documented laboratory entries include HbA1c 7.2 % flagged HIGH, FBG 134 mg/dL flagged HIGH, and LDL 108 mg/dL flagged HIGH. Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued. Clinical event type: lab improvement. Event: Laboratory trend reviewed.",
+        "plan": "The longitudinal medication context is documented as Metformin 500 mg twice_daily via oral (status continued; trajectory simple_start_continue); Atorvastatin 20 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Metformin; status continued; trajectory simple start continue and Atorvastatin; status continued; trajectory simple start continue. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-004. The documented timeline pattern is regular quarterly follow-up pattern. The documented timeline_gap_days value is 360. Retrieval focus includes patient-level conditions: type 2 diabetes and dyslipidemia; visit diagnoses: type 2 diabetes and dyslipidemia; laboratory entries: fbg, hba1c, and ldl; medication entries: atorvastatin and metformin; visit type: follow_up; visit role: lab_trend_review; timeline pattern: regular_quarterly; semantic focus: dual_lab_trend; clinical event type: lab_improvement; retrieval tags: dual_lab_trend, hba1c_trend, ldl_trend, and diabetes_medication; timeline link: prior visit documented."
       },
-      "linked_documents": [
-        "DOC-CHR-004-007"
-      ],
-      "prior_visit_id": "VST-CHR-004-006"
-    },
-    {
-      "visit_id": "VST-CHR-004-008",
-      "visit_date": "2023-01-05",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Ahmed Farid",
-      "diagnoses": [
-        "T2DM",
-        "HTN",
-        "Asthma"
-      ],
-      "vitals": {
-        "bp_systolic": 136,
-        "bp_diastolic": 87,
-        "heart_rate": 79,
-        "weight_kg": 68.6,
-        "bmi": 24.8
+      "linked_documents": [],
+      "prior_visit_id": "VST-CHR-004-004",
+      "visit_role": "lab_trend_review",
+      "timeline_pattern": "regular_quarterly",
+      "timeline_gap_days": 360,
+      "clinical_event": {
+        "event_type": "lab_improvement",
+        "event_label": "Laboratory trend reviewed",
+        "event_summary": "Laboratory trend for type 2 diabetes and dyslipidaemia was reviewed at scheduled follow-up; Metformin therapy continued."
       },
-      "labs": [
-        {
-          "lab_type": "HbA1c",
-          "value": 6.9,
-          "unit": "%",
-          "reference_range": "4.0-5.6 %",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "FBG",
-          "value": 118,
-          "unit": "mg/dL",
-          "reference_range": "70-99 mg/dL",
-          "flag": "HIGH"
-        },
-        {
-          "lab_type": "Creatinine",
-          "value": 0.9,
-          "unit": "mg/dL",
-          "reference_range": "0.6-1.2 mg/dL",
-          "flag": "NORMAL"
-        }
-      ],
-      "medications": [
-        {
-          "medication_name": "Metformin",
-          "medication_class": "Biguanide",
-          "dose": "500 mg",
-          "frequency": "twice_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Glibenclamide",
-          "medication_class": "Sulfonylurea",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-01-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2022-04-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Salbutamol inhaler",
-          "medication_class": "SABA",
-          "dose": "100 mcg",
-          "frequency": "as_needed",
-          "route": "inhaled",
-          "start_date": "2021-04-15",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Budesonide inhaler",
-          "medication_class": "ICS",
-          "dose": "200 mcg",
-          "frequency": "twice_daily",
-          "route": "inhaled",
-          "start_date": "2021-10-12",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "For this follow_up entry, the record identifies a 46-year-old female patient. The condition list records T2DM, HTN, Asthma. The patient-level condition field documents type 2 diabetes, hypertension, and asthma. Retrieval focus includes patient-level conditions: type 2 diabetes, hypertension, and asthma; visit diagnoses: type 2 diabetes, hypertension, and asthma; laboratory entries: creatinine, fbg, and hba1c; medication entries: amlodipine, budesonide inhaler, glibenclamide, lisinopril, metformin, and salbutamol inhaler; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Recorded vitals include blood pressure 136/87 mmHg, heart rate 79 bpm, weight 68.6 kg, and BMI 24.8. Laboratory results for the encounter: HbA1c 6.9 % (HIGH); FBG 118 mg/dL (HIGH); Creatinine 0.9 mg/dL (NORMAL). The visit contains documented monitoring context for type 2 diabetes laboratory follow-up and hypertension kidney-related laboratory documentation. Linked document references: DOC-CHR-004-008.",
-        "assessment": "Assessment summarizes the diagnoses documented for this visit: T2DM, HTN, Asthma. The visit diagnosis field documents type 2 diabetes, hypertension, and asthma for this encounter. The patient-level condition field documents type 2 diabetes, hypertension, and asthma.",
-        "plan": "The documented plan keeps the medication list as recorded: Metformin 500 mg twice_daily via oral; Glibenclamide 5 mg once_daily via oral; Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral; Salbutamol inhaler 100 mcg as_needed via inhaled; Budesonide inhaler 200 mcg twice_daily via inhaled. The medication list includes documented entries related to type 2 diabetes medication documentation, hypertension medication documentation, and asthma medication documentation. Prior visit reference is VST-CHR-004-007. This encounter is linked to a prior documented visit through prior_visit_id VST-CHR-004-007."
-      },
-      "linked_documents": [
-        "DOC-CHR-004-008"
-      ],
-      "prior_visit_id": "VST-CHR-004-007"
+      "retrieval_context": {
+        "semantic_focus": "dual_lab_trend",
+        "retrieval_intent_tags": [
+          "dual_lab_trend",
+          "hba1c_trend",
+          "ldl_trend",
+          "diabetes_medication"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "chronic"
+    "tier": "chronic",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "t2dm_dyslipidemia_dual_lab_trend_monitoring",
+    "timeline_pattern": "regular_quarterly",
+    "semantic_focus": "dual_lab_trend",
+    "retrieval_signature": "T2DM-Dyslipidemia|Metformin-Atorvastatin|dual_lab_trend|regular_quarterly|HbA1c-LDL",
+    "retrieval_intent_tags": [
+      "dual_lab_trend",
+      "hba1c_trend",
+      "ldl_trend",
+      "diabetes_medication"
+    ],
+    "soap_style": "timeline_oriented",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "lab_trend_query",
+      "timeline_query"
+    ]
   }
 }

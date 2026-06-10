@@ -2,224 +2,149 @@
   "schema_version": "1.0",
   "patient_id": "PAT-MOD-007",
   "demographics": {
-    "name": "Sherif Magdy",
-    "date_of_birth": "1980-10-12",
-    "sex": "male"
+    "name": "Dina Samir",
+    "date_of_birth": "1981-08-22",
+    "sex": "female"
   },
   "conditions": [
-    "HTN"
+    "Allergic_Rhinitis"
   ],
   "allergy_registry": [
     {
-      "allergen": "Sulfa",
-      "reaction": "itching",
-      "severity": "moderate",
-      "recorded_date": "2023-07-10",
+      "allergen": "Latex",
+      "reaction": "contact dermatitis",
+      "severity": "mild",
+      "recorded_date": "2023-02-11",
       "source_visit_id": "VST-MOD-007-001"
     }
   ],
   "visits": [
     {
       "visit_id": "VST-MOD-007-001",
-      "visit_date": "2023-07-10",
+      "visit_date": "2023-02-11",
       "visit_type": "initial",
       "attending_physician": "Dr. Salma Nabil",
       "diagnoses": [
-        "HTN"
+        "Allergic_Rhinitis"
       ],
       "vitals": {
-        "bp_systolic": 150,
-        "bp_diastolic": 94,
-        "heart_rate": 82,
-        "weight_kg": 79.3,
-        "bmi": 24.7
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 23.6
       },
       "labs": [],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
+          "medication_name": "Cetirizine",
+          "medication_class": "Second-generation antihistamine",
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-07-10",
-          "stop_date": null
+          "start_date": "2023-02-11",
+          "stop_date": null,
+          "medication_status": "started",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "During this initial encounter, the record identifies a 42-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: initial; timeline link: first documented visit.",
-        "objective": "Objective data from the encounter records blood pressure 150/94 mmHg, heart rate 82 bpm, weight 79.3 kg, and BMI 24.7. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-007-001.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "The documented plan includes the following medication entries: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. This is the first recorded visit in the available record. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: initial; timeline link: first documented visit."
+        "subjective": "This encounter records the patient's clinical status. This initial note describes a 41-year-old female patient. Documented conditions are Allergic_Rhinitis. The patient-level condition field documents allergic rhinitis. This is documented as an initial encounter in the visit record. Regarding the clinical course: Initial diagnosis was documented. Baseline management plan established.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 23.6. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Initial allergic rhinitis diagnosis was documented and baseline management plan established with Cetirizine. The diagnosis summary for this encounter is Allergic_Rhinitis. The visit diagnosis field documents allergic rhinitis for this encounter. The patient-level condition field documents allergic rhinitis.",
+        "plan": "The plan keeps medication information in recorded form: Cetirizine 10 mg once_daily via oral (status started; trajectory simple_start_continue). Documented medication trajectory entries include Cetirizine; status started; trajectory simple start continue. This is the first recorded visit in the available record."
       },
-      "linked_documents": [
-        "DOC-MOD-007-001"
-      ],
-      "prior_visit_id": null
+      "linked_documents": [],
+      "prior_visit_id": null,
+      "visit_role": "initial_diagnosis",
+      "timeline_pattern": "seasonal_exacerbation",
+      "timeline_gap_days": 0,
+      "clinical_event": {
+        "event_type": "diagnosis_documented",
+        "event_label": "Initial diagnosis documented",
+        "event_summary": "Initial allergic rhinitis diagnosis was documented and baseline management plan established with Cetirizine."
+      },
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "allergic_rhinitis_control",
+          "cetirizine_response",
+          "seasonal_asthma"
+        ]
+      }
     },
     {
       "visit_id": "VST-MOD-007-002",
-      "visit_date": "2023-09-08",
+      "visit_date": "2023-04-27",
       "visit_type": "follow_up",
       "attending_physician": "Dr. Ahmed Farid",
       "diagnoses": [
-        "HTN"
+        "Allergic_Rhinitis"
       ],
       "vitals": {
-        "bp_systolic": 148,
-        "bp_diastolic": 93,
-        "heart_rate": 81,
-        "weight_kg": 78.9,
-        "bmi": 24.5
+        "bp_systolic": 120,
+        "bp_diastolic": 78,
+        "heart_rate": 76,
+        "weight_kg": 74.0,
+        "bmi": 23.6
       },
       "labs": [],
       "medications": [
         {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
+          "medication_name": "Cetirizine",
+          "medication_class": "Second-generation antihistamine",
           "dose": "10 mg",
           "frequency": "once_daily",
           "route": "oral",
-          "start_date": "2023-07-10",
-          "stop_date": null
+          "start_date": "2023-02-11",
+          "stop_date": null,
+          "medication_status": "continued",
+          "trajectory_event": "simple_start_continue"
         }
       ],
       "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 42-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "Objective data from the encounter records blood pressure 148/93 mmHg, heart rate 81 bpm, weight 78.9 kg, and BMI 24.5. Laboratory results: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-007-002.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-007-001. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-007-001."
+        "subjective": "This encounter records the patient's clinical status. This follow_up note describes a 41-year-old female patient. Documented conditions are Allergic_Rhinitis. The patient-level condition field documents allergic rhinitis. This is documented as a follow-up encounter in the visit record. Regarding the clinical course: Symptom control reviewed. Clinical response to therapy assessed.",
+        "objective": "Recorded measurements include 120/78 mmHg, heart rate 76 bpm, weight 74.0 kg, and BMI 23.6. Laboratory entries: no lab results recorded. No laboratory trend entries are documented for this visit. Linked documents: none.",
+        "assessment": "Symptom control for allergic rhinitis with Cetirizine was reviewed and documented as improved at follow-up. The diagnosis summary for this encounter is Allergic_Rhinitis. The visit diagnosis field documents allergic rhinitis for this encounter. The patient-level condition field documents allergic rhinitis.",
+        "plan": "The plan keeps medication information in recorded form: Cetirizine 10 mg once_daily via oral (status continued; trajectory simple_start_continue). Documented medication trajectory entries include Cetirizine; status continued; trajectory simple start continue. Prior visit reference is VST-MOD-007-001."
       },
-      "linked_documents": [
-        "DOC-MOD-007-002"
-      ],
-      "prior_visit_id": "VST-MOD-007-001"
-    },
-    {
-      "visit_id": "VST-MOD-007-003",
-      "visit_date": "2023-11-07",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Laila Mostafa",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 146,
-        "bp_diastolic": 92,
-        "heart_rate": 80,
-        "weight_kg": 78.5,
-        "bmi": 24.4
+      "linked_documents": [],
+      "prior_visit_id": "VST-MOD-007-001",
+      "visit_role": "symptom_control_review",
+      "timeline_pattern": "seasonal_exacerbation",
+      "timeline_gap_days": 75,
+      "clinical_event": {
+        "event_type": "symptom_improvement",
+        "event_label": "Symptom control reviewed",
+        "event_summary": "Symptom control for allergic rhinitis with Cetirizine was reviewed and documented as improved at follow-up."
       },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-07-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "A 43-year-old male patient is recorded for a follow_up visit. The documented condition list includes HTN. The patient-level condition field documents hypertension. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-007-002.",
-        "objective": "Objective findings record blood pressure 146/92 mmHg, heart rate 80 bpm, weight 78.5 kg, and BMI 24.4. Laboratory results for this visit: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-007-003.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-007-002. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-007-002."
-      },
-      "linked_documents": [
-        "DOC-MOD-007-003"
-      ],
-      "prior_visit_id": "VST-MOD-007-002"
-    },
-    {
-      "visit_id": "VST-MOD-007-004",
-      "visit_date": "2024-01-06",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Hany Fawzy",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 144,
-        "bp_diastolic": 91,
-        "heart_rate": 79,
-        "weight_kg": 78.1,
-        "bmi": 24.3
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-07-10",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "During this follow_up encounter, the record identifies a 43-year-old male patient. The condition list includes HTN. The patient-level condition field documents hypertension. Retrieval focus includes patient-level conditions: hypertension; visit diagnoses: hypertension; medication entries: lisinopril; visit type: follow_up; timeline link: prior visit documented.",
-        "objective": "The visit measurements include blood pressure 144/91 mmHg, heart rate 79 bpm, weight 78.1 kg, and BMI 24.3. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-007-004.",
-        "assessment": "The recorded assessment for this encounter is based on the visit diagnosis list: HTN. The visit diagnosis field documents hypertension for this encounter. No laboratory entries are documented for this visit.",
-        "plan": "The visit plan lists the medication entries documented in the record: Lisinopril 10 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-007-003. This encounter is linked to a prior documented visit through prior_visit_id VST-MOD-007-003."
-      },
-      "linked_documents": [
-        "DOC-MOD-007-004"
-      ],
-      "prior_visit_id": "VST-MOD-007-003"
-    },
-    {
-      "visit_id": "VST-MOD-007-005",
-      "visit_date": "2024-04-05",
-      "visit_type": "follow_up",
-      "attending_physician": "Dr. Mona Kareem",
-      "diagnoses": [
-        "HTN"
-      ],
-      "vitals": {
-        "bp_systolic": 142,
-        "bp_diastolic": 90,
-        "heart_rate": 78,
-        "weight_kg": 77.7,
-        "bmi": 24.2
-      },
-      "labs": [],
-      "medications": [
-        {
-          "medication_name": "Lisinopril",
-          "medication_class": "ACE Inhibitor",
-          "dose": "10 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2023-07-10",
-          "stop_date": null
-        },
-        {
-          "medication_name": "Amlodipine",
-          "medication_class": "Calcium Channel Blocker",
-          "dose": "5 mg",
-          "frequency": "once_daily",
-          "route": "oral",
-          "start_date": "2024-04-05",
-          "stop_date": null
-        }
-      ],
-      "soap_note": {
-        "subjective": "The chart documents a 43-year-old male patient seen for a follow_up visit. The condition list records HTN. The patient-level condition field documents hypertension. This is documented as a follow-up encounter in the visit record.",
-        "objective": "The visit measurements include blood pressure 142/90 mmHg, heart rate 78 bpm, weight 77.7 kg, and BMI 24.2. Laboratory entries are recorded as: no lab results recorded. No laboratory entries are documented for this visit. Linked document references: DOC-MOD-007-005.",
-        "assessment": "The visit diagnosis list records HTN. The visit diagnosis field documents hypertension for this encounter. The patient-level condition field documents hypertension.",
-        "plan": "Medication details in the plan are recorded as Lisinopril 10 mg once_daily via oral; Amlodipine 5 mg once_daily via oral. The medication list includes documented entries related to hypertension medication documentation. Prior visit reference is VST-MOD-007-004."
-      },
-      "linked_documents": [
-        "DOC-MOD-007-005"
-      ],
-      "prior_visit_id": "VST-MOD-007-004"
+      "retrieval_context": {
+        "semantic_focus": "symptom_control",
+        "retrieval_intent_tags": [
+          "allergic_rhinitis_control",
+          "cetirizine_response",
+          "seasonal_asthma"
+        ]
+      }
     }
   ],
   "metadata": {
-    "tier": "moderate"
+    "tier": "moderate",
+    "dataset_version": "v1.7-lite",
+    "story_arc": "allergic_rhinitis_cetirizine_seasonal_control",
+    "timeline_pattern": "seasonal_exacerbation",
+    "semantic_focus": "symptom_control",
+    "retrieval_signature": "Allergic_Rhinitis|Cetirizine|symptom_control|seasonal_exacerbation|rhinitis-pollen",
+    "retrieval_intent_tags": [
+      "allergic_rhinitis_control",
+      "cetirizine_response",
+      "seasonal_asthma"
+    ],
+    "soap_style": "concise",
+    "primary_retrieval_targets": [
+      "medication_query",
+      "symptom_control_query",
+      "allergy_query"
+    ]
   }
 }

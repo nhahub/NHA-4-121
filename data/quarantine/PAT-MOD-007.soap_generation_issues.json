@@ -1,0 +1,25 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-MOD-007",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-007",
+      "visit_id": "VST-MOD-007-001",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type symptom flare event; event label Seasonal rhinitis symptoms documented; event summary: Seasonal sneezing, nasal congestion, and itchy eyes were documented and Cetirizine was started..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-MOD-007",
+      "visit_id": "VST-MOD-007-002",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type symptom improvement event; event label Rhinitis symptoms controlled; event summary: Follow-up documented improved rhinitis symptoms while Cetirizine continued..'."
+    }
+  ]
+}

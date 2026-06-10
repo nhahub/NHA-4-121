@@ -1,0 +1,137 @@
+{
+  "script_version": "generate-soap-v1.7-lite",
+  "dataset_version": "v1.7-lite",
+  "patient_id": "PAT-CHR-005",
+  "created_at_utc": "20260518T223957Z",
+  "validation_issues": [],
+  "soap_issues": [
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-001",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as an initial encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-001",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-ALLERGY-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-001",
+      "section": null,
+      "message": "Allergen 'Codeine' appears near medication or treatment context."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-002",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-002",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-ALLERGY-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-002",
+      "section": null,
+      "message": "Allergen 'Codeine' appears near medication or treatment context."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-003",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-003",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-003",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='Prior visit reference is VST-CHR-005-002.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-004",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a hospitalization encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-004",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-004",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type hospitalization event; event label Hospitalization for poor chronic control; event summary: Hospitalization visit documented poor control in T2DM, HTN, and CKD context with stabilization planning..'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-004",
+      "section": "plan",
+      "message": "Required fact text missing or changed in plan: prior_text='Prior visit reference is VST-CHR-005-003.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-005",
+      "section": "subjective",
+      "message": "Required fact text missing or changed in subjective: visit_context_text='This is documented as a follow-up encounter in the visit record.'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-005",
+      "section": "objective",
+      "message": "Required fact text missing or changed in objective: linked_documents_text='none'."
+    },
+    {
+      "rule_id": "SOAP-FACT-001",
+      "severity": "FAIL",
+      "patient_id": "PAT-CHR-005",
+      "visit_id": "VST-CHR-005-005",
+      "section": "assessment",
+      "message": "Required fact text missing or changed in assessment: clinical_event_text='The clinical_event field documents event type post-discharge review event; event label Post-discharge stabilization documented; event summary: Post-discharge follow-up documented stabilization, medication reconciliation, and continued creatinine monitoring..'."
+    }
+  ]
+}
