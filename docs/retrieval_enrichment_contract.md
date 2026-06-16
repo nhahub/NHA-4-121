@@ -50,7 +50,6 @@ The source truth remains:
 ```text
 validated patient JSON
 + deterministic SOAP notes
-+ linked OCR-cached documents when available
 ```
 
 Retrieval enrichment text must only restate, organize, or label documented facts already present in the structured record.
@@ -447,7 +446,6 @@ patient JSON
 visit object
 SOAP note
 allergy_registry
-linked OCR-cached document reference when applicable
 ```
 
 ## 9.3 Must Not Use LLMs

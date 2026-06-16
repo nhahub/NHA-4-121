@@ -13,7 +13,7 @@
 | Document Type | Official Data-to-RAG Engineering Handoff Contract |
 | Data Owner | Ahmed Hesham Kamel — Team Leader & Data Engineering Lead |
 | RAG Owner | Gamal Mohamed Gad — Retrieval-Augmented Generation Engineer |
-| Secondary Audience | Backend Developer, Frontend/OCR Developer, DevOps/Testing Member, DEPI Evaluators |
+| Secondary Audience | Backend Developer, Frontend Developer, DevOps/Testing Member, DEPI Evaluators |
 | Status | READY FOR FINAL HANDOFF |
 | Version | v1.0 |
 | Scope | Defines the exact handoff boundary between validated synthetic patient data and the RAG implementation layer |
@@ -443,7 +443,6 @@ Gamal must not assume:
 - that source types may be renamed freely,
 - that chunking may combine multiple visits into one evidence chunk,
 - that patient-level summaries may replace visit-level evidence,
-- that OCR outputs are live API outputs during demo,
 - that RAG answers may include facts not present in retrieved chunks.
 
 ---
@@ -774,12 +773,6 @@ visit_id
 visit_date
 source_type
 chunk_id
-```
-
-For OCR-linked documents, citation may also include:
-
-```text
-document_id
 ```
 
 A citation should allow the team to answer:

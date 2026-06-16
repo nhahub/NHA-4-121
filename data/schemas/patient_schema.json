@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://depi.local/schemas/patient_schema.json",
   "title": "AI Based Clinical Record Summarization System — Patient Record Schema",
-  "description": "Final locked JSON Schema for synthetic patient records used by deterministic generators, validators, SOAP generation, chunking, ChromaDB ingestion, RAG retrieval, grounded answer generation, timeline generation, allergy retrieval, lab trend retrieval, OCR linkage, and stable citation generation.",
+  "description": "Final locked JSON Schema for synthetic patient records used by deterministic generators, validators, SOAP generation, chunking, ChromaDB ingestion, RAG retrieval, grounded answer generation, timeline generation, allergy retrieval, lab trend retrieval, and stable citation generation.",
   "$comment": "FINAL LOCKED SCHEMA CONTRACT. BP must exist only inside visits[].vitals.bp_systolic and visits[].vitals.bp_diastolic. BP must never appear in labs, lab_type enum, metadata, or chunk metadata. CKD requires T2DM, HTN, and metadata.tier='chronic'. timeline_events is forbidden. demographics.age is forbidden. Valid medication routes are oral and inhaled only. subcutaneous is forbidden.",
   "type": "object",
   "additionalProperties": false,
@@ -53,7 +53,7 @@
     },
     "visits": {
       "type": "array",
-      "description": "Chronological visit records. Each visit is the atomic unit for timeline generation, SOAP doctor-note chunking, lab-result chunking, prescription chunking, OCR document linkage, and citation anchors.",
+      "description": "Chronological visit records. Each visit is the atomic unit for timeline generation, SOAP doctor-note chunking, lab-result chunking, prescription chunking, and citation anchors.",
       "items": {
         "$ref": "#/$defs/visit"
       },
@@ -226,7 +226,7 @@
       }
     },
     "visit": {
-      "$comment": "A visit is the atomic boundary for timeline generation, citation anchors, OCR document linkage, and per-visit chunking.",
+      "$comment": "A visit is the atomic boundary for timeline generation, citation anchors, and per-visit chunking.",
       "type": "object",
       "additionalProperties": false,
       "required": [
@@ -291,7 +291,7 @@
         },
         "linked_documents": {
           "type": "array",
-          "description": "OCR and source-document linkage used by citation and ingestion layers.",
+          "description": "Source-document linkage used by citation and ingestion layers.",
           "items": {
             "$ref": "#/$defs/document_id"
           },

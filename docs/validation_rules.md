@@ -13,7 +13,7 @@
 | Document Type | Official Validation Rules Reference |
 | Primary Owner | Ahmed Hesham Kamel — Data Engineering Lead |
 | Primary Audience | Gamal Mohamed Gad — AI/RAG Engineer |
-| Secondary Audience | Backend Developer, Frontend/OCR Developer, DevOps/Testing Member, DEPI Evaluators |
+| Secondary Audience | Backend Developer, Frontend Developer, DevOps/Testing Member, DEPI Evaluators |
 | Status | READY FOR FINAL HANDOFF |
 | Version | v1.0 |
 | Scope | Patient JSON validation rules, dataset-level checks, validation gates, failure handling, and pipeline commands |

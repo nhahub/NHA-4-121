@@ -55,7 +55,7 @@ RAG_SYSTEM_PROMPT: Final[str] = (
     "Keep your answer concise and factual. Do not speculate."
 )
 
-DEFAULT_GROQ_MODEL:         Final[str]          = "llama3-70b-8192"
+DEFAULT_GROQ_MODEL:         Final[str]          = "llama-3.3-70b-versatile"
 DEFAULT_MAX_TOKENS:         Final[int]          = 512
 DEFAULT_TEMPERATURE:        Final[float]        = 0.0
 DEFAULT_TOP_K:              Final[int]          = 5
@@ -214,52 +214,35 @@ def call_groq(
     max_tokens: int = DEFAULT_MAX_TOKENS,
 ) -> str:
     """
-    Call the Groq API and return the response text.
+    Call the active LLM provider and return the response text.
 
-    If _groq_call_override is set, calls that instead (test hook).
-    Retries up to MAX_RETRIES times on RateLimitError with exponential backoff.
+    If _groq_call_override is set, calls that instead (test hook — Step 18B
+    unit tests depend on this hook and continue to pass unchanged).
+
+    Provider selection is controlled by environment variables:
+      LLM_PROVIDER=groq    (default) — Groq llama-3.3-70b-versatile
+      LLM_PROVIDER=gemini            — Google Gemini free-tier fallback
+      LLM_FALLBACK_PROVIDER=gemini   — auto-fallback when primary fails
+
+    No callers outside this function need to know which provider is active.
     """
-    # Test mock override
+    # Test mock override — preserved from Step 18B, unchanged
     if _groq_call_override is not None:
         return _groq_call_override(system_prompt, user_message)
 
-    api_key = os.environ.get("GROQ_API_KEY")
-    if not api_key:
-        raise AnswerGeneratorError("GROQ_API_KEY environment variable not set.")
+    from rag.llm_providers.router import generate as _provider_generate
+    from rag.llm_providers.base import LLMProviderError
 
     try:
-        import groq as groq_sdk
-    except ImportError as exc:
-        raise AnswerGeneratorError(
-            "groq package not installed. Run: pip install groq"
-        ) from exc
-
-    client = groq_sdk.Groq(api_key=api_key)
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {"role": "user",   "content": user_message},
-    ]
-
-    for attempt in range(MAX_RETRIES + 1):
-        try:
-            response = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-            )
-            return response.choices[0].message.content.strip()
-
-        except groq_sdk.RateLimitError:
-            if attempt == MAX_RETRIES:
-                raise AnswerGeneratorError(
-                    f"Groq rate limit exceeded after {MAX_RETRIES} retries."
-                )
-            delay = RETRY_DELAYS_SECONDS[attempt]
-            time.sleep(delay)
-
-        except groq_sdk.APIError as exc:
-            raise AnswerGeneratorError(f"Groq API error: {exc}") from exc
+        return _provider_generate(
+            system_prompt,
+            user_message,
+            model=model,
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+    except LLMProviderError as exc:
+        raise AnswerGeneratorError(str(exc)) from exc
 
 
 # ---------------------------------------------------------------------------

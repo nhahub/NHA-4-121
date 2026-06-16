@@ -13,7 +13,7 @@
 | Document Type      | Official Data Schema Implementation Contract                                                                                                                         |
 | Primary Owner      | Ahmed Hesham Kamel — Data Engineering Lead                                                                                                                           |
 | Primary Audience   | Gamal Mohamed Gad — AI/RAG Engineer                                                                                                                                  |
-| Secondary Audience | Backend Developer, Frontend/OCR Developer, DevOps/Testing Member, DEPI Evaluators                                                                                    |
+| Secondary Audience | Backend Developer, Frontend Developer, DevOps/Testing Member, DEPI Evaluators                                                                                    |
 | Status             | READY FOR FINAL HANDOFF — Official Schema Handoff Contract                                                                                                           |
 | Version            | v1.1                                                                                                                                                                 |
 | Scope              | Patient JSON structure, schema meaning, RAG dependencies, ingestion assumptions, forbidden fields, stability rules                                                   |
@@ -67,7 +67,7 @@ This document is part of a layered documentation system. It does not replace the
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `docs/architecture_summary.md`             | Provides the high-level system architecture and end-to-end workflow that this schema contract supports.                                                                    |
 | `docs/team_ownership_and_architecture.md` | Defines the full system architecture, folder ownership, team responsibilities, dependency order, and high-level RAG flow. This schema contract builds on that architecture. |
-| `docs/project_scope_and_safety_rules.md`  | Defines non-negotiable safety boundaries, medical-scope restrictions, and LLM/RAG/OCR safety rules.                                                                        |
+| `docs/project_scope_and_safety_rules.md`  | Defines non-negotiable safety boundaries, medical-scope restrictions, and LLM/RAG safety rules.                                                                        |
 | `docs/validation_rules.md`                | Defines V1–V11 validation behavior and dataset-level checks in detail. This document explains what the schema means; the validation document explains how correctness is enforced. |
 | `docs/data_generation_pipeline.md`        | Explains how structured patients, visits, labs, medications, allergies, SOAP notes, and final exports are generated.                                                       |
 | `docs/rag_handoff_contract.md`            | Defines what Ahmed hands off to Gamal and what the RAG layer may safely assume.                                                                                            |
@@ -474,7 +474,7 @@ A visit may contain:
 * structured lab results,
 * structured medication records,
 * narrative SOAP text,
-* linked OCR/scanned document references,
+* linked source-document references,
 * and connection to a prior visit.
 
 ## 9.2 Visit Chronology

@@ -13,7 +13,7 @@
 | Document Type | Official Data Generation Pipeline Reference |
 | Primary Owner | Ahmed Hesham Kamel — Data Engineering Lead |
 | Primary Audience | Gamal Mohamed Gad — AI/RAG Engineer |
-| Secondary Audience | Backend Developer, Frontend/OCR Developer, DevOps/Testing Member, DEPI Evaluators |
+| Secondary Audience | Backend Developer, Frontend Developer, DevOps/Testing Member, DEPI Evaluators |
 | Status | READY FOR FINAL HANDOFF |
 | Version | v1.0 |
 | Scope | Deterministic synthetic patient generation, validation gates, SOAP generation, audit, export, and handoff to ingestion/RAG |
