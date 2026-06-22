@@ -61,6 +61,7 @@ from config.constants import (
     SHORT_COURSE_MEDICATIONS,
 )
 from config.patient_blueprints import BLUEPRINT_BY_ID, PatientBlueprint
+from generators._generator_utils import _format_conditions  # R2: shared utility
 
 
 # ---------------------------------------------------------------------------
@@ -527,24 +528,7 @@ def _adherence_reason(medication_name: str, blueprint: PatientBlueprint) -> str:
     )
 
 
-def _format_conditions(conditions: tuple[str, ...]) -> str:
-    """Join condition names into a readable string."""
-    display = {
-        "T2DM":             "type 2 diabetes",
-        "HTN":              "hypertension",
-        "Asthma":           "asthma",
-        "IDA":              "iron deficiency anaemia",
-        "GERD":             "GERD",
-        "Dyslipidemia":     "dyslipidaemia",
-        "Allergic_Rhinitis":"allergic rhinitis",
-        "UTI":              "urinary tract infection",
-        "CKD":              "chronic kidney disease",
-        "Acute_URTI":       "acute upper respiratory tract infection",
-    }
-    parts = [display.get(c, c) for c in conditions]
-    if len(parts) == 1:
-        return parts[0]
-    return ", ".join(parts[:-1]) + " and " + parts[-1]
+# R2: _format_conditions removed — now imported from generators._generator_utils.
 
 
 # ---------------------------------------------------------------------------
