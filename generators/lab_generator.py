@@ -433,6 +433,31 @@ def _validate_lab_focus(blueprint: PatientBlueprint) -> None:
                     f"supported by conditions {blueprint.conditions}."
                 )
 
+    # R4 guard — CKD Creatinine explicit series requirement.
+    #
+    # _generic_lab_value() contains a CKD-specific Creatinine fallback that
+    # produces a flat generic arc (1.4, 1.5, 1.6, 1.5, 1.4).  For the current
+    # 15-patient dataset this fallback is dead code — both CKD patients
+    # (PAT-CHR-002, PAT-CHR-005) have explicit series in _PATIENT_LAB_SERIES.
+    #
+    # If a future CKD blueprint is added without an explicit Creatinine series,
+    # the fallback would silently produce clinically inconsistent values that
+    # may not match the blueprint's story arc (e.g. a hospitalization peak or a
+    # dual_lab_trend arc).  This guard converts that silent failure into a
+    # loud, early LabGenerationError so the omission is caught at generation
+    # time rather than discovered after ChromaDB ingestion.
+    if "CKD" in blueprint.conditions and "Creatinine" in blueprint.lab_focus:
+        explicit_series = _PATIENT_LAB_SERIES.get(blueprint.patient_id, {})
+        if "Creatinine" not in explicit_series:
+            raise LabGenerationError(
+                f"{blueprint.patient_id}: CKD blueprint with 'Creatinine' in lab_focus "
+                f"must have an explicit 'Creatinine' series in _PATIENT_LAB_SERIES. "
+                f"The generic CKD fallback in _generic_lab_value() produces a flat arc "
+                f"that may be clinically inconsistent with this blueprint's story. "
+                f"Add a 'Creatinine' entry for '{blueprint.patient_id}' in "
+                f"_PATIENT_LAB_SERIES before proceeding."
+            )
+
 
 def _validate_lab_type(patient_id: str, lab_type: str) -> None:
     """Ensure a lab_type is valid and not a BP alias."""
