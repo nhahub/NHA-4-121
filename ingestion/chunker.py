@@ -52,6 +52,14 @@ _FORBIDDEN_META_SET: frozenset[str] = frozenset(
     k.lower() for k in FORBIDDEN_CHROMA_METADATA_FIELDS_V17_LITE
 )
 
+# Visit roles that semantically encode lab-trend monitoring intent.
+# R1 fix: has_lab_trend requires BOTH lab presence AND a trend-monitoring role.
+# Values are locked VISIT_ROLES members from config/constants.py.
+_LAB_TREND_ROLES: frozenset[str] = frozenset({
+    "lab_trend_review",
+    "ckd_monitoring",
+})
+
 # Source-type display labels used in anchor sentences
 _SOURCE_LABEL: dict[str, str] = {
     "doctor_note":              "Doctor note",
@@ -642,7 +650,10 @@ def _make_chunk(
     has_hospitalization = (
         visit_type == "hospitalization" or visit_role == "hospitalization"
     )
-    has_lab_trend = bool(labs)
+    # R1: trend-aware check — labs must be present AND the visit role must
+    # encode trend-monitoring intent. bool(labs) alone conflates "labs recorded"
+    # with "a trend is being tracked", which degrades retrieval filter precision.
+    has_lab_trend = bool(labs) and visit_role in _LAB_TREND_ROLES
 
     metadata: dict[str, Any] = {
         "patient_id":            patient_id,

@@ -73,6 +73,14 @@ _BOOL_FIELDS: tuple[str, ...] = (
     "has_lab_trend",
 )
 
+# Visit roles that semantically encode lab-trend monitoring intent.
+# R1 fix: has_lab_trend requires BOTH lab presence AND a trend-monitoring role.
+# Mirrors the same constant in chunker.py; both must stay in sync with VISIT_ROLES.
+_LAB_TREND_ROLES: frozenset[str] = frozenset({
+    "lab_trend_review",
+    "ckd_monitoring",
+})
+
 # Forbidden metadata keys — checked case-insensitively.
 # Includes BP terms, large-blob terms, and demographic fields that must never
 # be stored in ChromaDB (demographics belong only in structured patient JSON).
@@ -177,7 +185,9 @@ def build_metadata(
         has_hospitalization = bool(
             visit_type == "hospitalization" or visit_role == "hospitalization"
         )
-        has_lab_trend = bool(labs)
+        # R1: trend-aware check — mirrors chunker.py._LAB_TREND_ROLES logic.
+        # bool(labs) alone conflates "labs recorded" with "a trend is being tracked".
+        has_lab_trend = bool(labs) and visit_role in _LAB_TREND_ROLES
 
     # --- Assemble metadata dict ---
     metadata: dict[str, Any] = {

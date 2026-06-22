@@ -121,15 +121,26 @@ assert chr5_hosp_meta[0]["has_hospitalization"] is True
 print("Test 2: PAT-CHR-005 hospitalization has_hospitalization=True ✓")
 
 # ---------------------------------------------------------------------------
-# Test 3 — PAT-CHR-002 lab visits have has_lab_trend True
+# Test 3 — PAT-CHR-002 lab visits: has_lab_trend reflects visit_role (R1)
 # ---------------------------------------------------------------------------
+# R1 change: has_lab_trend = bool(labs) AND visit_role in {lab_trend_review, ckd_monitoring}.
+# PAT-CHR-002 visit_roles: initial_diagnosis (labs=True) → has_lab_trend=False
+#                           ckd_monitoring x3  (labs=True) → has_lab_trend=True
+#                           lab_trend_review   (labs=True) → has_lab_trend=True
 chr2_lab_meta = [
     m for m, c in zip(metadata_list, chunks)
     if c["patient_id"] == "PAT-CHR-002"
     and c["source_type"] == "lab_result"
 ]
-assert all(m["has_lab_trend"] is True for m in chr2_lab_meta)
-print("Test 3: PAT-CHR-002 lab_result chunks all have has_lab_trend=True ✓")
+_LAB_TREND_ROLES = {"lab_trend_review", "ckd_monitoring"}
+assert len(chr2_lab_meta) == 5, f"Expected 5 PAT-CHR-002 lab_result chunks, got {len(chr2_lab_meta)}"
+for m in chr2_lab_meta:
+    expected = m["visit_role"] in _LAB_TREND_ROLES
+    assert m["has_lab_trend"] is expected, (
+        f"visit_role={m['visit_role']!r}: expected has_lab_trend={expected}, "
+        f"got {m['has_lab_trend']}"
+    )
+print("Test 3: PAT-CHR-002 lab_result has_lab_trend matches visit_role (R1) ✓")
 
 # ---------------------------------------------------------------------------
 # Test 4 — Allergy chunk metadata uses empty strings not None
