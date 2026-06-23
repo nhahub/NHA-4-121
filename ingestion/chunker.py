@@ -38,6 +38,7 @@ from config.constants import (
 )
 from config.patient_blueprints import BLUEPRINT_BY_ID, PatientBlueprint
 from ingestion.retrieval_enricher import RetrievalEnrichmentError, build_retrieval_text
+from ingestion._utils import _conditions_pipe  # R5: shared ingestion utility
 
 
 # ---------------------------------------------------------------------------
@@ -713,9 +714,7 @@ def _safe_enrichment(
         return ""
 
 
-def _conditions_pipe(patient: dict) -> str:
-    conds = patient.get("conditions") or []
-    return "|".join(str(c) for c in conds if str(c).strip())
+# R5: _conditions_pipe removed — now imported from ingestion._utils.
 
 
 def _conditions_str(patient: dict) -> str:
