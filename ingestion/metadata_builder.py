@@ -23,11 +23,36 @@ Design contract
 * All three OPTIONAL_CHROMA_METADATA_FIELDS_V17_LITE boolean fields are always present.
 * BP keys and demographic keys are hard-forbidden in all metadata output.
 
+Boolean enrichment field ownership (R3 contract — see arch review §2.7)
+------------------------------------------------------------------------
+The three boolean enrichment fields—
+    has_medication_change, has_hospitalization, has_lab_trend
+—are ALWAYS recomputed by this module directly from the visit dict.
+
+The chunker (ingestion/chunker.py) also computes these fields and stores them
+in chunk["metadata"].  This module does NOT read those pre-computed values.
+chunk["metadata"] booleans are intentionally ignored.
+
+Rationale:
+    This module is the AUTHORITATIVE OWNER of the metadata written to ChromaDB.
+    Recomputing from the visit dict (the primary source of truth) prevents silent
+    metadata drift that could arise if an intermediate chunk representation were
+    ever modified, rebuilt with different logic, or re-ingested from a cached
+    artifact.  The visit dict is immutable after Step 8 (soap_auditor); this
+    module always reads from that stable, validated source.
+
+Consequence:
+    Any change to how a boolean field is computed MUST be applied to BOTH
+    ingestion/chunker.py AND ingestion/metadata_builder.py.  Both modules use
+    _LAB_TREND_ROLES and MEDICATION_CHANGE_STATUSES from config/constants.py
+    as their shared source of truth for enumerated values.
+
 Field normalization for allergy chunks
 ---------------------------------------
 Allergy chunks have no visit anchor.  The chunker currently places None for
 visit_id, visit_date, visit_type, and visit_role in allergy chunk metadata.
 This module coerces those None values to empty string "" before validation.
+All three boolean enrichment fields are hardcoded to False for allergy chunks.
 
 Public API
 ----------
@@ -54,6 +79,7 @@ from config.constants import (
     VISIT_ROLES,
     VISIT_TYPES,
 )
+from ingestion._utils import _conditions_pipe  # R5: shared ingestion utility
 
 
 # ---------------------------------------------------------------------------
@@ -172,7 +198,21 @@ def build_metadata(
         visit_type = str(visit.get("visit_type")  or "")
         visit_role = str(visit.get("visit_role")  or "")
 
-        # Boolean enrichment fields
+        # --- Boolean enrichment fields (R3 contract) ---
+        # These three fields are ALWAYS recomputed here from the visit dict.
+        # The values already present in chunk["metadata"] (computed earlier by
+        # chunker._make_chunk()) are intentionally NOT read and NOT trusted here.
+        #
+        # Ownership rationale:
+        #   This module is the authoritative owner of the metadata written to
+        #   ChromaDB.  Recomputing from the visit dict—the primary source of
+        #   truth, frozen after soap_auditor (Step 8)—prevents silent metadata
+        #   drift from cached, re-built, or differently-versioned chunk dicts.
+        #
+        # Sync requirement:
+        #   Any logic change to these fields MUST be mirrored in chunker.py.
+        #   Both modules reference MEDICATION_CHANGE_STATUSES and _LAB_TREND_ROLES
+        #   from config/constants.py as the shared enumerated sources of truth.
         medications = visit.get("medications") or []
         labs        = visit.get("labs")        or []
 
@@ -482,10 +522,7 @@ def summarize_metadata_set(
 # Internal helpers
 # ---------------------------------------------------------------------------
 
-def _conditions_pipe(patient: dict) -> str:
-    """Return patient conditions as a pipe-separated string."""
-    conds = patient.get("conditions") or []
-    return "|".join(str(c) for c in conds if str(c).strip())
+# R5: _conditions_pipe removed — now imported from ingestion._utils.
 
 
 def _require_str(obj: dict, key: str, location: str) -> str:
