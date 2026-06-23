@@ -68,7 +68,7 @@ This document is part of a layered documentation system. It does not replace the
 | `docs/architecture_summary.md`             | Provides the high-level system architecture and end-to-end workflow that this schema contract supports.                                                                    |
 | `docs/team_ownership_and_architecture.md` | Defines the full system architecture, folder ownership, team responsibilities, dependency order, and high-level RAG flow. This schema contract builds on that architecture. |
 | `docs/project_scope_and_safety_rules.md`  | Defines non-negotiable safety boundaries, medical-scope restrictions, and LLM/RAG safety rules.                                                                        |
-| `docs/validation_rules.md`                | Defines V1–V11 validation behavior and dataset-level checks in detail. This document explains what the schema means; the validation document explains how correctness is enforced. |
+| `docs/validation_rules.md`                | Defines V1–V13 validation behavior and dataset-level checks in detail. This document explains what the schema means; the validation document explains how correctness is enforced. |
 | `docs/data_generation_pipeline.md`        | Explains how structured patients, visits, labs, medications, allergies, SOAP notes, and final exports are generated.                                                       |
 | `docs/rag_handoff_contract.md`            | Defines what Ahmed hands off to Gamal and what the RAG layer may safely assume.                                                                                            |
 | `docs/retrieval_enrichment_contract.md`   | Defines deterministic retrieval enrichment text and auditing rules used before chunking and ingestion.                                                                     |
@@ -357,11 +357,15 @@ The `conditions` array stores documented conditions assigned to the patient.
 Allowed values:
 
 ```text
+Acute_URTI
 T2DM
 HTN
 Asthma
 IDA
 GERD
+Dyslipidemia
+Allergic_Rhinitis
+UTI
 CKD
 ```
 
@@ -369,11 +373,15 @@ CKD
 
 | Condition | Meaning                             | Typical Tier      |
 | --------- | ----------------------------------- | ----------------- |
+| `Acute_URTI` | Acute upper respiratory tract infection | normal            |
 | `T2DM`    | Type 2 Diabetes Mellitus            | moderate, chronic |
 | `HTN`     | Hypertension                        | moderate, chronic |
 | `Asthma`  | Asthma                              | moderate, chronic |
 | `IDA`     | Iron-Deficiency Anemia              | moderate          |
 | `GERD`    | Gastroesophageal Reflux Disease     | moderate          |
+| `Dyslipidemia` | Dyslipidemia                        | moderate, chronic |
+| `Allergic_Rhinitis` | Allergic rhinitis                   | moderate          |
+| `UTI`     | Urinary tract infection             | moderate          |
 | `CKD`     | Chronic Kidney Disease complication | chronic only      |
 
 ## Tier Expectations
@@ -560,6 +568,8 @@ Each visit may later produce multiple semantic evidence chunks, such as:
 doctor_note
 lab_result
 prescription
+discharge_summary
+medication_reconciliation
 ```
 
 All visit-derived chunks must remain anchored to the visit.
@@ -685,6 +695,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 ## Creatinine Generation Rule
@@ -1428,6 +1439,8 @@ doctor_note
 lab_result
 prescription
 allergy
+discharge_summary
+medication_reconciliation
 ```
 
 Retrieval enrichment may strengthen semantic matching, but citations and grounded answers must still point back to the underlying patient record, visit, source type, and chunk evidence.
@@ -1462,7 +1475,7 @@ depends on retrieved evidence and patient-level context.
 
 Validation protects this schema from corrupting downstream RAG behavior.
 
-The V1–V11 validation rules protect:
+The V1–V13 validation rules protect:
 
 | Rule Area                   | Schema Protection                                | RAG Protection                                    |
 | --------------------------- | ------------------------------------------------ | ------------------------------------------------- |
@@ -1482,7 +1495,7 @@ Validation must run before ingestion.
 
 ## Dataset-Level Validation Checks
 
-In addition to per-patient V1–V11 validation, the project also performs dataset-level checks in the command-line validation workflow.
+In addition to per-patient V1–V13 validation, the project also performs dataset-level checks in the command-line validation workflow.
 
 These checks protect the full dataset before handoff and ingestion:
 
@@ -1493,7 +1506,7 @@ unique patient_id values across files
 CKD patient count <= 2
 ```
 
-These checks are not replacements for V1–V11. They are additional dataset-level safeguards that ensure the full patient set remains consistent with the locked project scope.
+These checks are not replacements for V1–V13. They are additional dataset-level safeguards that ensure the full patient set remains consistent with the locked project scope.
 
 Expected full dataset distribution:
 

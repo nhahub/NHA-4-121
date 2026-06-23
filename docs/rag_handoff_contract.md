@@ -280,7 +280,7 @@ python scripts/generate_all.py --mode full --clean
 Expected result:
 
 ```text
-30 valid patients
+15 valid patients
 0 quarantined patients
 ```
 
@@ -376,6 +376,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 Creatinine generation follows the current locked rule:
@@ -456,6 +457,8 @@ doctor_note
 lab_result
 prescription
 allergy
+discharge_summary
+medication_reconciliation
 ```
 
 These source types must stay stable because they are used by:
@@ -557,6 +560,41 @@ Expected use:
 Important:
 
 The system retrieves documented allergies. It does not detect, predict, or infer allergies.
+
+## 8.5 `discharge_summary`
+
+Source object:
+
+```text
+visit.soap_note
+```
+
+Expected use:
+
+- hospitalization questions,
+- post-discharge timeline,
+- recovery summaries.
+
+Important:
+
+Functions similar to doctor_note but specifically anchors to hospitalization events.
+
+## 8.6 `medication_reconciliation`
+
+Source object:
+
+```text
+visit.soap_note
+```
+
+Expected use:
+
+- post-hospitalization medication review questions,
+- resolving complex medication changes.
+
+Important:
+
+Serves as an explicit checkpoint for medication continuity.
 
 ---
 
@@ -994,7 +1032,7 @@ python scripts/validate_all.py --mode full
 Expected:
 
 ```text
-30 patients
+15 patients
 0 validation FAIL
 0 dataset-level FAIL
 ```
@@ -1056,7 +1094,7 @@ visit_type enum
 medication whitelist
 route enum
 frequency enum
-validation rules V1–V11
+validation rules V1–V13
 SOAP structure
 BP rule
 CKD rule

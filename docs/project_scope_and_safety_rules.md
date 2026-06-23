@@ -213,7 +213,7 @@ Synthetic data may contain realistic-looking values for academic demonstration, 
 
 Validation is mandatory before SOAP generation and ingestion.
 
-The project uses V1–V11 validation rules.
+The project uses V1–V13 validation rules.
 
 Validation must run before:
 
@@ -246,7 +246,7 @@ Warnings should be reviewed before demo day.
 
 # 9. Validation Rule Summary
 
-The official validation rule set is V1–V11.
+The official validation rule set is V1–V13.
 
 | Rule | Purpose | Severity |
 |---|---|---|
@@ -261,6 +261,8 @@ The official validation rule set is V1–V11.
 | V9 | BP forbidden in labs | FAIL |
 | V10 | `timeline_events` forbidden in patient JSON | FAIL |
 | V11 | Medication whitelist, frequency, and route validation | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 Dataset-level checks also verify:
 
@@ -269,7 +271,7 @@ Dataset-level checks also verify:
 - unique `patient_id` values across files,
 - CKD patient count not exceeding the locked scope.
 
-These dataset-level checks do not replace V1–V11. They complement them.
+These dataset-level checks do not replace V1–V13. They complement them.
 
 ---
 
@@ -433,6 +435,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 BP is not a lab type.
@@ -539,6 +542,8 @@ doctor_note
 lab_result
 prescription
 allergy
+discharge_summary
+medication_reconciliation
 ```
 
 Expected chunk behavior:
@@ -546,7 +551,9 @@ Expected chunk behavior:
 - doctor note chunks contain SOAP narrative text,
 - lab result chunks contain documented lab records,
 - prescription chunks contain documented medication records,
-- allergy chunks contain allergy registry information.
+- allergy chunks contain allergy registry information,
+- discharge summary chunks contain hospitalization narratives and discharge timelines,
+- medication reconciliation chunks contain post-hospitalization medication reviews and continuity checks.
 
 Metadata may include:
 
@@ -876,7 +883,7 @@ Before demo or final handoff, verify:
 
 ```text
 [ ] All patient records are synthetic.
-[ ] Validation V1–V11 passes with zero FAIL issues.
+[ ] Validation V1–V13 passes with zero FAIL issues.
 [ ] Dataset-level checks pass.
 [ ] BP exists only in visit.vitals.
 [ ] BP is not in labs.

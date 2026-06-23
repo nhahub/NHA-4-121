@@ -141,7 +141,7 @@ data/quarantine/
 
 | File | Responsibility |
 |---|---|
-| `validators/rules.py` | Implements V1–V11 per-patient validation rules. |
+| `validators/rules.py` | Implements V1–V13 per-patient validation rules. |
 | `validators/validate.py` | Loads patient files and runs validation across patient JSON records. |
 | `validators/validation_report.py` | Formats validation results into readable reports. |
 | `scripts/validate_all.py` | Runs project-level validation and dataset-level checks. |
@@ -177,7 +177,7 @@ The pipeline supports two dataset modes.
 | Mode | Expected Count | Distribution | Purpose |
 |---|---:|---|---|
 | `pilot` | 5 | 2 normal, 2 moderate, 1 chronic | Fast testing and early validation. |
-| `full` | 30 | 10 normal, 13 moderate, 7 chronic | Final dataset for ingestion, RAG, and demo. |
+| `full` | 15 | 1 normal, 9 moderate, 5 chronic | Final dataset for ingestion, RAG, and demo. |
 
 Use `full` for final handoff to Gamal.
 
@@ -443,9 +443,9 @@ Expected success summary for full mode:
 
 ```text
 Mode:               full
-Expected patients:  30
-Generated patients: 30
-Valid exported:     30
+Expected patients:  15
+Generated patients: 15
+Valid exported:     15
 Quarantined:        0
 ```
 
@@ -463,7 +463,7 @@ Quarantined:        0
 
 # 9. Validation Rules Used by the Pipeline
 
-The pipeline uses V1–V11 validation rules.
+The pipeline uses V1–V13 validation rules.
 
 | Rule | Purpose | Severity |
 |---|---|---|
@@ -478,6 +478,8 @@ The pipeline uses V1–V11 validation rules.
 | V9 | BP forbidden in labs | FAIL |
 | V10 | `timeline_events` forbidden in patient JSON | FAIL |
 | V11 | Medication whitelist, frequency, and route validation | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 Detailed rule behavior belongs to:
 
@@ -495,7 +497,7 @@ These checks are not new V-rules. They protect the dataset as a whole.
 
 | Check | Purpose |
 |---|---|
-| Expected patient count | Confirms `pilot` has 5 and `full` has 30. |
+| Expected patient count | Confirms `pilot` has 5 and `full` has 15. |
 | Tier distribution | Confirms correct `normal`, `moderate`, `chronic` distribution. |
 | Unique patient IDs | Prevents duplicate patient IDs across files. |
 | CKD patient count | Ensures CKD appears in no more than 2 patients. |
@@ -584,7 +586,7 @@ Both commands must complete successfully.
 Expected result:
 
 ```text
-30 approved patient files
+15 approved patient files
 0 quarantined files
 0 validation FAIL issues
 0 SOAP audit FAIL issues
@@ -766,9 +768,9 @@ Before final handoff, Ahmed should confirm:
 
 ```text
 [ ] config/constants.py is the single source of truth.
-[ ] Full mode generates 30 patients.
+[ ] Full mode generates 15 patients.
 [ ] Pilot mode generates 5 patients.
-[ ] Full tier distribution is 10 normal, 13 moderate, 7 chronic.
+[ ] Full tier distribution is 1 normal, 9 moderate, 5 chronic.
 [ ] CKD appears in no more than 2 chronic patients.
 [ ] CKD always co-occurs with T2DM and HTN.
 [ ] BP appears only in visit.vitals.
@@ -796,7 +798,7 @@ Before final handoff, Ahmed should confirm:
 When the pipeline completes successfully, Ahmed can hand the data layer to Gamal with the following statement:
 
 ```text
-The full synthetic dataset has been generated deterministically, validated with V1–V11, checked with dataset-level validation, enriched with deterministic SOAP notes, audited successfully, and exported to data/patients/. The files in data/patients/ are the only approved records for ingestion and RAG. Files in data/quarantine/ must not be ingested.
+The full synthetic dataset has been generated deterministically, validated with V1–V13, checked with dataset-level validation, enriched with deterministic SOAP notes, audited successfully, and exported to data/patients/. The files in data/patients/ are the only approved records for ingestion and RAG. Files in data/quarantine/ must not be ingested.
 ```
 
 ---

@@ -82,7 +82,7 @@ The following rules are locked for this project:
 ```text
 Synthetic Patient Generation
         ↓
-Validation V1–V11
+Validation V1–V13
         ↓
 Deterministic SOAP Generation
         ↓
@@ -132,7 +132,7 @@ AI-Based-Clinical-Record-Summarization-System/
 ├── scripts/        # Pipeline workflow scripts
 ├── soap/           # Deterministic SOAP templates, rendering, audit
 ├── tests/          # Validation, retrieval, chunking, API, smoke tests
-├── validators/     # V1–V11 validation rules and reports
+├── validators/     # V1–V13 validation rules and reports
 ├── requirements.txt
 └── README.md
 ```
@@ -168,7 +168,7 @@ Important rules:
 
 ## 8. Validation System
 
-Validation rules are implemented as V1–V11.
+Validation rules are implemented as V1–V13.
 
 | Rule | Purpose | Severity |
 |---|---|---|
@@ -183,6 +183,8 @@ Validation rules are implemented as V1–V11.
 | V9 | BP forbidden inside labs | FAIL |
 | V10 | `timeline_events` forbidden | FAIL |
 | V11 | Medication whitelist, frequency, and route validation | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 Dataset-level checks are also run by `scripts/validate_all.py`:
 
@@ -197,14 +199,14 @@ Dataset-level checks are also run by `scripts/validate_all.py`:
 
 | Domain | Locked Values / Rules |
 |---|---|
-| Dataset size | Pilot: 5 patients; Full: 30 patients |
-| Full distribution | 10 normal, 13 moderate, 7 chronic |
-| Conditions | `T2DM`, `HTN`, `Asthma`, `IDA`, `GERD`, `CKD` |
+| Dataset size | Pilot: 5 patients; Full: 15 patients |
+| Full distribution | 1 normal, 9 moderate, 5 chronic |
+| Conditions | `Acute_URTI`, `T2DM`, `HTN`, `Asthma`, `IDA`, `GERD`, `Dyslipidemia`, `Allergic_Rhinitis`, `UTI`, `CKD` |
 | CKD | Chronic-tier only; must co-occur with `T2DM` and `HTN`; max 2 patients |
 | Visit types | `initial`, `follow_up`, `emergency`, `hospitalization` |
-| Lab types | `HbA1c`, `FBG`, `Creatinine`, `Hemoglobin`, `Ferritin` |
+| Lab types | `HbA1c`, `FBG`, `Creatinine`, `Hemoglobin`, `Ferritin`, `LDL` |
 | Medication routes | `oral`, `inhaled` |
-| Source types | `doctor_note`, `lab_result`, `prescription`, `allergy` |
+| Source types | `doctor_note`, `lab_result`, `prescription`, `allergy`, `discharge_summary`, `medication_reconciliation` |
 | BP location | `visit.vitals.bp_systolic` and `visit.vitals.bp_diastolic` only |
 | Forbidden BP locations | labs, lab type enum, ChromaDB metadata, duplicate shadow fields |
 
@@ -541,7 +543,7 @@ Demo rules:
 | `docs/team_ownership_and_architecture.md` | Team ownership and folder responsibilities |
 | `docs/project_scope_and_safety_rules.md` | Medical safety and scope boundaries |
 | `docs/data_schema_contract.md` | Patient JSON schema handoff contract |
-| `docs/validation_rules.md` | V1–V11 validation rule explanation |
+| `docs/validation_rules.md` | V1–V13 validation rule explanation |
 | `docs/data_generation_pipeline.md` | Data generation and validation workflow |
 | `docs/rag_handoff_contract.md` | Data-to-RAG handoff for AI/RAG engineer |
 | `docs/retrieval_enrichment_contract.md` | Retrieval enrichment layer contract |
@@ -577,7 +579,7 @@ Demo rules:
 
 ```text
 1. Lock constants and schema
-2. Implement validation rules V1–V11
+2. Implement validation rules V1–V13
 3. Generate pilot dataset
 4. Validate pilot dataset
 5. Generate full dataset
@@ -645,7 +647,7 @@ Current implementation direction:
 Status: Academic DEPI RAG demo
 Architecture: Local-first, modular, validation-gated
 Dataset: Synthetic patient JSON records
-Validation: V1–V11 + dataset-level checks
+Validation: V1–V13 + dataset-level checks
 SOAP: Deterministic template-based generation
 RAG: Patient-scoped, citation-based, grounded answers
 Demo: Streamlit + FastAPI + ChromaDB

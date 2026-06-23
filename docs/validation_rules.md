@@ -74,7 +74,7 @@ The validation implementation is split across three main files.
 
 | File | Responsibility |
 |---|---|
-| `validators/rules.py` | Implements the authoritative V1–V11 validation rules for one patient JSON object. |
+| `validators/rules.py` | Implements the authoritative V1–V13 validation rules. |
 | `validators/validate.py` | Loads patient files, runs `validate_patient()`, supports quarantine/report workflow. |
 | `validators/validation_report.py` | Formats validation results into readable console/report output. |
 
@@ -90,7 +90,7 @@ The most important public function is:
 validate_patient(patient: dict[str, Any]) -> list[ValidationIssue]
 ```
 
-It runs all rules V1–V11 and returns structured validation issues instead of raising exceptions.
+It runs rules V1–V12 and returns structured validation issues instead of raising exceptions. V13 is run separately as a report.
 
 ---
 
@@ -112,7 +112,7 @@ ValidationIssue(
 
 | Field | Meaning |
 |---|---|
-| `rule_id` | Validation rule identifier such as `V1`, `V2`, or `V11`. |
+| `rule_id` | Validation rule identifier such as `V1`, `V2`, `V12`, or `V13`. |
 | `severity` | Either `FAIL` or `WARN`. |
 | `patient_id` | The patient record affected by the issue. |
 | `location` | Path-like hint showing where the problem was found. |
@@ -184,13 +184,11 @@ A single invalid patient file can create:
 
 # 7. Authoritative Rule List
 
-There are exactly 11 validation rules.
+There are exactly 13 validation rules.
 
 ```text
-V1 through V11
+V1 through V13
 ```
-
-No V12 exists as a separate rule.
 
 | Rule | Name | Severity |
 |---|---|---|
@@ -205,6 +203,8 @@ No V12 exists as a separate rule.
 | V9 | BP forbidden inside labs | FAIL |
 | V10 | `timeline_events` forbidden anywhere in patient JSON | FAIL |
 | V11 | Medication whitelist, expected frequency, and expected route | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 ---
 
@@ -553,11 +553,15 @@ FAIL
 ### Conditions
 
 ```text
+Acute_URTI
 T2DM
 HTN
 Asthma
 IDA
 GERD
+Dyslipidemia
+Allergic_Rhinitis
+UTI
 CKD
 ```
 
@@ -578,6 +582,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 ### Lab Flags
@@ -890,9 +895,74 @@ Use medication names, frequency, and route exactly as defined in `config/constan
 
 ---
 
-# 19. Dataset-Level Validation Checks
+# 19. Rule V12 — Dataset Diversity and Retrieval Signature
 
-V1–V11 validate individual patient records.
+## Purpose
+
+Enforces dataset diversity and retrieval metadata correctness across the dataset to ensure a wide semantic and temporal space.
+
+## Checks
+
+For every patient:
+- `metadata.retrieval_signature` must be present and unique across the dataset.
+- `metadata.retrieval_intent_tags` must contain between 2 and 4 valid tags.
+- Every visit must have a `visit_role`, `clinical_event`, and `retrieval_context`.
+- The diversity fingerprint (composed of tier, conditions, semantic focus, timeline pattern, visit roles, main medications, lab focus, and allergens) must be unique across the dataset.
+- Patients with overlapping primary conditions must not share both `semantic_focus` and `timeline_pattern`.
+
+## Severity
+
+```text
+FAIL (when strict=True) or WARN (when strict=False)
+```
+
+## Why It Matters
+
+Ensures the generated dataset covers diverse clinical scenarios and prevents synthetic patient clustering, which would degrade retrieval testing fidelity.
+
+## Fix
+
+Regenerate the dataset to resolve fingerprint or signature collisions.
+
+---
+
+# 20. Rule V13 — Embedding Similarity Report
+
+## Purpose
+
+Generates a report-only audit of chunk similarity using embeddings to detect near-duplicate chunks.
+
+## Methodology
+
+Computes cosine similarity of `sentence-transformers` embeddings across chunks (from different visits). Identifies pairs of chunks with high similarity.
+
+## Checks
+
+This is a report-only rule. It does not block ingestion.
+It flags chunk pairs with similarities exceeding thresholds:
+- `critical_threshold` (e.g., >= 0.95)
+- `warn_threshold` (e.g., >= 0.88)
+- informational (e.g., >= 0.82)
+
+## Severity
+
+```text
+REPORT
+```
+
+## Why It Matters
+
+Helps track chunk quality and diversity after SOAP generation and enrichment, ensuring the retrieval system operates on distinct chunks.
+
+## Fix
+
+If critical similarities are flagged, review chunking strategy, SOAP templates, or retrieval enrichment text to increase distinctiveness.
+
+---
+
+# 21. Dataset-Level Validation Checks
+
+V1–V11 validate individual patient records, V12 validates dataset diversity and signatures, and V13 provides chunk similarity reports.
 
 The project also requires dataset-level checks before final handoff or ingestion.
 
@@ -902,12 +972,12 @@ These checks belong to the command-line workflow in `scripts/validate_all.py`, n
 
 | Check | Expected Behavior |
 |---|---|
-| Patient count | `pilot` mode must contain 5 patients; `full` mode must contain 30 patients. |
-| Tier distribution | Full mode must match 10 normal, 13 moderate, 7 chronic. |
+| Patient count | `pilot` mode must contain 5 patients; `full` mode must contain 15 patients. |
+| Tier distribution | Full mode must match 1 normal, 9 moderate, 5 chronic. |
 | Unique patient IDs | No two patient files may contain the same `patient_id`. |
 | CKD count limit | CKD must appear in at most 2 chronic patients. |
 
-## Why These Are Separate From V1–V11
+## Why These Are Separate From V1–V13
 
 The V-rules operate on one patient at a time.
 
@@ -923,7 +993,7 @@ That issue can only be detected at dataset level.
 
 ---
 
-# 20. Validation Commands
+# 22. Validation Commands
 
 ## Generate Full Dataset and Validate
 
@@ -970,7 +1040,7 @@ Dataset-level checks = PASS
 
 ---
 
-# 21. Quarantine Policy
+# 23. Quarantine Policy
 
 Invalid patient records must not be ingested.
 
@@ -1013,7 +1083,7 @@ data/quarantine/
 
 ---
 
-# 22. Relationship Between Validation and SOAP
+# 24. Relationship Between Validation and SOAP
 
 SOAP notes are generated after structured data passes validation.
 
@@ -1046,13 +1116,13 @@ This confirms that SOAP generation did not produce malformed records or missing 
 
 ## SOAP Audit
 
-SOAP audit is separate from V1–V11.
+SOAP audit is separate from V1–V13.
 
 It checks that SOAP text remains grounded and does not contain unsafe or unsupported phrases.
 
 ---
 
-# 23. Relationship Between Validation and Retrieval Enrichment
+# 25. Relationship Between Validation and Retrieval Enrichment
 
 Retrieval enrichment is downstream from validation.
 
@@ -1091,7 +1161,7 @@ The enrichment auditor protects against:
 
 ---
 
-# 24. Relationship Between Validation and Ingestion
+# 26. Relationship Between Validation and Ingestion
 
 Validation protects the RAG pipeline.
 
@@ -1121,7 +1191,7 @@ Stop → validate → fix data → regenerate → validate again
 
 ---
 
-# 25. Common Failure Examples
+# 27. Common Failure Examples
 
 ## BP Stored as Lab
 
@@ -1180,7 +1250,7 @@ and:
 Fails:
 
 ```text
-V7 or V11
+V7, V11, or V12
 ```
 
 Fix:
@@ -1228,7 +1298,7 @@ Delete the field and derive timelines from `visits[]`.
 
 ---
 
-# 26. What Validation Does Not Do
+# 28. What Validation Does Not Do
 
 The validator does not:
 
@@ -1249,7 +1319,7 @@ It only enforces the project’s locked synthetic data contract.
 
 ---
 
-# 27. Responsibilities
+# 29. Responsibilities
 
 ## Ahmed Hesham Kamel
 
@@ -1285,15 +1355,15 @@ The DevOps/Testing member supports:
 
 ---
 
-# 28. Final Validation Checklist
+# 30. Final Validation Checklist
 
 Before handing data to the RAG engineer, confirm:
 
 ```text
 [ ] python scripts/generate_all.py --mode full --clean succeeds
 [ ] python scripts/validate_all.py --mode full succeeds
-[ ] Patient count is 30
-[ ] Tier distribution is 10 normal, 13 moderate, 7 chronic
+[ ] Patient count is 15
+[ ] Tier distribution is 1 normal, 9 moderate, 5 chronic
 [ ] CKD patients are at most 2
 [ ] No validation FAIL issues exist
 [ ] WARN issues are reviewed
@@ -1306,7 +1376,7 @@ Before handing data to the RAG engineer, confirm:
 
 ---
 
-# 29. Final Summary
+# 31. Final Summary
 
 The validation system is the project’s data quality firewall.
 
@@ -1323,7 +1393,7 @@ Schema correctness
 → grounded RAG answers
 ```
 
-The validation rules V1–V11 are authoritative for per-patient validation.
+The validation rules V1–V12 are authoritative for dataset validation, and V13 serves as an ingestion-readiness check.
 
 Dataset-level checks are required before final handoff and ingestion.
 

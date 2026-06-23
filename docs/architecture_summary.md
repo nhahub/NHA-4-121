@@ -66,7 +66,7 @@ This is an academic RAG demonstration using synthetic records only.
 ```text
 Synthetic Patient Generation
         ↓
-Validation V1–V11
+Validation V1–V13
         ↓
 Deterministic SOAP Generation
         ↓
@@ -128,7 +128,7 @@ This means:
 |---|---|---|
 | Language | Python | Main implementation language |
 | Structured data | Local JSON files | Portable synthetic patient records |
-| Validation | Plain Python | Explicit V1–V11 rule checks |
+| Validation | Plain Python | Explicit V1–V13 rule checks |
 | SOAP generation | Deterministic templates | Safe note generation from structured facts |
 | Retrieval enrichment | Python text builders | Improve semantic retrieval quality |
 | Embeddings | Sentence Transformers | Local vector embedding generation |
@@ -157,7 +157,7 @@ AI-Based-Clinical-Record-Summarization-System/
 ├── scripts/        # Pipeline workflow scripts
 ├── soap/           # Deterministic SOAP templates, rendering, audit
 ├── tests/          # Validation, retrieval, chunking, API, smoke tests
-├── validators/     # V1–V11 validation rules and reports
+├── validators/     # V1–V13 validation rules and reports
 ├── requirements.txt
 └── README.md
 ```
@@ -212,7 +212,7 @@ The data engineering layer owns:
 - deterministic lab generation,
 - deterministic medication generation,
 - deterministic allergy registry generation,
-- validation rules V1–V11,
+- validation rules V1–V13,
 - deterministic SOAP generation,
 - SOAP auditing,
 - approved patient files,
@@ -250,24 +250,28 @@ Validation is the hard gate before SOAP generation and ingestion.
 | Mode | Count | Purpose |
 |---|---:|---|
 | `pilot` | 5 patients | Fast development and smoke testing |
-| `full` | 30 patients | Final dataset for RAG and demo |
+| `full` | 15 patients | Final dataset for RAG and demo |
 
 ### 10.2 Full Dataset Distribution
 
 | Tier | Count | Meaning |
 |---|---:|---|
-| `normal` | 10 | Simple or acute records with no chronic condition profile |
-| `moderate` | 13 | Managed condition profiles |
-| `chronic` | 7 | Multi-visit chronic profiles with longer timelines |
+| `normal` | 1 | Simple or acute records with no chronic condition profile |
+| `moderate` | 9 | Managed condition profiles |
+| `chronic` | 5 | Multi-visit chronic profiles with longer timelines |
 
 ### 10.3 Locked Conditions
 
 ```text
+Acute_URTI
 T2DM
 HTN
 Asthma
 IDA
 GERD
+Dyslipidemia
+Allergic_Rhinitis
+UTI
 CKD
 ```
 
@@ -289,6 +293,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 Creatinine is generated for:
@@ -349,6 +354,8 @@ The validation layer protects data quality and prevents invalid records from ent
 | V9 | BP forbidden inside labs | FAIL |
 | V10 | `timeline_events` forbidden | FAIL |
 | V11 | Medication whitelist, frequency, and route validation | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 ### 12.3 Dataset-Level Checks
 
@@ -359,7 +366,7 @@ The validation layer protects data quality and prevents invalid records from ent
 - duplicate `patient_id` values across files,
 - CKD patient count limit.
 
-These checks do not replace V1–V11. They protect dataset-level integrity.
+These checks do not replace V1–V13. They protect dataset-level integrity.
 
 ---
 
@@ -438,6 +445,8 @@ doctor_note
 lab_result
 prescription
 allergy
+discharge_summary
+medication_reconciliation
 ```
 
 ### 14.3 Rules
@@ -525,6 +534,8 @@ ChromaDB upsert
 | `lab_result` | Visit lab evidence | Lab names, values, flags, units, dates |
 | `prescription` | Visit medication evidence | Medication names, doses, routes, frequencies, start/stop dates |
 | `allergy` | Patient allergy evidence | Allergy registry records and source visit references |
+| `discharge_summary` | Hospitalization narrative | Hospitalization summaries, discharge timelines |
+| `medication_reconciliation` | Transition of care medications | Post-hospitalization medication reviews, continuity checks |
 
 ### 16.2 Chunking Rules
 
@@ -736,7 +747,7 @@ The project should be developed in dependency order:
 
 ```text
 1. Lock constants and schema
-2. Implement validation rules V1–V11
+2. Implement validation rules V1–V13
 3. Generate pilot dataset
 4. Validate pilot dataset
 5. Generate full dataset
@@ -772,7 +783,7 @@ Do not build or polish the frontend before retrieval works.
 | `config/` | Ahmed Hesham Kamel | Constants, paths, settings, showcase config |
 | `data/` | Ahmed Hesham Kamel | Patient JSON, schema, quarantine; not ChromaDB runtime ownership |
 | `generators/` | Ahmed Hesham Kamel | Deterministic synthetic data generation |
-| `validators/` | Ahmed Hesham Kamel | V1–V11 validation rules and reports |
+| `validators/` | Ahmed Hesham Kamel | V1–V13 validation rules and reports |
 | `soap/` | Ahmed Hesham Kamel | Deterministic SOAP generation and audit |
 | `docs/` | Ahmed Hesham Kamel + team input | Architecture, contracts, handoff docs |
 | `ingestion/` | Gamal Mohamed Gad | Chunking, metadata, enrichment integration, ChromaDB ingestion |
@@ -952,7 +963,7 @@ This architecture is intentionally scoped for a DEPI graduation project: strong 
 | `docs/team_ownership_and_architecture.md` | Team ownership and folder responsibilities |
 | `docs/project_scope_and_safety_rules.md` | Medical safety and scope boundaries |
 | `docs/data_schema_contract.md` | Patient JSON schema handoff contract |
-| `docs/validation_rules.md` | Validation rules V1–V11 and dataset checks |
+| `docs/validation_rules.md` | Validation rules V1–V13 and dataset checks |
 | `docs/data_generation_pipeline.md` | Data generation and validation workflow |
 | `docs/rag_handoff_contract.md` | Data-to-RAG handoff for AI/RAG engineer |
 | `docs/retrieval_enrichment_contract.md` | Retrieval enrichment layer contract |

@@ -150,7 +150,7 @@ The final pipeline order is:
 
 ```text
 1. Generate structured patient records
-2. Run validation V1–V11
+2. Run validation V1–V13
 3. Run dataset-level validation checks
 4. Generate deterministic SOAP notes
 5. Run SOAP audit
@@ -186,6 +186,8 @@ doctor_note
 lab_result
 prescription
 allergy
+discharge_summary
+medication_reconciliation
 ```
 
 These values must remain aligned with `config/constants.py` and the future chunking/metadata contract.
@@ -198,6 +200,8 @@ These values must remain aligned with `config/constants.py` and the future chunk
 | `lab_result` | Yes | visit labs + lab context | HbA1c trends, FBG, creatinine, hemoglobin, ferritin, lab monitoring queries |
 | `prescription` | Yes | visit medications + medication timeline context | current medications, medication changes, dose/frequency/start/stop questions |
 | `allergy` | No | patient allergy registry | documented allergies, reactions, recorded allergy history |
+| `discharge_summary` | Yes | visit SOAP note + visit context | hospitalization summaries, discharge timelines |
+| `medication_reconciliation` | Yes | visit SOAP note + visit context | post-hospitalization medication reviews, continuity checks |
 
 ---
 
@@ -215,6 +219,8 @@ Expected behavior:
 - `source_type = "lab_result"` requires `visit`.
 - `source_type = "prescription"` requires `visit`.
 - `source_type = "allergy"` does not require `visit`.
+- `source_type = "discharge_summary"` requires `visit`.
+- `source_type = "medication_reconciliation"` requires `visit`.
 - Unsupported `source_type` should fail clearly.
 - Missing `visit` for visit-level source types should fail clearly.
 
@@ -315,6 +321,7 @@ FBG
 Creatinine
 Hemoglobin
 Ferritin
+LDL
 ```
 
 Condition-to-lab semantic support:
@@ -325,6 +332,7 @@ Condition-to-lab semantic support:
 | `HTN` | `Creatinine` when present in T2DM+HTN context | `hypertension-related` |
 | `CKD` | `Creatinine` | `CKD-related` |
 | `IDA` | `Hemoglobin`, `Ferritin` | `anemia-related` |
+| `Dyslipidemia` | `LDL` | `dyslipidemia-related` |
 
 Creatinine rule:
 
@@ -424,6 +432,26 @@ Clinical allergy detection
 ```
 
 Allergy enrichment may be patient-level rather than visit-level because `allergy_registry` belongs to the patient record.
+
+## 8.5 `discharge_summary` Enrichment
+
+Purpose:
+
+```text
+Improve retrieval for hospitalization and discharge summaries.
+```
+
+The discharge-summary enrichment text may include the same fields as doctor_note, but explicitly flags the event as a major timeline transition (hospitalization).
+
+## 8.6 `medication_reconciliation` Enrichment
+
+Purpose:
+
+```text
+Improve retrieval for post-hospitalization medication checks.
+```
+
+The medication-reconciliation enrichment text ensures medication changes made during hospitalization are semantically highlighted for continuity queries.
 
 ---
 

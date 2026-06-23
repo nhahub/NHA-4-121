@@ -32,7 +32,7 @@ The system follows this final workflow:
 ```text
 Synthetic Structured Data Generation
         ↓
-Structured Validation V1–V11
+Structured Validation V1–V13
         ↓
 Dataset-Level Validation Checks
         ↓
@@ -71,7 +71,7 @@ The following rules are mandatory and must not be changed during implementation.
 
 | Rule | Requirement |
 |---|---|
-| Validation | V1–V11 validation rules must be implemented and enforced |
+| Validation | V1–V13 validation rules must be implemented and enforced |
 | Dataset checks | Full dataset must pass count, tier distribution, unique patient ID, and CKD count checks |
 | Validation gate | Structured validation must pass before SOAP, enrichment, chunking, or ingestion |
 | Blood Pressure | BP exists only inside `visit.vitals` |
@@ -130,7 +130,7 @@ This structure separates the project into clear engineering areas:
 | `rag/` | Retrieval, prompt construction, grounding, citations, and answer generation |
 | `ingestion/` | Retrieval enrichment, chunking, metadata construction, and ChromaDB ingestion |
 | `generators/` | Deterministic synthetic structured patient data generation |
-| `validators/` | V1–V11 validation rules and validation reporting |
+| `validators/` | V1–V13 validation rules and validation reporting |
 | `soap/` | Deterministic SOAP generation and SOAP safety auditing |
 | `data/` | Synthetic patient JSON, schema files, quarantine, and ChromaDB storage |
 | `config/` | Constants, paths, prompts, settings, and showcase patient configuration |
@@ -544,7 +544,7 @@ validators/
 
 Purpose:
 
-- Implement V1–V11 validation rules
+- Implement V1–V13 validation rules
 - Check patient JSON consistency
 - Reject invalid records
 - Generate validation reports
@@ -636,7 +636,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 
 | File | Responsibility |
 |---|---|
-| `validators/rules.py` | Contains V1–V11 validation functions |
+| `validators/rules.py` | Contains V1–V13 validation functions |
 | `validators/validate.py` | Runs validation checks across patient files |
 | `validators/validation_report.py` | Produces readable validation reports |
 | `validators/__init__.py` | Marks validators as a package |
@@ -647,7 +647,7 @@ Validation is a hard gate before SOAP generation, retrieval enrichment, chunking
 |---|---|---|
 | `scripts/generate_all.py` | Runs full data generation pipeline with validation hard gate | Ahmed Hesham Kamel |
 | `scripts/generate_soap.py` | Regenerates deterministic SOAP after validation | Ahmed Hesham Kamel |
-| `scripts/validate_all.py` | Runs V1–V11 and dataset-level checks | Ahmed Hesham Kamel |
+| `scripts/validate_all.py` | Runs V1–V13 and dataset-level checks | Ahmed Hesham Kamel |
 | `scripts/check_retrieval_enricher_output.py` | Debugs retrieval enrichment output | Ahmed Hesham Kamel / Gamal Mohamed Gad |
 | `scripts/ingest_all.py` | Runs chunking and ChromaDB ingestion | Gamal Mohamed Gad |
 | `scripts/reset_chromadb.py` | Clears local ChromaDB state | Gamal Mohamed Gad / Mahmoud Mohamed El Faham |
@@ -745,7 +745,7 @@ Validation is the main safety and quality gate.
 ```text
 Generate structured synthetic records
         ↓
-Run V1–V11 validation
+Run V1–V13 validation
         ↓
 Run dataset-level checks
         ↓
@@ -773,15 +773,17 @@ Only valid records proceed to SOAP, enrichment, chunking, and ingestion
 | V9 | BP forbidden in labs | FAIL |
 | V10 | `timeline_events` forbidden in patient JSON | FAIL |
 | V11 | Medication whitelist, frequency, and route validation | FAIL |
+| V12 | Dataset diversity fingerprint and retrieval signature validation | FAIL/WARN |
+| V13 | Embedding similarity report helper | REPORT |
 
 ## Dataset-Level Checks
 
-In addition to V1–V11, the full dataset must pass:
+In addition to V1–V13, the full dataset must pass:
 
 | Check | Requirement |
 |---|---|
-| Patient count | `pilot = 5`, `full = 30` |
-| Tier distribution | `full = 10 normal / 13 moderate / 7 chronic` |
+| Patient count | `pilot = 5`, `full = 15` |
+| Tier distribution | `full = 1 normal / 9 moderate / 5 chronic` |
 | Unique patient IDs | No duplicate `patient_id` values across files |
 | CKD count | CKD appears in max 2 chronic patients |
 
@@ -890,6 +892,8 @@ Ingest into ChromaDB
 | `lab_result` | Lab values, lab types, and condition-related lab context |
 | `prescription` | Medication names, dose, frequency, route, start date, and stop date |
 | `allergy` | Allergy registry and documented reactions |
+| `discharge_summary` | Hospitalization summaries, discharge timelines |
+| `medication_reconciliation` | Post-hospitalization medication reviews, continuity checks |
 
 ## Enrichment Rules
 
@@ -1115,7 +1119,7 @@ The project must be developed in dependency order.
 
 ```text
 1. Define constants and schema
-2. Build validation rules V1–V11
+2. Build validation rules V1–V13
 3. Generate pilot patient records
 4. Validate pilot records
 5. Generate full synthetic dataset
