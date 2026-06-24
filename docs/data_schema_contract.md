@@ -17,7 +17,7 @@
 | Status             | READY FOR FINAL HANDOFF — Official Schema Handoff Contract                                                                                                           |
 | Version            | v1.1                                                                                                                                                                 |
 | Scope              | Patient JSON structure, schema meaning, RAG dependencies, ingestion assumptions, forbidden fields, stability rules                                                   |
-| Related Contracts  | `docs/architecture_summary.md`, `docs/team_ownership_and_architecture.md`, `docs/project_scope_and_safety_rules.md`, `docs/validation_rules.md`, `docs/data_generation_pipeline.md`, `docs/rag_handoff_contract.md`, `docs/retrieval_enrichment_contract.md`, `docs/chunking_and_metadata_contract.md`, `docs/citation_contract.md`, `docs/rag_pipeline.md` |
+| Related Contracts  | `docs/architecture_summary.md`, `docs/team_ownership_and_architecture.md`, `docs/project_scope_and_safety_rules.md`, `docs/validation_rules.md`, `docs/data_generation_pipeline.md`, `docs/rag_handoff_contract.md`, `docs/retrieval_enrichment_contract.md`, `docs/chunking_and_metadata_contract.md`, `docs/api_contract.md`, `docs/rag_pipeline.md` |
 | Source of Truth    | `data/schemas/patient_schema.json`, `config/constants.py`, validated files in `data/patients/`                                                                       |
 
 ---
@@ -73,7 +73,7 @@ This document is part of a layered documentation system. It does not replace the
 | `docs/rag_handoff_contract.md`            | Defines what Ahmed hands off to Gamal and what the RAG layer may safely assume.                                                                                            |
 | `docs/retrieval_enrichment_contract.md`   | Defines deterministic retrieval enrichment text and auditing rules used before chunking and ingestion.                                                                     |
 | `docs/chunking_and_metadata_contract.md`  | Will define exact chunk types, chunk IDs, metadata fields, and ChromaDB-ready chunk structure. This document defines the source patient data that chunking reads from.      |
-| `docs/citation_contract.md`               | Will define exact citation object structure and display behavior. This document defines the stable IDs and source fields citations depend on.                               |
+| `docs/api_contract.md`               | Defines exact API request/response structures and endpoints used in backend-frontend integration. This document defines the stable IDs and source fields the API requires.                               |
 | `docs/rag_pipeline.md`                    | Will explain the end-to-end RAG flow. This schema contract explains the dataset assumptions underneath that flow.                                                           |
 
 ## Documentation Layering Rule

@@ -270,7 +270,6 @@ docs/
 ├── retrieval_enrichment_contract.md
 ├── chunking_and_metadata_contract.md
 ├── rag_pipeline.md
-├── citation_contract.md
 ├── api_contract.md
 ├── demo_script.md
 ├── fallback_plan.md
@@ -1324,7 +1323,7 @@ The structure is strong, but the following areas should be strengthened before f
 | Validation documentation needs official handoff clarity | Add `docs/validation_rules.md`               |
 | Retrieval enrichment needs formal handoff documentation | Add `docs/retrieval_enrichment_contract.md`  |
 | Chunking and metadata need a strict contract            | Add `docs/chunking_and_metadata_contract.md` |
-| Citation output needs stable format                     | Add `docs/citation_contract.md`              |
+| API boundaries need stable definition                   | Add `docs/api_contract.md`                   |
 | Demo smoke tests may be missing                         | Add `tests/test_demo_smoke.py`               |
 
 ---
@@ -1338,7 +1337,7 @@ Add docs/rag_pipeline.md
 Add docs/validation_rules.md
 Add docs/retrieval_enrichment_contract.md
 Add docs/chunking_and_metadata_contract.md
-Add docs/citation_contract.md
+Add docs/api_contract.md
 Add tests/test_demo_smoke.py
 Add frontend/components.py if Streamlit grows too large
 Add backend/app/health.py if health logic grows

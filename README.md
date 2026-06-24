@@ -549,7 +549,6 @@ Demo rules:
 | `docs/retrieval_enrichment_contract.md` | Retrieval enrichment layer contract |
 | `docs/chunking_and_metadata_contract.md` | Chunk and metadata rules |
 | `docs/rag_pipeline.md` | End-to-end RAG behavior |
-| `docs/citation_contract.md` | Citation object and display format |
 | `docs/api_contract.md` | API request/response contract |
 | `docs/demo_script.md` | Final demo script |
 | `docs/fallback_plan.md` | Demo fallback and recovery plan |

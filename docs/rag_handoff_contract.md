@@ -822,10 +822,10 @@ Which source type supported this answer?
 Which chunk was retrieved?
 ```
 
-The final citation object should be defined in:
+The final API endpoints and objects should be defined in:
 
 ```text
-docs/citation_contract.md
+docs/api_contract.md
 ```
 
 ---
